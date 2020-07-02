@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../static/img/favicon.ico">
+
+    <title>MIM</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../static/css/bootstrap.css" rel="stylesheet">
+    <link href="../static/css/cover.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<main role="main" class="container">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="masthead mb-auto">
+            <div class="inner">
+                <h3 class="masthead-brand">
+                    <a href="/">Metaphoraction</a>
+                </h3>
+                <nav class="nav nav-masthead justify-content-center">
+                    <a class="nav-link">If you have registered, please</a>
+                    <a class="nav-link active" href="/login">Sign in</a>
+                </nav>
+            </div>
+        </header>
+        <main role="main" class="inner cover">
+
+            {% if message %}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endif %}
+
+            <div class="py-5 text-center">
+                <form class="form-signin" method="post">
+                    <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
+                    <label for="inputName" class="sr-only">Username</label>
+                    <input type="text" id="inputName" class="form-control" placeholder="Username" required=""
+                           name="username"
+                           autofocus="">
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Password"
+                           name="password" required="">
+                    <button class="btn btn-outline-info btn-lg btn-block mt-5" type="submit">Sign up</button>
+                </form>
+            </div>
+        </main>
+
+        <footer class="mastfoot mt-auto">
+            <div class="text-center">
+                <p>Copyright © HKUST HCI Initiative</p>
+            </div>
+        </footer>
+    </div>
+</main>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+{#<script src="../static/js/vendor/jquery-3.4.1.min.js"></script>#}
+<script src="../static/js/vendor/popper.min.js"></script>
+<script src="../static/js/bootstrap.min.js"></script>
+
+<!--</script>-->
+{#<script src="../static/js/main.js"></script>#}
+</body>
+</html>

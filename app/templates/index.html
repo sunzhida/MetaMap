@@ -7,11 +7,10 @@
     <meta name="author" content="">
     <link rel="icon" href="../static/img/favicon.ico">
 
-    <title>MIM</title>
+    <title>MetaBoard</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../static/css/bootstrap.css" rel="stylesheet">
-    <link href="../static/css/cover.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
@@ -21,67 +20,14 @@
         <header class="masthead mb-auto">
             <div class="inner">
                 <nav class="nav nav-masthead justify-content-center">
-                    <a class="nav-link active" href="/">Main</a>
-                    {% if g.user %}
-                        <a class="nav-link">{{ g.user[1] }}</a>
-                        <a class="nav-link" href="{{ url_for('logout') }}">Log out</a>
-                    {% else %}
-                        <a class="nav-link" href="/login">Sign in</a>
-                        <a class="nav-link" href="/register">Sign up</a>
-                    {% endif %}
+                    <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="#">About</a>
                 </nav>
             </div>
         </header>
         <main role="main" class="inner cover">
-            <div class="py-5 text-center">
-                {#                <img class="d-block mx-auto mb-4" src="" alt="" width="72" height="72">#}
-                <h2>Metaphoraction</h2>
-                <p class="lead">
-                    Below is an example of how to use the query to search for the mappings between digital and physical
-                    world. There are four blanks in the query. From the left to right, each blank represents "<strong>gesture</strong>",
-                    "<strong>action</strong>", "<strong>object</strong>",
-                    and "<strong>meaning</strong>". The application will return a visualization of the framework after
-                    getting the submitted query, even with no more than three unfilling blanks.</p>
-            </div>
-
-            <div>
-                <p>Please filling in any blanks in the following query</p>
-            </div>
-
-            <div>
-                <form class="input-group" action="{{ url_for('result') }}" method="post">
-                    <label class="col-form-label">To</label>&nbsp;
-                    <input id='interaction' type="text" class="form-control"
-                           placeholder="e.g., Slash" aria-label="Interaction" name="interaction"
-                           style="width: 15%">&nbsp;
-                    <label class="col-form-label">the device, as to</label>&nbsp;
-                    <input id='action' type="text" class="form-control"
-                           placeholder="e.g., Light" aria-label="Action" name="action"
-                           style="width: 15%">&nbsp;
-                    <input id='entity' type="text" class="form-control"
-                           placeholder="e.g., Candle" aria-label="Entity" name="entity"
-                           style="width: 15%">
-                    <label class="col-form-label">, could represent</label>&nbsp;
-                    <input id='mean' type="text" class="form-control"
-                           placeholder="e.g., Hope" aria-label="Mean" name="mean" style="width: 15%">
-
-                    <div class="input-group-append">
-                        <input class="btn btn-outline-success" type="submit" value="Search"/>
-                    </div>
-                </form>
-            </div>
-
-            <div class="text-center mt-5">
-                {% if message['type'] %}
-                    <p class="lead">{{ message['content'] }}</p>
-                {% else %}
-                    <div class="alert alert-info alert-dismissible fade show" role="alert">
-                        {{ message['content'] }}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                {% endif %}
+            <div class="">
+                <div></div>
             </div>
         </main>
 
@@ -97,11 +43,10 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
-{#<script src="../static/js/vendor/jquery-3.4.1.min.js"></script>#}
 <script src="../static/js/vendor/popper.min.js"></script>
 <script src="../static/js/bootstrap.min.js"></script>
 
-<!--</script>-->
-{#<script src="../static/js/main.js"></script>#}
+<script src="../static/js/main.js"></script>
+
 </body>
 </html>

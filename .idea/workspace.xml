@@ -2,30 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47634e43-10ee-4812-ae17-2a32f46f168c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/css/bootstrap-grid.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/bootstrap-grid.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/css/bootstrap-grid.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/bootstrap-grid.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/css/bootstrap-grid.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/bootstrap-grid.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/css/bootstrap-grid.min.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/bootstrap-grid.min.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/css/bootstrap-reboot.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/bootstrap-reboot.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/css/bootstrap-reboot.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/bootstrap-reboot.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/css/bootstrap-reboot.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/bootstrap-reboot.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/css/bootstrap-reboot.min.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/bootstrap-reboot.min.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/css/bootstrap.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/bootstrap.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/css/bootstrap.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/bootstrap.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/css/bootstrap.min.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/bootstrap.min.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/js/bootstrap.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/bootstrap.bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/js/bootstrap.bundle.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/bootstrap.bundle.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/js/bootstrap.bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/bootstrap.bundle.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/js/bootstrap.bundle.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/bootstrap.bundle.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/bootstrap.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/js/bootstrap.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/bootstrap.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/js/bootstrap.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/bootstrap.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/js/bootstrap.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/bootstrap.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/result.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/result.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -38,8 +16,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1904">
-              <caret line="333" column="19" selection-start-line="333" selection-start-column="19" selection-end-line="333" selection-end-column="19" />
+            <state relative-caret-position="561">
+              <caret line="315" column="18" lean-forward="true" selection-start-line="315" selection-start-column="18" selection-end-line="315" selection-end-column="18" />
               <folding>
                 <element signature="e#0#106#0" expanded="true" />
               </folding>
@@ -47,11 +25,15 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="688">
-              <caret line="47" selection-start-line="47" selection-end-line="47" />
+            <state relative-caret-position="365">
+              <caret line="56" column="88" selection-start-line="56" selection-start-column="88" selection-end-line="56" selection-end-column="88" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -72,11 +54,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/result.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="215" column="53" selection-start-line="215" selection-start-column="53" selection-end-line="215" selection-end-column="53" />
+            <state relative-caret-position="688">
+              <caret line="248" column="11" lean-forward="true" selection-end-line="253" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -89,9 +71,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/templates/index.html" />
         <option value="$PROJECT_DIR$/app/static/js/main.js" />
         <option value="$PROJECT_DIR$/app/templates/result.html" />
+        <option value="$PROJECT_DIR$/app/__init__.py" />
+        <option value="$PROJECT_DIR$/app/templates/index.html" />
       </list>
     </option>
   </component>
@@ -181,12 +164,12 @@
       <option name="presentableId" value="Default" />
       <updated>1593690071735</updated>
       <workItem from="1593690079187" duration="1411000" />
-      <workItem from="1594031869032" duration="2786000" />
+      <workItem from="1594031869032" duration="5077000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4197000" />
+    <option name="totallyTimeSpent" value="6488000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -196,7 +179,7 @@
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info active="true" anchor="bottom" id="Find" order="1" visible="true" weight="0.32936078" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -219,23 +202,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1904">
-          <caret line="333" column="19" selection-start-line="333" selection-start-column="19" selection-end-line="333" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#106#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="688">
-          <caret line="47" selection-start-line="47" selection-end-line="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/static/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
@@ -250,8 +216,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/result.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="215" column="53" selection-start-line="215" selection-start-column="53" selection-end-line="215" selection-end-column="53" />
+        <state relative-caret-position="688">
+          <caret line="248" column="11" lean-forward="true" selection-end-line="253" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="561">
+          <caret line="315" column="18" lean-forward="true" selection-start-line="315" selection-start-column="18" selection-end-line="315" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#106#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="56" column="88" selection-start-line="56" selection-start-column="88" selection-end-line="56" selection-end-column="88" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

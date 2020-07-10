@@ -19,6 +19,8 @@ if not sys.warnoptions:
 
 app = Flask(__name__, instance_relative_config=True)
 app.config['DEBUG'] = True
+
+
 # app.config['SECRET_KEY'] = 'hcihkust'
 
 # TEMPData = pd.DataFrame()
@@ -63,48 +65,6 @@ def create_interaction(conn, interaction):
     return cur.lastrowid
 
 
-def create_action(conn, action):
-    """
-    Create a new task
-    :param conn:
-    :param task:
-    :return:
-    """
-    sql = ''' INSERT INTO actions (id, name, freq, child, parent)
-              VALUES(?, ?, ?, ?, ?) '''
-    cur = conn.cursor()
-    cur.execute(sql, action)
-    return cur.lastrowid
-
-
-def create_entity(conn, entity):
-    """
-    Create a new task
-    :param conn:
-    :param task:
-    :return:
-    """
-    sql = ''' INSERT INTO entities (id, name, freq, child, parent)
-              VALUES(?, ?, ?, ?, ?) '''
-    cur = conn.cursor()
-    cur.execute(sql, entity)
-    return cur.lastrowid
-
-
-def create_meaning(conn, meaning):
-    """
-    Create a new task
-    :param conn:
-    :param task:
-    :return:
-    """
-    sql = ''' INSERT INTO meanings (id, name, freq, parent)
-              VALUES(?, ?, ?, ?) '''
-    cur = conn.cursor()
-    cur.execute(sql, meaning)
-    return cur.lastrowid
-
-
 def create_relation(conn, relation):
     """
     Create a new task
@@ -145,6 +105,26 @@ def create_history(conn, item):
     cur = conn.cursor()
     cur.execute(sql, item)
     return cur.lastrowid
+
+
+# return suggest keywords based on input: a list of string
+def suggestKeayword(input):
+    print(input)
+    if input == "test":
+        keywordlist = ['Key word 1', 'Key word 2', 'Key word 3', 'Key word 4']
+    else:
+        keywordlist = ['Key word 1', 'Key word 2', 'Key word 3', 'Key word 4', 'test']
+    return keywordlist
+
+
+# return related images based on input: a list of image ID
+def searchImage(input):
+    print(input)
+    if input == "test":
+        imagelist = ["1.jpeg", "2.jpeg", "3.jpeg", "4.jpeg"]
+    else:
+        imagelist = ["3.jpeg", "4.jpeg", "5.jpeg", "6.jpeg"]
+    return imagelist
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -311,9 +291,27 @@ def index():
     #     print("Error! cannot create the database connection.")
     # message = {'content': 'Welcome to Metaphoriaction!',
     #            'type': 1}
-    print('hello')
+    # print('hello')
     message = 'OK'
     return render_template('index.html', message=message)
+
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    search = request.form['search']
+    keyword = suggestKeayword(search)
+    image = searchImage(search)
+    message = 'OK'
+    return render_template('index.html', keyword=keyword, image=image, message=message)
+
+
+@app.route('/redir/<i>')
+def redir(i):
+    keyword = suggestKeayword(i)
+    image = searchImage(i)
+    message = 'OK'
+    return render_template('index.html', keyword=keyword, image=image, message=message)
+
 
 
 # @app.before_request

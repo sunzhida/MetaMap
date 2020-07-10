@@ -31,10 +31,10 @@
                 <h3 class="masthead-brand">
                     <a href="/">MetaBoard</a>
                 </h3>
-                <nav class="nav nav-masthead justify-content-center">
-                    <a class="nav-link active" href="/">Result</a>
-                    <a class="nav-link" href="#">About</a>
-                </nav>
+                <!--                <nav class="nav nav-masthead justify-content-center">-->
+                <!--                    <a class="nav-link active" href="/">Result</a>-->
+                <!--                    <a class="nav-link" href="#">About</a>-->
+                <!--                </nav>-->
             </div>
         </header>
 
@@ -42,82 +42,108 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-3">
-                        <div class="card bg-light">
+                        <div class="card bg-light mb-1">
                             <div class="card-body" style="padding-top: 15px; padding-bottom: 6px;">
+                                <p>Searching Box</p>
                                 <small class="text-muted">Please filling in any blanks in the following query. An
                                     example query: "To <b><i>cover</i></b> the device, as to <b><i>grasp</i></b>
                                     <b><i>butterfly</i></b>,
                                     could represent <b><i>love</i></b>".
                                 </small>
-                            </div>
-                            <div>
-                                <form class="input-group" action="" method="post">
-                                    <input id='interaction' type="text" class="form-control"
-                                                                     placeholder="" aria-label="Interaction"
-                                                                     name="interaction">
-                                    <div class="input-group-append"
-                                         style="height: calc(1.5em + 0.75rem + 2px); width: 13%">
-                                        <input style="width: 100%;" class="btn btn-outline-success" type="submit"
-                                               onclick="recordData()"
+                                <form class="input-group" action="/search" method="post">
+                                    <input id="search" type="text" class="form-control" placeholder=""
+                                           aria-label="Search" name="search">
+                                    <div class="input-group-append">
+                                        <input class="btn btn-outline-success" type="submit"
                                                value="Search"/>
                                     </div>
                                 </form>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-9">
-                        <div class="card mb-1">
-                            <div class="card-header">Control Panel</div>
-                            <div class="card-body">
-                                <div id="number" class="text-left">
-                                    <div id="slider" class="mb-1">
-                                        <div id="custom-handle" class="ui-slider-handle"></div>
-                                    </div>
-                                    <div class="text-center">
-                                        <small class="text-muted">Slide the bar to browse the other 50 candidates
-                                        </small>
-                                    </div>
-                                </div>
-                                <hr>
+                        <div class="card bg-light mb-1">
+                            <div class="card-body" style="padding-top: 15px; padding-bottom: 6px;">
+                                <p>Keyword Collection</p>
                                 <div>
-                                    <span>Nodes Browsing History</span>
-                                    <button type="button" class="btn btn-outline-secondary float-right"
-                                            onclick="clearNode()">
-                                        <i class="fas fa-eraser"></i> Clear History
-                                    </button>
-                                </div>
-                                <div id="selected" class="mt-3">
-                                    <div id="i_group">
-                                        <small>Gesture:</small>
-                                    </div>
-                                    <div id="a_group">
-                                        <small>Action:</small>
-                                    </div>
-                                    <div id="e_group">
-                                        <small>Entity:</small>
-                                    </div>
-                                    <div id="m_group">
-                                        <small>Meaning:</small>
-                                    </div>
+                                    {% if keyword|length != 0 %}
+                                    {% for item in keyword %}
+                                    <a href="/redir/{{ item }}" class="badge badge-primary">{{ item }}</a>
+                                    {% endfor %}
+                                    {% else %}
+                                    <p>No Keywords</p>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
                         <div class="card bg-light mb-1">
-                            <div class="card-body" id="filter">
-                                <span style="position: absolute; padding-top: 8px">Node Operation</span>
-                                <div class="btn-group float-right" role="group">
-                                    <button type="button" class="btn btn-outline-secondary" onclick="pinNode()"><i
-                                            class="fas fa-thumbtack"></i> Pin
-                                    </button>
-                                    <button type="button" class="btn btn-outline-secondary" onclick="removeNode()"><i
-                                            class="fas fa-trash-alt"></i> Remove
-                                    </button>
-                                    <button type="button" class="btn btn-outline-secondary" onclick="redoNode()"><i
-                                            class="fas fa-undo"></i> Undo
-                                    </button>
+                            <div class="card-body" style="padding-top: 15px; padding-bottom: 6px;">
+                                <p>Image Collection</p>
+                                <div>
+                                    {% if image|length != 0 %}
+                                    {% for elem in image %}
+                                    <img src="../static/img/{{ elem }}"
+                                         alt="..." class="img-fluid img-thumbnail">
+                                    {% endfor %}
+                                    {% else %}
+                                    <p>No Images</p>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="col-9">
+                        <div class="card mb-1">
+                            <div class="card-header">Canvas</div>
+                            <div class="card-body">
+                                <div id="board"></div>
+                                <!--                                <div id="number" class="text-left">-->
+                                <!--                                    <div id="slider" class="mb-1">-->
+                                <!--                                        <div id="custom-handle" class="ui-slider-handle"></div>-->
+                                <!--                                    </div>-->
+                                <!--                                    <div class="text-center">-->
+                                <!--                                        <small class="text-muted">Slide the bar to browse the other 50 candidates-->
+                                <!--                                        </small>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+                                <!--                                <hr>-->
+                                <!--                                <div>-->
+                                <!--                                    <span>Nodes Browsing History</span>-->
+                                <!--                                    <button type="button" class="btn btn-outline-secondary float-right"-->
+                                <!--                                            onclick="clearNode()">-->
+                                <!--                                        <i class="fas fa-eraser"></i> Clear History-->
+                                <!--                                    </button>-->
+                                <!--                                </div>-->
+                                <!--                                <div id="selected" class="mt-3">-->
+                                <!--                                    <div id="i_group">-->
+                                <!--                                        <small>Gesture:</small>-->
+                                <!--                                    </div>-->
+                                <!--                                    <div id="a_group">-->
+                                <!--                                        <small>Action:</small>-->
+                                <!--                                    </div>-->
+                                <!--                                    <div id="e_group">-->
+                                <!--                                        <small>Entity:</small>-->
+                                <!--                                    </div>-->
+                                <!--                                    <div id="m_group">-->
+                                <!--                                        <small>Meaning:</small>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
+                            </div>
+                        </div>
+                        <!--                        <div class="card bg-light mb-1">-->
+                        <!--                            <div class="card-body" id="filter">-->
+                        <!--                                <span style="position: absolute; padding-top: 8px">Node Operation</span>-->
+                        <!--                                <div class="btn-group float-right" role="group">-->
+                        <!--                                    <button type="button" class="btn btn-outline-secondary" onclick="pinNode()"><i-->
+                        <!--                                            class="fas fa-thumbtack"></i> Pin-->
+                        <!--                                    </button>-->
+                        <!--                                    <button type="button" class="btn btn-outline-secondary" onclick="removeNode()"><i-->
+                        <!--                                            class="fas fa-trash-alt"></i> Remove-->
+                        <!--                                    </button>-->
+                        <!--                                    <button type="button" class="btn btn-outline-secondary" onclick="redoNode()"><i-->
+                        <!--                                            class="fas fa-undo"></i> Undo-->
+                        <!--                                    </button>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
                     </div>
                 </div>
             </div>

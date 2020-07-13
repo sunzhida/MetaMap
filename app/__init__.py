@@ -15,7 +15,7 @@ from werkzeug.security import generate_password_hash
 if not sys.warnoptions:
     warnings.simplefilter("ignore")
 
-# DATABASE = "./database.db"
+DATABASE = "./database.db"
 
 app = Flask(__name__, instance_relative_config=True)
 app.config['DEBUG'] = True
@@ -110,26 +110,85 @@ def create_history(conn, item):
 # return suggest keywords based on input: a list of string
 def suggestKeayword(input):
     print(input)
-    if input == "test":
-        keywordlist = ['Key word 1', 'Key word 2', 'Key word 3', 'Key word 4']
-    else:
-        keywordlist = ['Key word 1', 'Key word 2', 'Key word 3', 'Key word 4', 'test']
+    # if input == "test":
+    #     keywordlist = ['Key word 1', 'Key word 2', 'Key word 3', 'Key word 4']
+    # else:
+    #     keywordlist = ['Key word 1', 'Key word 2', 'Key word 3', 'Key word 4', 'test']
+    conn = create_connection(DATABASE)
+    search_df = pd.read_sql_query("SELECT suggestions from search where keyword == '%s'" % input, conn)
+    keywordlist = eval(search_df.suggestions[0])
+    conn.commit()
+    conn.close()
+
     return keywordlist
 
 
 # return related images based on input: a list of image ID
 def searchImage(input):
-    print(input)
-    if input == "test":
-        imagelist = ["1.jpeg", "2.jpeg", "3.jpeg", "4.jpeg"]
-    else:
-        imagelist = ["3.jpeg", "4.jpeg", "5.jpeg", "6.jpeg"]
+    # print(input)
+    # if input == "test":
+    #     imagelist = ["1.jpeg", "2.jpeg", "3.jpeg", "4.jpeg"]
+    # else:
+    #     imagelist = ["3.jpeg", "4.jpeg", "5.jpeg", "6.jpeg"]
+    conn = create_connection(DATABASE)
+    image_df = pd.read_sql_query("SELECT image_name from images where keyword == '%s'" % input, conn)
+    imagelist = list(image_df.image_name.values)
+    conn.commit()
+    conn.close()
+
     return imagelist
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    # sql_create_sensor_table = """ CREATE TABLE IF NOT EXISTS sensors (
+    RELOAD_DATABASE = False
+    conn = create_connection(DATABASE)
+    cur = conn.cursor()
+    if conn is not None and RELOAD_DATABASE:
+        search_data = pd.read_csv('./data_csv/search_demo.csv')
+        image_data = pd.read_csv('./data_csv/images_demo.csv')
+        search_data.to_sql('search', conn, if_exists='replace', index = False)
+        image_data.to_sql('images', conn, if_exists='replace', index = False)
+    conn.commit()
+    conn.close()
+
+    message = 'OK'
+    return render_template('index.html', message=message)
+
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    search = request.form['search']
+    keyword = suggestKeayword(search)
+    image = searchImage(search)
+    message = 'OK'
+    return render_template('index.html', keyword=keyword, image=image, message=message)
+
+@app.route('/redir/<i>')
+def redir(i):
+    keyword = suggestKeayword(i)
+    image = searchImage(i)
+    message = 'OK'
+    return render_template('index.html', keyword=keyword, image=image, message=message)
+
+
+    # sql_create_search_table = """ CREATE TABLE IF NOT EXISTS search (
+    #                                                image text NOT NULL,
+    #                                                gesture text NOT NULL,
+    #                                                s_id integer NOT NULL,
+    #                                                sensor_id integer NOT NULL,
+    #                                                paper_id integer NOT NULL,
+    #                                                link text NOT NULL,
+    #                                                domain text NOT NULL,
+    #                                                year integer NOT NULL,
+    #                                                author text NOT NULL,
+    #                                                type text NOT NULL,
+    #                                                device text NOT NULL,
+    #                                                sensor text NOT NULL,
+    #                                                algo text NOT NULL
+    #                                            ); """
+
+    # sql_create_image_table = """ CREATE TABLE IF NOT EXISTS sensors (
     #                                                id integer NOT NULL,
     #                                                gesture text NOT NULL,
     #                                                s_id integer NOT NULL,
@@ -292,25 +351,8 @@ def index():
     # message = {'content': 'Welcome to Metaphoriaction!',
     #            'type': 1}
     # print('hello')
-    message = 'OK'
-    return render_template('index.html', message=message)
-
-
-@app.route('/search', methods=['GET', 'POST'])
-def search():
-    search = request.form['search']
-    keyword = suggestKeayword(search)
-    image = searchImage(search)
-    message = 'OK'
-    return render_template('index.html', keyword=keyword, image=image, message=message)
-
-
-@app.route('/redir/<i>')
-def redir(i):
-    keyword = suggestKeayword(i)
-    image = searchImage(i)
-    message = 'OK'
-    return render_template('index.html', keyword=keyword, image=image, message=message)
+    # message = 'OK'
+    # return render_template('index.html', message=message)
 
 
 

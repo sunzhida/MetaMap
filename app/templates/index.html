@@ -80,7 +80,8 @@
                                     {% if image|length != 0 %}
                                     {% for elem in image %}
                                     <img src="../static/img/{{ elem }}"
-                                         alt="..." class="img-fluid img-thumbnail item">
+                                         alt="..." class="img-fluid img-thumbnail item"
+                                         onclick="addImage('../static/img/{{ elem }}')">
                                     {% endfor %}
                                     {% else %}
                                     <p>No Images</p>
@@ -93,7 +94,11 @@
                         <div class="card mb-1">
                             <div class="card-header">Canvas</div>
                             <div class="card-body">
-                                <div id="board"></div>
+                                <div id="board">
+                                    <svg>
+                                        <text x="50" y="50">Please click a image for boarding.</text>
+                                    </svg>
+                                </div>
                                 <!--                                <div id="number" class="text-left">-->
                                 <!--                                    <div id="slider" class="mb-1">-->
                                 <!--                                        <div id="custom-handle" class="ui-slider-handle"></div>-->
@@ -168,10 +173,12 @@
 <script src="../static/js/bootstrap.min.js"></script>
 <script src="../static/js/vendor/jquery-ui.min.js"></script>
 <!--<script src="https://d3js.org/d3.v4.min.js"></script>-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>-->
 <script src="../static/js/vendor/textures.js"></script>
 <script src="../static/js/layout.js"></script>
-<script src="../static/js/tree.js"></script>
+<!--<script src="../static/js/tree.js"></script>-->
+<script src="../static/js/interaction.js"></script>
 <!--<script src="../static/js/sankey.js"></script>-->
 </body>
 </html>

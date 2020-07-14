@@ -31,5 +31,11 @@ function addImage(input) {
         .attr('width', 120)
         .attr('x', width/2)
         .attr('y', height/2)
+        .attr('onclick', 'browseImage("'+input+'")')
         .attr("id", "boarding");
+}
+
+function browseImage(input) {
+    console.log(input);
+
 }

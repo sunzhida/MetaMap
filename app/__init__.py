@@ -116,9 +116,11 @@ def suggestKeayword(input):
     #     keywordlist = ['Key word 1', 'Key word 2', 'Key word 3', 'Key word 4', 'test']
     conn = create_connection(DATABASE)
     search_df = pd.read_sql_query("SELECT suggestions from search where keyword == '%s'" % input, conn)
-    keywordlist = eval(search_df.suggestions[0])
     conn.commit()
     conn.close()
+    keywordlist = search_df.suggestions.values
+    if len(keywordlist) != 0:
+        keywordlist = eval(keywordlist[0])
 
     return keywordlist
 

@@ -1,0 +1,51 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="card bg-light mb-1">
+    <div class="card-body" style="padding-top: 15px; padding-bottom: 6px;">
+        <p>Searching Box</p>
+        <!-- <small class="text-muted">Please filling in any blanks in the following query. An
+            example query: "To <b><i>cover</i></b> the device, as to <b><i>grasp</i></b>
+            <b><i>butterfly</i></b>,
+            could represent <b><i>love</i></b>".
+        </small> -->
+        <form class="input-group" action="/search" method="post">
+            <input id="search" type="text" class="form-control" placeholder=""
+                   aria-label="Search" name="search">
+            <div class="input-group-append">
+                <input class="btn btn-outline-success" type="submit"
+                       value="Search"/>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="card bg-light mb-1">
+    <div class="card-body" style="padding-top: 15px; padding-bottom: 6px;">
+        <p>Keyword Collection</p>
+        <div>
+            {% if keyword|length != 0 %}
+            {% for item in keyword %}
+            <a href="/redir/{{ item }}" class="badge badge-primary">{{ item }}</a>
+            {% endfor %}
+            {% else %}
+            <p>No Keywords</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<div class="card bg-light mb-1">
+    <div class="card-body" style="padding-top: 15px; padding-bottom: 6px;">
+        <p>Image Collection</p>
+        <div class="wrapper">
+            {% if image|length != 0 %}
+            {% for elem in image %}
+            <img src="../static/img/{{ elem }}"
+                 alt="..." class="img-fluid img-thumbnail item"
+                 onclick="addImage('../static/img/{{ elem }}')">
+            {% endfor %}
+            {% else %}
+            <p>No Images</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

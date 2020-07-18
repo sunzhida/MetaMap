@@ -16,6 +16,28 @@ let height = h - margin.top - margin.bottom;
 //     .attr("transform", "translate("
 //         + margin.left + "," + margin.top + ")");
 
+// $("#submit").click(function () {
+//     let text = $("#search").val();
+//     console.log(text);
+//     // $.ajax({
+//     //     url: "/search",
+//     //     type: "get",
+//     //     data: {'data': text},
+//     //     success: function (response) {
+//     //         console.log(response);
+//     //     },
+//     //     error: function (xhr) {
+//     //         //Do Something to handle error
+//     //     }
+//     // });
+// });
+
+function submit() {
+    console.log('hello')
+    let input = document.getElementById("search").value;
+    console.log(input);
+}
+
 
 function addImage(input) {
     console.log(input);
@@ -29,9 +51,9 @@ function addImage(input) {
         .append("image")
         .attr('href', input)
         .attr('width', 120)
-        .attr('x', width/2)
-        .attr('y', height/2)
-        .attr('onclick', 'browseImage("'+input+'")')
+        .attr('x', width / 2)
+        .attr('y', height / 2)
+        .attr('onclick', 'browseImage("' + input + '")')
         .attr("id", "boarding");
 }
 

@@ -67,7 +67,7 @@ function drawImages(i) {
     // console.log(i);
     let ihtml = '';
     for (let e in i) {
-        ihtml = ihtml + '<img src="../static/img/' + i[e] + '" alt="..." class="img-fluid img-thumbnail item" onclick="addImage(\'../static/img/' + i[e] + '\')">'
+        ihtml = ihtml + '<img src="../static/img/' + i[e] + '" alt="..." class="img-fluid img-thumbnail" onclick="addImage(\'../static/img/' + i[e] + '\')">'
     }
     document.getElementById("images").innerHTML = ihtml;
 }

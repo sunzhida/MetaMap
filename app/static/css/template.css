@@ -2,18 +2,8 @@
     width: 388px;
     margin: 0 auto;
     overflow: hidden;
+    column-count: 3;
     padding: 0px 0px 5px 5px;
-}
-
-.wrapper .col {
-    float: left;
-    width: 50%;
-}
-
-.wrapper .col .item {
-    display: block;
-    margin: 5px 5px 0px 0px;
-    padding: 5px;
 }
 
 .node .main {

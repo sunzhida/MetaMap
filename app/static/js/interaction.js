@@ -16,26 +16,60 @@ let height = h - margin.top - margin.bottom;
 //     .attr("transform", "translate("
 //         + margin.left + "," + margin.top + ")");
 
-// $("#submit").click(function () {
-//     let text = $("#search").val();
-//     console.log(text);
-//     // $.ajax({
-//     //     url: "/search",
-//     //     type: "get",
-//     //     data: {'data': text},
-//     //     success: function (response) {
-//     //         console.log(response);
-//     //     },
-//     //     error: function (xhr) {
-//     //         //Do Something to handle error
-//     //     }
-//     // });
-// });
-
 function submit() {
-    console.log('hello')
     let input = document.getElementById("search").value;
-    console.log(input);
+    $.ajax({
+        url: "/search/" + input,
+        type: "get",
+        data: input,
+        success: function (response) {
+            let re = JSON.parse(response);
+            let keywords = re['keywords'];
+            let images = re['images'];
+            drawKeywords(keywords);
+            drawImages(images);
+        },
+        error: function (xhr) {
+            //Do Something to handle error
+        }
+    });
+}
+
+function resubmit(i) {
+    let input = i.innerHTML;
+    $.ajax({
+        url: "/search/" + input,
+        type: "get",
+        data: input,
+        success: function (response) {
+            let re = JSON.parse(response);
+            let keywords = re['keywords'];
+            let images = re['images'];
+            drawKeywords(keywords);
+            drawImages(images);
+        },
+        error: function (xhr) {
+            //Do Something to handle error
+        }
+    });
+}
+
+function drawKeywords(i) {
+    // console.log(i);
+    let khtml = '';
+    for (let e in i) {
+        khtml = khtml + '<span class="badge badge-primary" type="button" onclick="resubmit(this)">' + i[e] + '</span> '
+    }
+    document.getElementById("keywords").innerHTML = khtml;
+}
+
+function drawImages(i) {
+    // console.log(i);
+    let ihtml = '';
+    for (let e in i) {
+        ihtml = ihtml + '<img src="../static/img/' + i[e] + '" alt="..." class="img-fluid img-thumbnail item" onclick="addImage(\'../static/img/' + i[e] + '\')">'
+    }
+    document.getElementById("images").innerHTML = ihtml;
 }
 
 

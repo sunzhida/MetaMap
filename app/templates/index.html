@@ -83,35 +83,51 @@
                     </div>
                     <div class="col-9">
                         <div class="card mb-1">
-                            <div class="card-header">Canvas</div>
+                            <div class="card-header container-fluid">
+                                <span class="align-middle" style="float: left;">Canvas</span>
+                                <div class="btn-toolbar" role="toolbar" style="float: right;" aria-label="Toolbar with button groups">
+                                    <div class="btn-group btn-group-sm mr-2" role="toolbar" style="float: right;"
+                                         aria-label="Toolbar with button groups">
+                                        <button class="btn btn-outline-dark" id="clear" onclick="clear()">Clear
+                                        </button>
+                                    </div>
+                                    <div class="btn-group btn-group-sm" role="toolbar"
+                                         aria-label="Toolbar with button groups">
+                                        <button class="btn btn-outline-dark" id="zoomIn" onclick="zoomIn()">Zoom In
+                                        </button>
+                                        <button class="btn btn-outline-dark" id="zoomOut" onclick="zoomOut()">Zoom Out
+                                        </button>
+                                        <button class="btn btn-outline-dark" id="moveLeft" onclick="moveDrawLeft()">Move
+                                            left
+                                        </button>
+                                        <button class="btn btn-outline-dark" id="moveRight" onclick="moveDrawRight()">
+                                            Move
+                                            right
+                                        </button>
+                                        <button class="btn btn-outline-dark" id="moveTop" onclick="moveDrawTop()">Move
+                                            top
+                                        </button>
+                                        <button class="btn btn-outline-dark" id="moveBottom" onclick="moveDrawBottom()">
+                                            Move
+                                            bottom
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="card-body">
                                 <div id="board">
-                                    <svg>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="600" height="200">
-                                            <foreignObject x="50" y="50" width="600" height="100">
-                                                <div xmlns="http://www.w3.org/1999/xhtml">Please click a image for boarding.</div>
-                                            </foreignObject>
-                                        </svg>
-                                    </svg>
+<!--                                    <svg id="init">-->
+<!--                                        <svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" id="init-sub">-->
+<!--                                            <foreignObject x="50" y="50" width="600" height="100">-->
+<!--                                                <div xmlns="http://www.w3.org/1999/xhtml">Please click a image for-->
+<!--                                                    boarding.-->
+<!--                                                </div>-->
+<!--                                            </foreignObject>-->
+<!--                                        </svg>-->
+<!--                                    </svg>-->
                                 </div>
                             </div>
                         </div>
-                        <!--                        <div class="card bg-light mb-1">-->
-                        <!--                            <div class="card-body" id="filter">-->
-                        <!--                                <span style="position: absolute; padding-top: 8px">Node Operation</span>-->
-                        <!--                                <div class="btn-group float-right" role="group">-->
-                        <!--                                    <button type="button" class="btn btn-outline-secondary" onclick="pinNode()"><i-->
-                        <!--                                            class="fas fa-thumbtack"></i> Pin-->
-                        <!--                                    </button>-->
-                        <!--                                    <button type="button" class="btn btn-outline-secondary" onclick="removeNode()"><i-->
-                        <!--                                            class="fas fa-trash-alt"></i> Remove-->
-                        <!--                                    </button>-->
-                        <!--                                    <button type="button" class="btn btn-outline-secondary" onclick="redoNode()"><i-->
-                        <!--                                            class="fas fa-undo"></i> Undo-->
-                        <!--                                    </button>-->
-                        <!--                                </div>-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
                     </div>
                 </div>
             </div>
@@ -137,7 +153,7 @@
 <script src="../static/js/bootstrap.min.js"></script>
 <script src="../static/js/vendor/jquery-ui.min.js"></script>
 <!--<script src="https://d3js.org/d3.v4.min.js"></script>-->
-<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
 <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>-->
 <script src="../static/js/vendor/textures.js"></script>
 <!--<script src="../static/js/layout.js"></script>-->

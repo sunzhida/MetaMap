@@ -5,18 +5,39 @@ const margin = {top: 10, right: 20, bottom: 10, left: 20};
 let width = w - margin.right - margin.left;
 let height = h - margin.top - margin.bottom;
 
+
+let canvas = d3.select("#board")
+    .attr('width', width)
+    .attr('height', height)
+    .append("svg")
+    .attr('viewBox', '0 0 ' + width + ' ' + height)
+    .attr('xmlns', 'http://www.w3.org/2000/svg')
+    .attr("width", width + margin.right + margin.left)
+    .attr("height", height + margin.top + margin.bottom);
+let container = canvas.append('g');
+canvas.append('text')
+    .attr('x', width/2-50)
+    .attr('y', 100)
+    .text('Please click a image for boarding.');
+
 let imageID = 0;
-
-
-// append the svg object to the body of the page
-// appends a 'group' element to 'svg'
-// moves the 'group' element to the top left margin
-// let svg = d3.select("#board").append("svg")
-//     .attr("width", width + margin.right + margin.left)
-//     .attr("height", height + margin.top + margin.bottom)
-//     .append("g")
-//     .attr("transform", "translate("
-//         + margin.left + "," + margin.top + ")");
+let MAX_ZOOM_IN = 2.0;
+let MAX_ZOOM_OUT = 0.2;
+let zoomStep = 0.2;
+let actualZoomLevel = 1.0;
+let MOVE_STEP = 100;
+//Create the zoom behavior to set for the draw
+let zoom = d3.behavior.zoom().scaleExtent([MAX_ZOOM_OUT, MAX_ZOOM_IN]).on('zoom', zoomed);
+//Create the drag and drop behavior to set for the objects crated
+let drag = d3.behavior.drag()
+    .origin(function (d) {
+        return d;
+    })
+    .on("dragstart", dragstarted)
+    .on("drag", dragged);
+//Set the zoom behavior on the container variable (the draw), disable mousedown event for the zoom and set the function to call on the double click	event
+container.call(zoom);
+container.call(drag);
 
 function submit() {
     let input = document.getElementById("search").value;
@@ -74,18 +95,22 @@ function drawImages(i) {
     document.getElementById("images").innerHTML = ihtml;
 }
 
-
 function addImage(input) {
     let imageWidth = 240;
     console.log(input);
-    d3.select("#board").select("svg").remove();
-    let bg = d3.select("#board").append("svg")
-        .attr('viewBox', '0 0 ' + width + ' ' + height)
-        .attr('xmlns', 'http://www.w3.org/2000/svg')
-        // .attr('xmlns:xhtml', 'http://www.w3.org/1999/xhtml')
-        .attr("width", width + margin.right + margin.left)
-        .attr("height", height + margin.top + margin.bottom)
-    let buttons = bg.append("foreignObject")
+    // console.log(d3.select('#init'));
+    canvas.select('text').remove();
+    // let bg = canvas.append("svg")
+    //     .attr('viewBox', '0 0 ' + width + ' ' + height)
+    //     .attr('xmlns', 'http://www.w3.org/2000/svg')
+    //     .attr("width", width + margin.right + margin.left)
+    //     .attr("height", height + margin.top + margin.bottom);
+    let group = container.append("g")
+        .attr("transform", "translate("
+            + margin.left + "," + margin.top + ")")
+        .attr('id', 'image_' + imageID)
+        .classed('draggable', true);
+    let buttons = group.append("foreignObject")
         .attr('x', width / 2 - imageWidth / 2)
         .attr('y', height / 2 - imageWidth / 2 - 40)
         .attr('width', 240)
@@ -112,47 +137,35 @@ function addImage(input) {
         .attr('id', 'remove_' + imageID)
         .attr('onclick', 'remove(' + imageID + ')')
         .html('remove');
-    let group = bg.append("g")
-        .attr("transform", "translate("
-            + margin.left + "," + margin.top + ")")
-        .attr('onclick', 'browseImage("' + input + ',' + imageID + '")')
-        .attr('id', 'image_' + imageID);
     group.append("image")
         .attr('href', input)
         .attr('width', imageWidth)
         .attr('x', width / 2 - imageWidth / 2)
         .attr('y', height / 2 - imageWidth / 2)
+        .attr('onmouseup', 'browseImage("' + input + ',' + imageID + '")')
         .attr("id", "boarding");
     imageID += 1;
 }
 
-let drag = d3.drag()
-    .on("drag", function (d, i) {
-        d.x += d3.event.dx;
-        d.y += d3.event.dy;
-        d3.select(this).attr("transform", function (d, i) {
-            return "translate(" + [d.x, d.y] + ")"
-        })
-    });
+//Function called on the zoom event. It translate the draw on the zoommed point and scale with a certain factor
+function zoomed() {
+    container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+}
 
+//Called when drag event starts. It stop the propagation of the click event
 function dragstarted(d) {
-    d3.select(this).raise().attr("stroke", "black");
+    d3.event.sourceEvent.stopPropagation();
 }
 
+//Called when the drag event occurs (object should be moved)
 function dragged(d) {
-    d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+    d.x = d3.event.x;
+    d.y = d3.event.y;
+    //Translate the object on the actual moved point
+    d3.select(this).attr({
+        transform: "translate(" + d.x + "," + d.y + ")"
+    });
 }
-
-function dragended(d) {
-    d3.select(this).attr("stroke", null);
-}
-
-//
-//   return d3.drag()
-//       .on("start", dragstarted)
-//       .on("drag", dragged)
-//       .on("end", dragended);
-// }
 
 // click on the image
 function browseImage(input) {
@@ -167,6 +180,57 @@ function browseImage(input) {
     } else {
         popup.style.display = "none";
     }
+}
+
+function clear() {
+    canvas.select('svg').remove();
+}
+
+function zoomIn() {
+    //Calculate and set the new zoom level
+    actualZoomLevel = roundFloat(parseFloat(actualZoomLevel) + parseFloat(zoomStep));
+    zoom.scale(actualZoomLevel);
+    //Get the actual position of the container
+    let xPosition = d3.transform(canvas.attr("transform")).translate[0];
+    let yPosition = d3.transform(canvas.attr("transform")).translate[1];
+    //Esecute the transformation setting the actual position and the new zoom level
+    container.attr("transform", "translate(" + xPosition + ", " + yPosition + ")scale(" + zoom.scale() + ")");
+}
+
+function zoomOut() {
+    actualZoomLevel = roundFloat(parseFloat(actualZoomLevel) - parseFloat(zoomStep));
+    zoom.scale(actualZoomLevel);
+    let xPosition = d3.transform(canvas.attr("transform")).translate[0];
+    let yPosition = d3.transform(canvas.attr("transform")).translate[1];
+    canvas.attr("transform", "translate(" + xPosition + ", " + yPosition + ")scale(" + zoom.scale() + ")");
+}
+
+function moveDrawLeft() {
+    let xPosition = d3.transform(canvas.attr("transform")).translate[0];
+    let yPosition = d3.transform(canvas.attr("transform")).translate[1];
+    canvas.attr("transform", "translate(" + (xPosition - MOVE_STEP) + ", " + yPosition + ")scale(" + zoom.scale() + ")");
+}
+
+function moveDrawRight() {
+    let xPosition = d3.transform(canvas.attr("transform")).translate[0];
+    let yPosition = d3.transform(canvas.attr("transform")).translate[1];
+    canvas.attr("transform", "translate(" + (xPosition + MOVE_STEP) + ", " + yPosition + ")scale(" + zoom.scale() + ")");
+}
+
+function moveDrawTop() {
+    let xPosition = d3.transform(canvas.attr("transform")).translate[0];
+    let yPosition = d3.transform(canvas.attr("transform")).translate[1];
+    canvas.attr("transform", "translate(" + xPosition + ", " + (yPosition - MOVE_STEP) + ")scale(" + zoom.scale() + ")");
+}
+
+function moveDrawBottom() {
+    let xPosition = d3.transform(canvas.attr("transform")).translate[0];
+    let yPosition = d3.transform(canvas.attr("transform")).translate[1];
+    canvas.attr("transform", "translate(" + xPosition + ", " + (yPosition + MOVE_STEP) + ")scale(" + zoom.scale() + ")");
+}
+
+function roundFloat(value) {
+    return value.toFixed(2);
 }
 
 function refresh(i) {

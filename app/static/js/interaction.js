@@ -25,19 +25,20 @@ let MAX_ZOOM_IN = 2.0;
 let MAX_ZOOM_OUT = 0.2;
 let zoomStep = 0.2;
 let actualZoomLevel = 1.0;
-let MOVE_STEP = 100;
+let MOVE_STEP = 10;
 //Create the zoom behavior to set for the draw
 let zoom = d3.behavior.zoom().scaleExtent([MAX_ZOOM_OUT, MAX_ZOOM_IN]).on('zoom', zoomed);
 //Create the drag and drop behavior to set for the objects crated
 let drag = d3.behavior.drag()
     .origin(function (d) {
+        console.log(d);
         return d;
     })
     .on("dragstart", dragstarted)
     .on("drag", dragged);
 //Set the zoom behavior on the container variable (the draw), disable mousedown event for the zoom and set the function to call on the double click	event
 container.call(zoom);
-container.call(drag);
+container.selectAll(".draggable").call(drag);
 
 function submit() {
     let input = document.getElementById("search").value;
@@ -154,6 +155,7 @@ function zoomed() {
 
 //Called when drag event starts. It stop the propagation of the click event
 function dragstarted(d) {
+    console.log(d);
     d3.event.sourceEvent.stopPropagation();
 }
 
@@ -161,6 +163,8 @@ function dragstarted(d) {
 function dragged(d) {
     d.x = d3.event.x;
     d.y = d3.event.y;
+    console.log(d);
+    console.log(this);
     //Translate the object on the actual moved point
     d3.select(this).attr({
         transform: "translate(" + d.x + "," + d.y + ")"
@@ -169,9 +173,9 @@ function dragged(d) {
 
 // click on the image
 function browseImage(input) {
-    console.log(input);
+    // console.log(input);
     let res = input.split(',');
-    console.log(res);
+    // console.log(res);
     let image_url = res[0];
     let image_id = res[1];
     let popup = document.getElementById('button_' + image_id);

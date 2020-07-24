@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="47634e43-10ee-4812-ae17-2a32f46f168c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/static/css/template.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/template.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/static/js/interaction.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/interaction.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -55,8 +53,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/static/js/interaction.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-68">
-              <caret line="107" column="25" selection-start-line="107" selection-start-column="25" selection-end-line="107" selection-end-column="25" />
+            <state relative-caret-position="739">
+              <caret line="228" column="13" selection-start-line="228" selection-start-column="13" selection-end-line="228" selection-end-column="13" />
               <folding>
                 <element signature="n#!!block;n#submit#0" />
                 <element signature="n#!!block;n#resubmit#0" />
@@ -105,6 +103,7 @@
       <find>popup</find>
       <find>var</find>
       <find>bg.</find>
+      <find>container</find>
     </findStrings>
     <replaceStrings>
       <replace>bg.</replace>
@@ -135,7 +134,7 @@
     <option name="x" value="1918" />
     <option name="y" value="-571" />
     <option name="width" value="1090" />
-    <option name="height" value="1000" />
+    <option name="height" value="1223" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -227,15 +226,15 @@
       <workItem from="1595297795284" duration="599000" />
       <workItem from="1595470186203" duration="6364000" />
       <workItem from="1595557321086" duration="1214000" />
-      <workItem from="1595566074097" duration="18698000" />
+      <workItem from="1595566074097" duration="19092000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="71504000" />
+    <option name="totallyTimeSpent" value="71898000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1918" y="-571" width="1090" height="1000" extended-state="0" />
+    <frame x="1918" y="-571" width="1090" height="1223" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16796117" />
@@ -351,8 +350,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/static/js/interaction.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-68">
-          <caret line="107" column="25" selection-start-line="107" selection-start-column="25" selection-end-line="107" selection-end-column="25" />
+        <state relative-caret-position="739">
+          <caret line="228" column="13" selection-start-line="228" selection-start-column="13" selection-end-line="228" selection-end-column="13" />
           <folding>
             <element signature="n#!!block;n#submit#0" />
             <element signature="n#!!block;n#resubmit#0" />

@@ -191,8 +191,8 @@ function zoomIn() {
     actualZoomLevel = roundFloat(parseFloat(actualZoomLevel) + parseFloat(zoomStep));
     zoom.scale(actualZoomLevel);
     //Get the actual position of the container
-    let xPosition = d3.transform(canvas.attr("transform")).translate[0];
-    let yPosition = d3.transform(canvas.attr("transform")).translate[1];
+    let xPosition = d3.transform(container.attr("transform")).translate[0];
+    let yPosition = d3.transform(container.attr("transform")).translate[1];
     //Esecute the transformation setting the actual position and the new zoom level
     container.attr("transform", "translate(" + xPosition + ", " + yPosition + ")scale(" + zoom.scale() + ")");
 }
@@ -200,33 +200,33 @@ function zoomIn() {
 function zoomOut() {
     actualZoomLevel = roundFloat(parseFloat(actualZoomLevel) - parseFloat(zoomStep));
     zoom.scale(actualZoomLevel);
-    let xPosition = d3.transform(canvas.attr("transform")).translate[0];
-    let yPosition = d3.transform(canvas.attr("transform")).translate[1];
-    canvas.attr("transform", "translate(" + xPosition + ", " + yPosition + ")scale(" + zoom.scale() + ")");
+    let xPosition = d3.transform(container.attr("transform")).translate[0];
+    let yPosition = d3.transform(container.attr("transform")).translate[1];
+    container.attr("transform", "translate(" + xPosition + ", " + yPosition + ")scale(" + zoom.scale() + ")");
 }
 
 function moveDrawLeft() {
-    let xPosition = d3.transform(canvas.attr("transform")).translate[0];
-    let yPosition = d3.transform(canvas.attr("transform")).translate[1];
-    canvas.attr("transform", "translate(" + (xPosition - MOVE_STEP) + ", " + yPosition + ")scale(" + zoom.scale() + ")");
+    let xPosition = d3.transform(container.attr("transform")).translate[0];
+    let yPosition = d3.transform(container.attr("transform")).translate[1];
+    container.attr("transform", "translate(" + (xPosition - MOVE_STEP) + ", " + yPosition + ")scale(" + zoom.scale() + ")");
 }
 
 function moveDrawRight() {
-    let xPosition = d3.transform(canvas.attr("transform")).translate[0];
-    let yPosition = d3.transform(canvas.attr("transform")).translate[1];
-    canvas.attr("transform", "translate(" + (xPosition + MOVE_STEP) + ", " + yPosition + ")scale(" + zoom.scale() + ")");
+    let xPosition = d3.transform(container.attr("transform")).translate[0];
+    let yPosition = d3.transform(container.attr("transform")).translate[1];
+    container.attr("transform", "translate(" + (xPosition + MOVE_STEP) + ", " + yPosition + ")scale(" + zoom.scale() + ")");
 }
 
 function moveDrawTop() {
-    let xPosition = d3.transform(canvas.attr("transform")).translate[0];
-    let yPosition = d3.transform(canvas.attr("transform")).translate[1];
-    canvas.attr("transform", "translate(" + xPosition + ", " + (yPosition - MOVE_STEP) + ")scale(" + zoom.scale() + ")");
+    let xPosition = d3.transform(container.attr("transform")).translate[0];
+    let yPosition = d3.transform(container.attr("transform")).translate[1];
+    container.attr("transform", "translate(" + xPosition + ", " + (yPosition - MOVE_STEP) + ")scale(" + zoom.scale() + ")");
 }
 
 function moveDrawBottom() {
-    let xPosition = d3.transform(canvas.attr("transform")).translate[0];
-    let yPosition = d3.transform(canvas.attr("transform")).translate[1];
-    canvas.attr("transform", "translate(" + xPosition + ", " + (yPosition + MOVE_STEP) + ")scale(" + zoom.scale() + ")");
+    let xPosition = d3.transform(container.attr("transform")).translate[0];
+    let yPosition = d3.transform(container.attr("transform")).translate[1];
+    container.attr("transform", "translate(" + xPosition + ", " + (yPosition + MOVE_STEP) + ")scale(" + zoom.scale() + ")");
 }
 
 function roundFloat(value) {

@@ -98,16 +98,19 @@ function addImage(input) {
         .attr('class', 'btn btn-outline-primary hide')
         .attr('type', 'button')
         .attr('id', 'refresh_' + imageID)
+        .attr('onclick', 'refresh(' + imageID + ')')
         .html('refresh');
     buttons.append('button')
         .attr('class', 'btn btn-outline-success hide')
         .attr('type', 'button')
         .attr('id', 'explore_' + imageID)
+        .attr('onclick', 'explore(' + imageID + ')')
         .html('explore');
     buttons.append('button')
         .attr('class', 'btn btn-outline-danger hide')
         .attr('type', 'button')
         .attr('id', 'remove_' + imageID)
+        .attr('onclick', 'remove(' + imageID + ')')
         .html('remove');
     let group = bg.append("g")
         .attr("transform", "translate("
@@ -132,19 +135,18 @@ let drag = d3.drag()
         })
     });
 
-// let drag = {
-//
-//   function dragstarted(d) {
-//     d3.select(this).raise().attr("stroke", "black");
-//   }
-//
-//   function dragged(d) {
-//     d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
-//   }
-//
-//   function dragended(d) {
-//     d3.select(this).attr("stroke", null);
-//   }
+function dragstarted(d) {
+    d3.select(this).raise().attr("stroke", "black");
+}
+
+function dragged(d) {
+    d3.select(this).attr("cx", d.x = d3.event.x).attr("cy", d.y = d3.event.y);
+}
+
+function dragended(d) {
+    d3.select(this).attr("stroke", null);
+}
+
 //
 //   return d3.drag()
 //       .on("start", dragstarted)
@@ -165,5 +167,17 @@ function browseImage(input) {
     } else {
         popup.style.display = "none";
     }
+}
+
+function refresh(i) {
+    console.log(i);
+}
+
+function explore(i) {
+    console.log(i);
+}
+
+function remove(i) {
+    console.log(i);
 }
 

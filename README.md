@@ -6,11 +6,11 @@
 input: img_name
 return: a dictionary
 {
-  input: "01.jpg"
-  semantic: ["01.jpg", "01.jpg", "01.jpg", ...]
-  color: ["01.jpg", "01.jpg", "01.jpg", ...]
-  shape: ["01.jpg", "01.jpg", "01.jpg", ...]
-  status: ........
+  "input": "01.jpg"
+  "semantic: ["01.jpg", "01.jpg", "01.jpg", ...]
+  "color": ["01.jpg", "01.jpg", "01.jpg", ...]
+  "shape": ["01.jpg", "01.jpg", "01.jpg", ...]
+  "status": ........
   ......
 }
 ```

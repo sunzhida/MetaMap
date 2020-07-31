@@ -246,6 +246,7 @@ function explore(i) {
 }
 
 function remove(i) {
-    console.log(i);
+    let g_id = "#image_" + i;
+    d3.select(g_id).remove();
 }
 

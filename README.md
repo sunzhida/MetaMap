@@ -22,5 +22,13 @@ return: a dictionary
 
 ## Functions
 
-### Left
+### Left control panel
+
+1. Searching (done)
+2. Keywords history
+3. Color palette
+
+### Right mood-boarding area
+
+
 

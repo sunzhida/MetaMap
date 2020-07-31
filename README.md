@@ -25,12 +25,16 @@ return: a dictionary
 ### Left control panel
 
 1. Searching (done)
+  1). searching keywords with keywords
+  2). searching images with keywords
 2. Keywords history
 3. Color palette
 
 ### Right mood-boarding area
 
 1. Expand/Explore the mind map
+  1). searching images with images
+  2). searching keywords with images
 2. Iteraction history
 
 

@@ -30,5 +30,8 @@ return: a dictionary
 
 ### Right mood-boarding area
 
+1. Expand/Explore the mind map
+2. Iteraction history
+
 
 

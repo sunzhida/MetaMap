@@ -19,3 +19,8 @@ return: a dictionary
 
 ### History Record
 * 保留搜索记录（包括keyword collection的点击结果和search input）
+
+## Functions
+
+### Left
+

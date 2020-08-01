@@ -24,7 +24,7 @@ var myZoom = d3.behavior.zoom()
 var container = d3.select("#board").append("svg")
     .attr("width", diameter)
     .attr("height", height)
-    .call(myZoom);
+    .call(myZoom);z
 
 
 //I am centering my node here, but if I pan the node it jump

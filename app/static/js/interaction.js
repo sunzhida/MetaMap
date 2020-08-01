@@ -5,6 +5,10 @@ const margin = {top: 10, right: 20, bottom: 10, left: 20};
 let width = w - margin.right - margin.left;
 let height = h - margin.top - margin.bottom;
 
+let imageID = 0;
+let MAX_ZOOM_IN = 10;
+let MAX_ZOOM_OUT = 0.5;
+let zoom = d3.behavior.zoom().scaleExtent([MAX_ZOOM_OUT, MAX_ZOOM_IN]).on('zoom', zoomed);
 
 let canvas = d3.select("#board")
     .attr('width', width)
@@ -13,32 +17,15 @@ let canvas = d3.select("#board")
     .attr('viewBox', '0 0 ' + width + ' ' + height)
     .attr('xmlns', 'http://www.w3.org/2000/svg')
     .attr("width", width + margin.right + margin.left)
-    .attr("height", height + margin.top + margin.bottom);
-let container = canvas.append('g');
+    .attr("height", height + margin.top + margin.bottom)
+    .call(zoom);
+let container = canvas.append('g')
+    .attr('width', '100%')
+    .attr('height', '100%');
 canvas.append('text')
-    .attr('x', width/2-50)
+    .attr('x', width / 2 - 50)
     .attr('y', 100)
     .text('Please click a image for boarding.');
-
-let imageID = 0;
-let MAX_ZOOM_IN = 2.0;
-let MAX_ZOOM_OUT = 0.2;
-let zoomStep = 0.2;
-let actualZoomLevel = 1.0;
-let MOVE_STEP = 10;
-//Create the zoom behavior to set for the draw
-let zoom = d3.behavior.zoom().scaleExtent([MAX_ZOOM_OUT, MAX_ZOOM_IN]).on('zoom', zoomed);
-//Create the drag and drop behavior to set for the objects crated
-let drag = d3.behavior.drag()
-    .origin(function (d) {
-        console.log(d);
-        return d;
-    })
-    .on("dragstart", dragstarted)
-    .on("drag", dragged);
-//Set the zoom behavior on the container variable (the draw), disable mousedown event for the zoom and set the function to call on the double click	event
-container.call(zoom);
-container.selectAll(".draggable").call(drag);
 
 function submit() {
     let input = document.getElementById("search").value;
@@ -150,25 +137,7 @@ function addImage(input) {
 
 //Function called on the zoom event. It translate the draw on the zoommed point and scale with a certain factor
 function zoomed() {
-    container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-}
-
-//Called when drag event starts. It stop the propagation of the click event
-function dragstarted(d) {
-    console.log(d);
-    d3.event.sourceEvent.stopPropagation();
-}
-
-//Called when the drag event occurs (object should be moved)
-function dragged(d) {
-    d.x = d3.event.x;
-    d.y = d3.event.y;
-    console.log(d);
-    console.log(this);
-    //Translate the object on the actual moved point
-    d3.select(this).attr({
-        transform: "translate(" + d.x + "," + d.y + ")"
-    });
+    container.attr("transform", "translate(" + (d3.event.translate[0]) + "," + (d3.event.translate[1]) + ")scale(" + d3.event.scale + ")");
 }
 
 // click on the image
@@ -187,62 +156,55 @@ function browseImage(input) {
 }
 
 function clear() {
-    canvas.select('svg').remove();
+    console.log('clear');
+    canvas.selectAll('g').remove();
 }
 
-function zoomIn() {
-    //Calculate and set the new zoom level
-    actualZoomLevel = roundFloat(parseFloat(actualZoomLevel) + parseFloat(zoomStep));
-    zoom.scale(actualZoomLevel);
-    //Get the actual position of the container
-    let xPosition = d3.transform(container.attr("transform")).translate[0];
-    let yPosition = d3.transform(container.attr("transform")).translate[1];
-    //Esecute the transformation setting the actual position and the new zoom level
-    container.attr("transform", "translate(" + xPosition + ", " + yPosition + ")scale(" + zoom.scale() + ")");
+function screenshot() {
+    console.log('screenshot');
 }
 
-function zoomOut() {
-    actualZoomLevel = roundFloat(parseFloat(actualZoomLevel) - parseFloat(zoomStep));
-    zoom.scale(actualZoomLevel);
-    let xPosition = d3.transform(container.attr("transform")).translate[0];
-    let yPosition = d3.transform(container.attr("transform")).translate[1];
-    container.attr("transform", "translate(" + xPosition + ", " + yPosition + ")scale(" + zoom.scale() + ")");
+function printout() {
+    console.log('print out');
 }
 
-function moveDrawLeft() {
-    let xPosition = d3.transform(container.attr("transform")).translate[0];
-    let yPosition = d3.transform(container.attr("transform")).translate[1];
-    container.attr("transform", "translate(" + (xPosition - MOVE_STEP) + ", " + yPosition + ")scale(" + zoom.scale() + ")");
-}
-
-function moveDrawRight() {
-    let xPosition = d3.transform(container.attr("transform")).translate[0];
-    let yPosition = d3.transform(container.attr("transform")).translate[1];
-    container.attr("transform", "translate(" + (xPosition + MOVE_STEP) + ", " + yPosition + ")scale(" + zoom.scale() + ")");
-}
-
-function moveDrawTop() {
-    let xPosition = d3.transform(container.attr("transform")).translate[0];
-    let yPosition = d3.transform(container.attr("transform")).translate[1];
-    container.attr("transform", "translate(" + xPosition + ", " + (yPosition - MOVE_STEP) + ")scale(" + zoom.scale() + ")");
-}
-
-function moveDrawBottom() {
-    let xPosition = d3.transform(container.attr("transform")).translate[0];
-    let yPosition = d3.transform(container.attr("transform")).translate[1];
-    container.attr("transform", "translate(" + xPosition + ", " + (yPosition + MOVE_STEP) + ")scale(" + zoom.scale() + ")");
-}
-
-function roundFloat(value) {
-    return value.toFixed(2);
+function shareto() {
+    console.log('share to');
 }
 
 function refresh(i) {
     console.log(i);
 }
 
+// should give input data
 function explore(i) {
     console.log(i);
+    let d = {
+        'input': '',
+        'semantic': ['000e74ea347f08c0cae2b3cfc4f612cf.jpg', '00a5155ce76792c8aaef4bd67e2d4f44.jpg', '00a8885948a4a3abed0a27480c9f3fa6.png'],
+        'color': ['00ab0fe3d1d76da690d7438117eeea49.jpg', '00e43e295097e2580d0178cb3cadd04b.jpg'],
+        'status': ['00daeeb00b31e6f7fd9bf103a1733560.jpg', '00dddfdfe4ad349925af78c3d04533f9.jpg']
+    };
+    console.log(d);
+    let g_id = "#image_" + i;
+    let x1 = 20, y1 = 10, x2 = 40, y2 = 20;
+    d3.select(g_id)
+        .append('line')
+        .attr('x1', x1)
+        .attr('y1', y1)
+        .attr('x2', x2)
+        .attr('y2', y2)
+        .style('stroke', 'gray')
+        .style('stroke-width', '8')
+        .on('mouseover', function (d) {
+            console.log(d);
+        })
+        .on('mouseout', function (d) {
+            console.log(d);
+        })
+        .on('click', function (d) {
+            console.log(d);
+        });
 }
 
 function remove(i) {

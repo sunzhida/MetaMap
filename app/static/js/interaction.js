@@ -155,9 +155,9 @@ function browseImage(input) {
     }
 }
 
-function clear() {
+function clearboard() {
     console.log('clear');
-    canvas.selectAll('g').remove();
+    container.selectAll('*').remove();
 }
 
 function screenshot() {

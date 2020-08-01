@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47634e43-10ee-4812-ae17-2a32f46f168c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/static/js/interaction.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/interaction.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/static/js/tree.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/tree.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -42,8 +40,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="549">
-              <caret line="99" column="104" selection-start-line="99" selection-start-column="104" selection-end-line="99" selection-end-column="104" />
+            <state relative-caret-position="617">
+              <caret line="90" column="107" selection-start-line="90" selection-start-column="107" selection-end-line="90" selection-end-column="107" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#main#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -58,8 +56,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/static/js/interaction.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="163" column="30" lean-forward="true" selection-start-line="163" selection-start-column="30" selection-end-line="163" selection-end-column="30" />
+            <state relative-caret-position="272">
+              <caret line="159" column="13" selection-start-line="159" selection-start-column="13" selection-end-line="159" selection-end-column="13" />
               <folding>
                 <element signature="n#!!block;n#submit#0" />
                 <element signature="n#!!block;n#resubmit#0" />
@@ -243,12 +241,12 @@
       <workItem from="1595939874031" duration="630000" />
       <workItem from="1596008146605" duration="1185000" />
       <workItem from="1596164904049" duration="4852000" />
-      <workItem from="1596249098029" duration="3528000" />
+      <workItem from="1596249098029" duration="4356000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="85380000" />
+    <option name="totallyTimeSpent" value="86208000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1918" y="-571" width="1090" height="1223" extended-state="0" />
@@ -352,8 +350,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="549">
-          <caret line="99" column="104" selection-start-line="99" selection-start-column="104" selection-end-line="99" selection-end-column="104" />
+        <state relative-caret-position="617">
+          <caret line="90" column="107" selection-start-line="90" selection-start-column="107" selection-end-line="90" selection-end-column="107" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#main#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -366,8 +364,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/static/js/interaction.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="163" column="30" lean-forward="true" selection-start-line="163" selection-start-column="30" selection-end-line="163" selection-end-column="30" />
+        <state relative-caret-position="272">
+          <caret line="159" column="13" selection-start-line="159" selection-start-column="13" selection-end-line="159" selection-end-column="13" />
           <folding>
             <element signature="n#!!block;n#submit#0" />
             <element signature="n#!!block;n#resubmit#0" />

@@ -41,6 +41,32 @@ text {
     font: 16px "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+.scrollable {
+    height: 528px;
+    overflow: auto;
+}
+
+/* width */
+.scrollable::-webkit-scrollbar {
+  height: 6px;
+}
+
+/* Track */
+.scrollable::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 3px grey;
+  border-radius: 6px;
+}
+
+/* Handle */
+.scrollable::-webkit-scrollbar-thumb {
+  background: #007bff;
+  border-radius: 6px;
+}
+
+/* Handle on hover */
+.scrollable::-webkit-scrollbar-thumb:hover {
+  background: #0056b3;
+}
 
 /*!*body {*!*/
 /*!*  height: 100vh;*!*/

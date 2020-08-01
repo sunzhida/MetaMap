@@ -17,7 +17,7 @@ let canvas = d3.select("#board")
     .attr('viewBox', '0 0 ' + width + ' ' + height)
     .attr('xmlns', 'http://www.w3.org/2000/svg')
     .attr("width", width + margin.right + margin.left)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("height", height - 112)
     .call(zoom);
 let container = canvas.append('g')
     .attr('width', '100%')
@@ -84,8 +84,8 @@ function drawImages(i) {
 }
 
 function addImage(input) {
-    let imageWidth = 180;
-    let imagePlace = 20;
+    let imageWidth = 120;
+    let imagePlace = 0;
     console.log(input);
     // console.log(d3.select('#init'));
     canvas.select('text').remove();
@@ -103,12 +103,12 @@ function addImage(input) {
         .attr('href', input)
         .attr('width', imageWidth)
         .attr('x', imagePlace)
-        .attr('y', height / 2 - imageWidth / 2)
+        .attr('y', (height - 112) / 2 - imageWidth / 2)
         .attr('onmouseup', 'browseImage("' + input + ',' + imageID + '")')
-        .attr("id", "boarding");
+        .attr("id", "boarding_" + imageID);
     let buttons = group.append("foreignObject")
-        .attr('x', imagePlace + imageWidth - 62)
-        .attr('y', height / 2 - imageWidth / 2)
+        .attr('x', imagePlace + imageWidth - 61)
+        .attr('y', (height - 112) / 2 - imageWidth / 2)
         .attr('width', 240)
         .attr('height', 40)
         .append('xhtml:div')
@@ -175,8 +175,9 @@ function refresh(i) {
 
 // should give input data
 function explore(i) {
-    let imageWidth = 180;
-
+    let img = document.getElementById("boarding_" + imageID);
+    let imageWidth = img.clientWidth;
+    let imageHeight = img.clientHeight;
     console.log(i);
     let d = {
         'input': '',

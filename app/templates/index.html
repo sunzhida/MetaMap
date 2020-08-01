@@ -68,7 +68,7 @@
                         <div class="card bg-light mb-1">
                             <div class="card-body" style="padding-top: 15px; padding-bottom: 6px;">
                                 <p>Image Collection</p>
-                                <div class="wrapper" id="images">
+                                <div class="wrapper scrollable" id="images">
                                     {% if image|length != 0 %}
                                     {% for elem in image %}
                                     <img src="../static/img/{{ elem }}" alt="..." class="img-fluid img-thumbnail item"

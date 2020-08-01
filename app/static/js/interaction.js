@@ -84,7 +84,8 @@ function drawImages(i) {
 }
 
 function addImage(input) {
-    let imageWidth = 240;
+    let imageWidth = 180;
+    let imagePlace = 20;
     console.log(input);
     // console.log(d3.select('#init'));
     canvas.select('text').remove();
@@ -98,9 +99,16 @@ function addImage(input) {
             + margin.left + "," + margin.top + ")")
         .attr('id', 'image_' + imageID)
         .classed('draggable', true);
+    group.append("image")
+        .attr('href', input)
+        .attr('width', imageWidth)
+        .attr('x', imagePlace)
+        .attr('y', height / 2 - imageWidth / 2)
+        .attr('onmouseup', 'browseImage("' + input + ',' + imageID + '")')
+        .attr("id", "boarding");
     let buttons = group.append("foreignObject")
-        .attr('x', width / 2 - imageWidth / 2)
-        .attr('y', height / 2 - imageWidth / 2 - 40)
+        .attr('x', imagePlace + imageWidth - 62)
+        .attr('y', height / 2 - imageWidth / 2)
         .attr('width', 240)
         .attr('height', 40)
         .append('xhtml:div')
@@ -108,30 +116,19 @@ function addImage(input) {
         .attr('style', 'display: none;')
         .attr('id', 'button_' + imageID);
     buttons.append('button')
-        .attr('class', 'btn btn-outline-primary hide')
-        .attr('type', 'button')
-        .attr('id', 'refresh_' + imageID)
-        .attr('onclick', 'refresh(' + imageID + ')')
-        .html('refresh');
-    buttons.append('button')
-        .attr('class', 'btn btn-outline-success hide')
+        .attr('class', 'btn btn-info btn-sm hide')
         .attr('type', 'button')
         .attr('id', 'explore_' + imageID)
         .attr('onclick', 'explore(' + imageID + ')')
-        .html('explore');
+        .append('i')
+        .attr('class', 'fas fa-arrow-right');
     buttons.append('button')
-        .attr('class', 'btn btn-outline-danger hide')
+        .attr('class', 'btn btn-danger btn-sm hide')
         .attr('type', 'button')
         .attr('id', 'remove_' + imageID)
         .attr('onclick', 'remove(' + imageID + ')')
-        .html('remove');
-    group.append("image")
-        .attr('href', input)
-        .attr('width', imageWidth)
-        .attr('x', width / 2 - imageWidth / 2)
-        .attr('y', height / 2 - imageWidth / 2)
-        .attr('onmouseup', 'browseImage("' + input + ',' + imageID + '")')
-        .attr("id", "boarding");
+        .append('i')
+        .attr('class', 'fas fa-trash-alt');
     imageID += 1;
 }
 
@@ -178,6 +175,8 @@ function refresh(i) {
 
 // should give input data
 function explore(i) {
+    let imageWidth = 180;
+
     console.log(i);
     let d = {
         'input': '',

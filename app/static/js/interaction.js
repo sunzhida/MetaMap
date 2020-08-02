@@ -21,6 +21,7 @@ let canvas = d3.select("#board")
     .attr('id', 'canvas')
     .call(zoom);
 let container = canvas.append('g')
+    .attr('id', '')
     .attr('width', '100%')
     .attr('height', '100%');
 canvas.append('text')
@@ -201,6 +202,10 @@ function explore(i) {
     let y_color = y1;
     let y_shape = y1 + recHeight / 2 + sec;
 
+    // image
+
+
+    // line
     let lineGenerator = d3.svg.line()
         .x(function (d) {
             return d.x;
@@ -211,6 +216,7 @@ function explore(i) {
         .interpolate('bundle');
 
     let path1 = [{'x': x1, 'y': y1}, {'x': x2, 'y': y1}, {'x': x1, 'y': y_semantic}, {'x': x2, 'y': y_semantic}];
+    let path2 = [{'x': x1, 'y': y1}, {'x': x2, 'y': y1}, {'x': x1, 'y': y_color}, {'x': x2, 'y': y_color}];
     let path3 = [{'x': x1, 'y': y1}, {'x': x2, 'y': y1}, {'x': x1, 'y': y_shape}, {'x': x2, 'y': y_shape}];
 
     d3.select(g_id)
@@ -230,11 +236,9 @@ function explore(i) {
         });
 
     d3.select(g_id)
-        .append('line')
-        .attr('x1', x1)
-        .attr('y1', y1)
-        .attr('x2', x2)
-        .attr('y2', y_color)
+        .append('path')
+        .attr('d', lineGenerator(path2))
+        .style('fill', 'none')
         .style('stroke', 'gray')
         .style('stroke-width', '8')
         .on('mouseover', function (d) {

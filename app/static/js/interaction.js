@@ -30,6 +30,7 @@ canvas.append('text')
 
 function submit() {
     let input = document.getElementById("search").value;
+    addAndDrawHistory(input);
     $.ajax({
         url: "/search/" + input,
         type: "get",
@@ -64,6 +65,49 @@ function resubmit(i) {
             //Do Something to handle error
         }
     });
+}
+
+/* Search History */
+var addHistory = (function () {
+    const MAXLEN = 10;
+    let history = [];
+    function _addHistory(value) {
+        const idx = history.indexOf(value);
+        console.log(idx);
+        if (idx < 0) {
+            // 未找到，新插入，删掉旧的
+            history = [value].concat(history.slice(0, MAXLEN - 1));
+            return history;
+        }
+        if (idx === 0) {
+            // 已找到，就是第一个，直接return
+            return history;
+        }
+    
+        // 已找到，在后面，挪到前面
+        history = [value].concat(history.slice(0, idx), history.slice(idx + 1))
+        return history;
+    }
+    return _addHistory;
+})();
+
+function addAndDrawHistory(value) {
+    const history = addHistory(value);
+    const ihtml = history
+        .map(e => 
+            `<span class="badge badge-primary mr-1" type="button" onclick="fillInHistory(this)">${e}</span>`
+        )
+        .join('')
+    document.getElementById("history").innerHTML = ihtml;
+}
+
+function fillInHistory(i) {
+    const value = i.textContent;
+    const input = document.getElementById('search');
+    if (input.value === value) return;
+    input.value = value;
+    addAndDrawHistory(value);
+    resubmit(i);
 }
 
 function drawKeywords(i) {

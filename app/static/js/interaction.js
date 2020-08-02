@@ -219,6 +219,42 @@ function refresh(i) {
     console.log(i);
 }
 
+function addSubImage(x, y, i, input, w, h) {
+    let group = container.append("g")
+        .attr("transform", "translate("
+            + x + "," + y + ")")
+        .attr('id', 'image_' + i)
+        .classed('draggable', true);
+    group.append("image")
+        .attr('href', '../static/img/' + input)
+        .attr('height', h)
+        .attr('onmouseup', 'browseImage("' + input + ',' + i + '")')
+        .attr("id", "boarding_" + i);
+    // let buttons = group.append("foreignObject")
+    //     .attr('x', x + w - 61)
+    //     .attr('y', y)
+    //     .attr('width', imageWidth)
+    //     .attr('height', 30)
+    //     .append('xhtml:div')
+    //     .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+    //     .attr('style', 'display: none;')
+    //     .attr('id', 'button_' + imageID);
+    // buttons.append('button')
+    //     .attr('class', 'btn btn-info btn-sm hide')
+    //     .attr('type', 'button')
+    //     .attr('id', 'explore_' + imageID)
+    //     .attr('onclick', 'explore(' + imageID + ')')
+    //     .append('i')
+    //     .attr('class', 'fas fa-arrow-right');
+    // buttons.append('button')
+    //     .attr('class', 'btn btn-danger btn-sm hide')
+    //     .attr('type', 'button')
+    //     .attr('id', 'remove_' + imageID)
+    //     .attr('onclick', 'remove(' + imageID + ')')
+    //     .append('i')
+    //     .attr('class', 'fas fa-trash-alt');
+}
+
 // should give input data
 function explore(i) {
     // console.log(i);
@@ -247,7 +283,12 @@ function explore(i) {
     let y_shape = y1 + recHeight / 2 + sec;
 
     // image
-
+    addSubImage(x2+ sec/2, y_semantic, imageID, d['semantic'][0], recHeight -sec);
+    imageID += 1;
+    addSubImage(x2+ sec/2, y_color, imageID, d['color'][0], recHeight-sec);
+    imageID += 1;
+    addSubImage(x2+ sec/2, y_shape, imageID, d['status'][0], recHeight-sec);
+    imageID += 1;
 
     // line
     let lineGenerator = d3.svg.line()
@@ -310,14 +351,6 @@ function explore(i) {
         .on('click', function (d) {
             console.log(d);
         });
-}
-
-function getMeta(url, callback) {
-    let img = new Image();
-    img.src = url;
-    img.onload = function () {
-        callback(this.width, this.height);
-    };
 }
 
 function remove(i) {

@@ -6,10 +6,10 @@
 input: img_name
 return: a dictionary
 {
-  "input": "01.jpg"
-  "semantic: ["01.jpg", "01.jpg", "01.jpg", ...]
-  "color": ["01.jpg", "01.jpg", "01.jpg", ...]
-  "shape": ["01.jpg", "01.jpg", "01.jpg", ...]
+  "input": "01.jpg",
+  "semantic": [{"name": "01.jpg", "keywords": "xxx", "width": 123, "height": 123},{"name": "02.jpg", "keywords": "xxx", "width": 123, "height": 123},...],
+  "color": [{"name": "01.jpg", "keywords": "xxx", "width": 123, "height": 123},{"name": "02.jpg", "keywords": "xxx", "width": 123, "height": 123},...],
+  "shape": [{"name": "01.jpg", "keywords": "xxx", "width": 123, "height": 123},{"name": "02.jpg", "keywords": "xxx", "width": 123, "height": 123},...],
   "status": ........
   ......
 }

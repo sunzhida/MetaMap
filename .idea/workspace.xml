@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/app/static/js/interaction.js" line="183" />
+    <bookmark url="file://$PROJECT_DIR$/app/static/js/interaction.js" line="185" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47634e43-10ee-4812-ae17-2a32f46f168c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/static/css/template.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/css/template.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/static/js/interaction.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/interaction.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -59,8 +57,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/static/js/interaction.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="232" column="4" selection-start-line="232" selection-start-column="7" selection-end-line="254" selection-end-column="46" />
+            <state relative-caret-position="691">
+              <caret line="287" column="69" selection-start-line="287" selection-start-column="69" selection-end-line="287" selection-end-column="69" />
               <folding>
                 <element signature="n#!!block;n#submit#0" />
                 <element signature="n#!!block;n#resubmit#0" />
@@ -255,12 +253,12 @@
       <workItem from="1595939874031" duration="630000" />
       <workItem from="1596008146605" duration="1185000" />
       <workItem from="1596164904049" duration="4852000" />
-      <workItem from="1596249098029" duration="29065000" />
+      <workItem from="1596249098029" duration="29865000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="110917000" />
+    <option name="totallyTimeSpent" value="111717000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1918" y="-571" width="1090" height="1223" extended-state="0" />
@@ -380,8 +378,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/static/js/interaction.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="232" column="4" selection-start-line="232" selection-start-column="7" selection-end-line="254" selection-end-column="46" />
+        <state relative-caret-position="691">
+          <caret line="287" column="69" selection-start-line="287" selection-start-column="69" selection-end-line="287" selection-end-column="69" />
           <folding>
             <element signature="n#!!block;n#submit#0" />
             <element signature="n#!!block;n#resubmit#0" />

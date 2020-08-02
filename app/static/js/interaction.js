@@ -72,6 +72,7 @@ function resubmit(i) {
 var addHistory = (function () {
     const MAXLEN = 10;
     let history = [];
+
     function _addHistory(value) {
         const idx = history.indexOf(value);
         console.log(idx);
@@ -84,18 +85,19 @@ var addHistory = (function () {
             // 已找到，就是第一个，直接return
             return history;
         }
-    
+
         // 已找到，在后面，挪到前面
         history = [value].concat(history.slice(0, idx), history.slice(idx + 1))
         return history;
     }
+
     return _addHistory;
 })();
 
 function addAndDrawHistory(value) {
     const history = addHistory(value);
     const ihtml = history
-        .map(e => 
+        .map(e =>
             `<span class="badge badge-primary mr-1" type="button" onclick="fillInHistory(this)">${e}</span>`
         )
         .join('')
@@ -230,29 +232,29 @@ function addSubImage(x, y, i, input, w, h) {
         .attr('height', h)
         .attr('onmouseup', 'browseImage("' + input + ',' + i + '")')
         .attr("id", "boarding_" + i);
-    // let buttons = group.append("foreignObject")
-    //     .attr('x', x + w - 61)
-    //     .attr('y', y)
-    //     .attr('width', imageWidth)
-    //     .attr('height', 30)
-    //     .append('xhtml:div')
-    //     .attr('xmlns', 'http://www.w3.org/1999/xhtml')
-    //     .attr('style', 'display: none;')
-    //     .attr('id', 'button_' + imageID);
-    // buttons.append('button')
-    //     .attr('class', 'btn btn-info btn-sm hide')
-    //     .attr('type', 'button')
-    //     .attr('id', 'explore_' + imageID)
-    //     .attr('onclick', 'explore(' + imageID + ')')
-    //     .append('i')
-    //     .attr('class', 'fas fa-arrow-right');
-    // buttons.append('button')
-    //     .attr('class', 'btn btn-danger btn-sm hide')
-    //     .attr('type', 'button')
-    //     .attr('id', 'remove_' + imageID)
-    //     .attr('onclick', 'remove(' + imageID + ')')
-    //     .append('i')
-    //     .attr('class', 'fas fa-trash-alt');
+    let buttons = group.append("foreignObject")
+        .attr('x', x + w - 61)
+        .attr('y', y)
+        .attr('width', w)
+        .attr('height', 30)
+        .append('xhtml:div')
+        .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+        .attr('style', 'display: none;')
+        .attr('id', 'button_' + i);
+    buttons.append('button')
+        .attr('class', 'btn btn-info btn-sm hide')
+        .attr('type', 'button')
+        .attr('id', 'explore_' + i)
+        .attr('onclick', 'explore(' + i + ')')
+        .append('i')
+        .attr('class', 'fas fa-arrow-right');
+    buttons.append('button')
+        .attr('class', 'btn btn-danger btn-sm hide')
+        .attr('type', 'button')
+        .attr('id', 'remove_' + i)
+        .attr('onclick', 'remove(' + i + ')')
+        .append('i')
+        .attr('class', 'fas fa-trash-alt');
 }
 
 // should give input data
@@ -283,11 +285,11 @@ function explore(i) {
     let y_shape = y1 + recHeight / 2 + sec;
 
     // image
-    addSubImage(x2+ sec/2, y_semantic, imageID, d['semantic'][0], recHeight -sec);
+    addSubImage(x2 + sec / 2, y_semantic, imageID, d['semantic'][0], recHeight - sec);
     imageID += 1;
-    addSubImage(x2+ sec/2, y_color, imageID, d['color'][0], recHeight-sec);
+    addSubImage(x2 + sec / 2, y_color, imageID, d['color'][0], recHeight - sec);
     imageID += 1;
-    addSubImage(x2+ sec/2, y_shape, imageID, d['status'][0], recHeight-sec);
+    addSubImage(x2 + sec / 2, y_shape, imageID, d['status'][0], recHeight - sec);
     imageID += 1;
 
     // line

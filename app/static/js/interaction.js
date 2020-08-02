@@ -18,6 +18,7 @@ let canvas = d3.select("#board")
     .attr('xmlns', 'http://www.w3.org/2000/svg')
     .attr("width", width + margin.right + margin.left)
     .attr("height", height - 112)
+    .attr('id', 'canvas')
     .call(zoom);
 let container = canvas.append('g')
     .attr('width', '100%')
@@ -109,8 +110,8 @@ function addImage(input) {
     let buttons = group.append("foreignObject")
         .attr('x', imagePlace + imageWidth - 61)
         .attr('y', (height - 112) / 2 - imageWidth / 2)
-        .attr('width', 240)
-        .attr('height', 40)
+        .attr('width', imageWidth)
+        .attr('height', 30)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
         .attr('style', 'display: none;')
@@ -175,10 +176,16 @@ function refresh(i) {
 
 // should give input data
 function explore(i) {
-    let img = document.getElementById("boarding_" + imageID);
-    let imageWidth = img.clientWidth;
-    let imageHeight = img.clientHeight;
-    console.log(i);
+    // console.log(i);
+    let h = height - 112;
+    let w = width;
+    let img = document.getElementById("boarding_" + i).getBBox();
+    let imageWidth = img.width;
+    let imageHeight = img.height;
+    let imageX = img.x;
+    let imageY = img.y;
+    console.log(img);
+    let recHeight = 180, sec = 40;
     let d = {
         'input': '',
         'semantic': ['000e74ea347f08c0cae2b3cfc4f612cf.jpg', '00a5155ce76792c8aaef4bd67e2d4f44.jpg', '00a8885948a4a3abed0a27480c9f3fa6.png'],
@@ -186,14 +193,30 @@ function explore(i) {
         'status': ['00daeeb00b31e6f7fd9bf103a1733560.jpg', '00dddfdfe4ad349925af78c3d04533f9.jpg']
     };
     console.log(d);
+
     let g_id = "#image_" + i;
-    let x1 = 20, y1 = 10, x2 = 40, y2 = 20;
+    let x1 = imageWidth, y1 = h / 2 - imageWidth / 2 + imageHeight / 2;
+    let x2 = imageWidth + sec;
+    let y_semantic = y1 - recHeight / 2 - sec;
+    let y_color = y1;
+    let y_shape = y1 + recHeight / 2 + sec;
+
+    let lineGenerator = d3.svg.line()
+        .x(function (d) {
+            return d.x;
+        })
+        .y(function (d) {
+            return d.y;
+        })
+        .interpolate('bundle');
+
+    let path1 = [{'x': x1, 'y': y1}, {'x': x2, 'y': y1}, {'x': x1, 'y': y_semantic}, {'x': x2, 'y': y_semantic}];
+    let path3 = [{'x': x1, 'y': y1}, {'x': x2, 'y': y1}, {'x': x1, 'y': y_shape}, {'x': x2, 'y': y_shape}];
+
     d3.select(g_id)
-        .append('line')
-        .attr('x1', x1)
-        .attr('y1', y1)
-        .attr('x2', x2)
-        .attr('y2', y2)
+        .append('path')
+        .attr('d', lineGenerator(path1))
+        .style('fill', 'none')
         .style('stroke', 'gray')
         .style('stroke-width', '8')
         .on('mouseover', function (d) {
@@ -205,6 +228,48 @@ function explore(i) {
         .on('click', function (d) {
             console.log(d);
         });
+
+    d3.select(g_id)
+        .append('line')
+        .attr('x1', x1)
+        .attr('y1', y1)
+        .attr('x2', x2)
+        .attr('y2', y_color)
+        .style('stroke', 'gray')
+        .style('stroke-width', '8')
+        .on('mouseover', function (d) {
+            console.log(d);
+        })
+        .on('mouseout', function (d) {
+            console.log(d);
+        })
+        .on('click', function (d) {
+            console.log(d);
+        });
+
+    d3.select(g_id)
+        .append('path')
+        .attr('d', lineGenerator(path3))
+        .style('fill', 'none')
+        .style('stroke', 'gray')
+        .style('stroke-width', '8')
+        .on('mouseover', function (d) {
+            console.log(d);
+        })
+        .on('mouseout', function (d) {
+            console.log(d);
+        })
+        .on('click', function (d) {
+            console.log(d);
+        });
+}
+
+function getMeta(url, callback) {
+    let img = new Image();
+    img.src = url;
+    img.onload = function () {
+        callback(this.width, this.height);
+    };
 }
 
 function remove(i) {

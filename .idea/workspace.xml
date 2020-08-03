@@ -4,7 +4,9 @@
     <bookmark url="file://$PROJECT_DIR$/app/static/js/interaction.js" line="185" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="47634e43-10ee-4812-ae17-2a32f46f168c" name="Default Changelist" comment="" />
+    <list default="true" id="47634e43-10ee-4812-ae17-2a32f46f168c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/app/static/js/interaction.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/interaction.js" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,8 +57,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/static/js/interaction.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="287" column="69" selection-start-line="287" selection-start-column="69" selection-end-line="287" selection-end-column="69" />
+            <state relative-caret-position="354">
+              <caret line="137" column="26" lean-forward="true" selection-start-line="137" selection-start-column="26" selection-end-line="137" selection-end-column="26" />
               <folding>
                 <element signature="n#!!block;n#submit#0" />
                 <element signature="n#!!block;n#resubmit#0" />
@@ -125,6 +127,7 @@
       <find>height - 112</find>
       <find>font</find>
       <find>static</find>
+      <find>console</find>
     </findStrings>
     <replaceStrings>
       <replace>bg.</replace>
@@ -251,12 +254,12 @@
       <workItem from="1595939874031" duration="630000" />
       <workItem from="1596008146605" duration="1185000" />
       <workItem from="1596164904049" duration="4852000" />
-      <workItem from="1596249098029" duration="30045000" />
+      <workItem from="1596249098029" duration="37753000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="111897000" />
+    <option name="totallyTimeSpent" value="119605000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1913" y="-571" width="1090" height="1223" extended-state="0" />
@@ -376,8 +379,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/static/js/interaction.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="287" column="69" selection-start-line="287" selection-start-column="69" selection-end-line="287" selection-end-column="69" />
+        <state relative-caret-position="354">
+          <caret line="137" column="26" lean-forward="true" selection-start-line="137" selection-start-column="26" selection-end-line="137" selection-end-column="26" />
           <folding>
             <element signature="n#!!block;n#submit#0" />
             <element signature="n#!!block;n#resubmit#0" />

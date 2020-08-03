@@ -134,7 +134,7 @@ function drawImages(i) {
 function addImage(input) {
     let imageWidth = 120;
     let imagePlace = 0;
-    console.log(input);
+    // console.log(input);
     // console.log(d3.select('#init'));
     canvas.select('text').remove();
     // let bg = canvas.append("svg")
@@ -221,21 +221,25 @@ function refresh(i) {
     console.log(i);
 }
 
-function addSubImage(x, y, i, input, w, h) {
+function addSubImage(x, y, i, input) {
+    console.log(x);
+    console.log(y);
+    console.log(x);
+    console.log(x);
     let group = container.append("g")
         .attr("transform", "translate("
             + x + "," + y + ")")
         .attr('id', 'image_' + i)
         .classed('draggable', true);
     group.append("image")
-        .attr('href', '../static/img/' + input)
-        .attr('height', h)
-        .attr('onmouseup', 'browseImage("' + input + ',' + i + '")')
+        .attr('href', '../static/img/' + input['name'])
+        .attr('height', input['height'])
+        .attr('onmouseup', 'browseImage("' + input['name'] + ',' + i + '")')
         .attr("id", "boarding_" + i);
     let buttons = group.append("foreignObject")
-        .attr('x', x + w - 61)
-        .attr('y', y)
-        .attr('width', w)
+        .attr('x', input['width'] - 61)
+        .attr('y', 0)
+        .attr('width', 62)
         .attr('height', 30)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
@@ -260,36 +264,70 @@ function addSubImage(x, y, i, input, w, h) {
 // should give input data
 function explore(i) {
     // console.log(i);
-    let h = height - 112;
-    let w = width;
     let img = document.getElementById("boarding_" + i).getBBox();
     let imageWidth = img.width;
     let imageHeight = img.height;
     let imageX = img.x;
     let imageY = img.y;
     console.log(img);
-    let recHeight = 180, sec = 40;
+    let recHeight = 220, sec = 80;
     let d = {
-        'input': '',
-        'semantic': ['000e74ea347f08c0cae2b3cfc4f612cf.jpg', '00a5155ce76792c8aaef4bd67e2d4f44.jpg', '00a8885948a4a3abed0a27480c9f3fa6.png'],
-        'color': ['00ab0fe3d1d76da690d7438117eeea49.jpg', '00e43e295097e2580d0178cb3cadd04b.jpg'],
-        'status': ['00daeeb00b31e6f7fd9bf103a1733560.jpg', '00dddfdfe4ad349925af78c3d04533f9.jpg']
+        "input": "01.jpg",
+        "semantic": [{
+            "name": "000e74ea347f08c0cae2b3cfc4f612cf.jpg",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 276,
+            "height": 180
+        }, {
+            "name": "00a8885948a4a3abed0a27480c9f3fa6.png",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 240,
+            "height": 180
+        }, {
+            "name": "00a5155ce76792c8aaef4bd67e2d4f44.jpg",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 232,
+            "height": 180
+        }],
+        "color": [{
+            "name": "00ab0fe3d1d76da690d7438117eeea49.jpg",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 270,
+            "height": 180
+        }, {
+            "name": "00e43e295097e2580d0178cb3cadd04b.jpg",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 131,
+            "height": 180
+        }],
+        "shape": [{
+            "name": "00daeeb00b31e6f7fd9bf103a1733560.jpg",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 131,
+            "height": 180
+        }, {
+            "name": "00dddfdfe4ad349925af78c3d04533f9.jpg",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 116,
+            "height": 180
+        }],
+        "status": "xxx"
     };
-    console.log(d);
+    // console.log(d);
 
     let g_id = "#image_" + i;
-    let x1 = imageWidth, y1 = h / 2 - imageWidth / 2 + imageHeight / 2;
-    let x2 = imageWidth + sec;
+    let x1 = imageX + imageWidth, y1 = imageY + imageHeight / 2;
+    let x2 = imageX + imageWidth + sec / 2;
     let y_semantic = y1 - recHeight / 2 - sec;
     let y_color = y1;
     let y_shape = y1 + recHeight / 2 + sec;
 
     // image
-    addSubImage(x2 + sec / 2, y_semantic, imageID, d['semantic'][0], recHeight - sec);
+    addSubImage(imageX + imageWidth + sec, y_semantic - recHeight / 2, imageID, d['semantic'][0]);
     imageID += 1;
-    addSubImage(x2 + sec / 2, y_color, imageID, d['color'][0], recHeight - sec);
+    addSubImage(imageX + imageWidth + sec, y_color - recHeight / 2, imageID, d['color'][0]);
     imageID += 1;
-    addSubImage(x2 + sec / 2, y_shape, imageID, d['status'][0], recHeight - sec);
+    addSubImage(imageX + imageWidth + sec, y_shape - recHeight / 2, imageID, d['shape'][0]);
     imageID += 1;
 
     // line

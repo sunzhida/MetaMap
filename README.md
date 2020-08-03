@@ -2,16 +2,45 @@
 
 ## Data Structure
 ### Explore
-```
+```javascript
 input: img_name
 return: a dictionary
 {
-  "input": "01.jpg",
-  "semantic": [{"name": "01.jpg", "keywords": "xxx", "width": 123, "height": 123},{"name": "02.jpg", "keywords": "xxx", "width": 123, "height": 123},...],
-  "color": [{"name": "01.jpg", "keywords": "xxx", "width": 123, "height": 123},{"name": "02.jpg", "keywords": "xxx", "width": 123, "height": 123},...],
-  "shape": [{"name": "01.jpg", "keywords": "xxx", "width": 123, "height": 123},{"name": "02.jpg", "keywords": "xxx", "width": 123, "height": 123},...],
-  "status": ........
-  ......
+	"input": "01.jpg",
+	"semantic": [{
+		"name": "01.jpg",
+		"keywords": "xxx",
+		"width": 123,
+		"height": 123
+	}, {
+		"name": "02.jpg",
+		"keywords": "xxx",
+		"width": 123,
+		"height": 123
+	}],
+	"color": [{
+		"name": "01.jpg",
+		"keywords": "xxx",
+		"width": 123,
+		"height": 123
+	}, {
+		"name": "02.jpg",
+		"keywords": "xxx",
+		"width": 123,
+		"height": 123
+	}],
+	"shape": [{
+		"name": "01.jpg",
+		"keywords": "xxx",
+		"width": 123,
+		"height": 123
+	}, {
+		"name": "02.jpg",
+		"keywords": "xxx",
+		"width": 123,
+		"height": 123
+	}],
+	"status": "xxx"
 }
 ```
 ### Refresh

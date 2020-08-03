@@ -75,7 +75,7 @@ var addHistory = (function () {
 
     function _addHistory(value) {
         const idx = history.indexOf(value);
-        console.log(idx);
+        // console.log(idx);
         if (idx < 0) {
             // 未找到，新插入，删掉旧的
             history = [value].concat(history.slice(0, MAXLEN - 1));
@@ -177,6 +177,23 @@ function addImage(input) {
         .attr('onclick', 'remove(' + imageID + ')')
         .append('i')
         .attr('class', 'fas fa-trash-alt');
+    let keywords = group.append("foreignObject")
+        .attr('x', imagePlace)
+        .attr('y', (height - 112) / 2 - imageWidth / 2 - 80)
+        .attr('width', imageWidth)
+        .attr('height', 80)
+        .append('xhtml:div')
+        .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+        .attr('style', 'display: none;')
+        .attr('id', 'keywords_' + imageID);
+    let kw = ["xxx", "health", "health", "health"];
+    for (let w in kw) {
+        keywords.append('button')
+            .attr('class', 'btn btn-warning btn-sm hide')
+            .attr('type', 'button')
+            .attr('onclick', 'inquire(' + kw[w] + ')')
+            .html(kw[w]);
+    }
     imageID += 1;
 }
 
@@ -191,7 +208,59 @@ function browseImage(input) {
     let res = input.split(',');
     // console.log(res);
     let image_url = res[0];
+    let image_name = res[0].split('/');
     let image_id = res[1];
+
+    let d = {
+        "input": "01.jpg",
+        "semantic": [{
+            "name": "000e74ea347f08c0cae2b3cfc4f612cf.jpg",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 276,
+            "height": 180
+        }, {
+            "name": "00a8885948a4a3abed0a27480c9f3fa6.png",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 240,
+            "height": 180
+        }, {
+            "name": "00a5155ce76792c8aaef4bd67e2d4f44.jpg",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 232,
+            "height": 180
+        }],
+        "color": [{
+            "name": "00ab0fe3d1d76da690d7438117eeea49.jpg",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 270,
+            "height": 180
+        }, {
+            "name": "00e43e295097e2580d0178cb3cadd04b.jpg",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 131,
+            "height": 180
+        }],
+        "shape": [{
+            "name": "00daeeb00b31e6f7fd9bf103a1733560.jpg",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 131,
+            "height": 180
+        }, {
+            "name": "00dddfdfe4ad349925af78c3d04533f9.jpg",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 116,
+            "height": 180
+        }],
+        "status": "xxx"
+    };
+
+    let popup_kw = document.getElementById('keywords_' + image_id);
+    if (popup_kw.style.display === "none") {
+        popup_kw.style.display = "block";
+    } else {
+        popup_kw.style.display = "none";
+    }
+
     let popup = document.getElementById('button_' + image_id);
     if (popup.style.display === "none") {
         popup.style.display = "block";
@@ -222,10 +291,6 @@ function refresh(i) {
 }
 
 function addSubImage(x, y, i, input) {
-    console.log(x);
-    console.log(y);
-    console.log(x);
-    console.log(x);
     let group = container.append("g")
         .attr("transform", "translate("
             + x + "," + y + ")")
@@ -259,6 +324,23 @@ function addSubImage(x, y, i, input) {
         .attr('onclick', 'remove(' + i + ')')
         .append('i')
         .attr('class', 'fas fa-trash-alt');
+    let keywords = group.append("foreignObject")
+        .attr('x', 0)
+        .attr('y', -40)
+        .attr('width', input['width'])
+        .attr('height', 40)
+        .append('xhtml:div')
+        .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+        .attr('style', 'display: none;')
+        .attr('id', 'keywords_' + i);
+    let kw = ["xxx", "health", "health", "health"];
+    for (let w in kw) {
+        keywords.append('button')
+            .attr('class', 'btn btn-warning btn-sm hide')
+            .attr('type', 'button')
+            .attr('onclick', 'inquire(' + kw[w] + ')')
+            .html(kw[w]);
+    }
 }
 
 // should give input data

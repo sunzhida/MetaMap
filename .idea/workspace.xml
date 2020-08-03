@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/app/static/js/interaction.js" line="185" />
+    <bookmark url="file://$PROJECT_DIR$/app/static/js/interaction.js" line="202" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47634e43-10ee-4812-ae17-2a32f46f168c" name="Default Changelist" comment="">
@@ -31,7 +31,7 @@
         <entry file="file://$PROJECT_DIR$/app/static/css/template.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="532">
-              <caret line="44" column="15" selection-start-line="44" selection-start-column="15" selection-end-line="44" selection-end-column="15" />
+              <caret line="68" column="1" selection-start-line="68" selection-start-column="1" selection-end-line="68" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -57,15 +57,14 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/static/js/interaction.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="354">
-              <caret line="137" column="26" lean-forward="true" selection-start-line="137" selection-start-column="26" selection-end-line="137" selection-end-column="26" />
+            <state relative-caret-position="705">
+              <caret line="330" column="25" selection-start-line="330" selection-start-column="25" selection-end-line="330" selection-end-column="25" />
               <folding>
                 <element signature="n#!!block;n#submit#0" />
                 <element signature="n#!!block;n#resubmit#0" />
                 <element signature="e#2068#2637#0" />
                 <element signature="n#!!block;n#addAndDrawHistory#0" />
                 <element signature="n#!!block;n#fillInHistory#0" />
-                <element signature="n#!!block;n#drawKeywords#0" />
                 <element signature="n#!!block;n#drawImages#0" />
                 <element signature="n#!!block;n#zoomed#0" />
                 <element signature="n#!!block;n#clear#0" />
@@ -128,6 +127,9 @@
       <find>font</find>
       <find>static</find>
       <find>console</find>
+      <find>onclick</find>
+      <find>kw</find>
+      <find>onmouse</find>
     </findStrings>
     <replaceStrings>
       <replace>bg.</replace>
@@ -148,8 +150,8 @@
         <option value="$PROJECT_DIR$/app/templates/search.html" />
         <option value="$PROJECT_DIR$/app/__init__.py" />
         <option value="$PROJECT_DIR$/app/static/js/tree.js" />
-        <option value="$PROJECT_DIR$/app/static/css/template.css" />
         <option value="$PROJECT_DIR$/app/templates/index.html" />
+        <option value="$PROJECT_DIR$/app/static/css/template.css" />
         <option value="$PROJECT_DIR$/app/static/js/interaction.js" />
       </list>
     </option>
@@ -254,12 +256,12 @@
       <workItem from="1595939874031" duration="630000" />
       <workItem from="1596008146605" duration="1185000" />
       <workItem from="1596164904049" duration="4852000" />
-      <workItem from="1596249098029" duration="37753000" />
+      <workItem from="1596249098029" duration="43584000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="119605000" />
+    <option name="totallyTimeSpent" value="125436000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1913" y="-571" width="1090" height="1223" extended-state="0" />
@@ -354,13 +356,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/css/template.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="44" column="15" selection-start-line="44" selection-start-column="15" selection-end-line="44" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -377,17 +372,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/css/template.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="68" column="1" selection-start-line="68" selection-start-column="1" selection-end-line="68" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/static/js/interaction.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="137" column="26" lean-forward="true" selection-start-line="137" selection-start-column="26" selection-end-line="137" selection-end-column="26" />
+        <state relative-caret-position="705">
+          <caret line="330" column="25" selection-start-line="330" selection-start-column="25" selection-end-line="330" selection-end-column="25" />
           <folding>
             <element signature="n#!!block;n#submit#0" />
             <element signature="n#!!block;n#resubmit#0" />
             <element signature="e#2068#2637#0" />
             <element signature="n#!!block;n#addAndDrawHistory#0" />
             <element signature="n#!!block;n#fillInHistory#0" />
-            <element signature="n#!!block;n#drawKeywords#0" />
             <element signature="n#!!block;n#drawImages#0" />
             <element signature="n#!!block;n#zoomed#0" />
             <element signature="n#!!block;n#clear#0" />

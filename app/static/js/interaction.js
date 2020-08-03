@@ -345,7 +345,7 @@ function addSubImage(x, y, i, input) {
 
 // should give input data
 function explore(i) {
-    // console.log(i);
+    console.log(i);
     let img = document.getElementById("boarding_" + i).getBBox();
     let imageWidth = img.width;
     let imageHeight = img.height;

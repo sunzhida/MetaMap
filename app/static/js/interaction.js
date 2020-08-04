@@ -98,13 +98,13 @@ function addAndDrawHistory(value) {
     const history = addHistory(value);
     const ihtml = history
         .map(e =>
-            `<span class="badge badge-primary mr-1" type="button" onclick="fillInHistory(this)">${e}</span>`
+            `<span class="badge badge-primary mr-1" type="button" onclick="fillInBadge(this)">${e}</span>`
         )
         .join('')
     document.getElementById("history").innerHTML = ihtml;
 }
 
-function fillInHistory(i) {
+function fillInBadge(i) {
     const value = i.textContent;
     const input = document.getElementById('search');
     if (input.value === value) return;
@@ -117,7 +117,7 @@ function drawKeywords(i) {
     // console.log(i);
     let khtml = '';
     for (let e in i) {
-        khtml = khtml + '<span class="badge badge-primary" type="button" onclick="resubmit(this)">' + i[e] + '</span> '
+        khtml = khtml + '<span class="badge badge-primary" type="button" onclick="fillInBadge(this)">' + i[e] + '</span> '
     }
     document.getElementById("keywords").innerHTML = khtml;
 }

@@ -134,14 +134,10 @@ function drawImages(i) {
 function addImage(input) {
     let imageWidth = 120;
     let imagePlace = 0;
-    // console.log(input);
-    // console.log(d3.select('#init'));
     canvas.select('text').remove();
-    // let bg = canvas.append("svg")
-    //     .attr('viewBox', '0 0 ' + width + ' ' + height)
-    //     .attr('xmlns', 'http://www.w3.org/2000/svg')
-    //     .attr("width", width + margin.right + margin.left)
-    //     .attr("height", height + margin.top + margin.bottom);
+
+    let imageName = input.split('/')[3];
+
     let group = container.append("g")
         .attr("transform", "translate("
             + margin.left + "," + margin.top + ")")
@@ -186,14 +182,25 @@ function addImage(input) {
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
         .attr('style', 'display: none;')
         .attr('id', 'keywords_' + imageID);
-    let kw = ["xxx", "health", "health", "health"];
-    for (let w in kw) {
-        keywords.append('span')
-            .attr('class', 'badge badge-warning mr-1 hide')
-            .attr('type', 'button')
-            .attr('onclick', 'inquire("' + kw[w] + '")')
-            .html(kw[w]);
-    }
+    $.ajax({
+        url: "/plot/" + imageName,
+        type: "get",
+        data: imageName,
+        success: function (response) {
+            let re = JSON.parse(response);
+            let kw = re['keywords'];
+            for (let w in kw) {
+                keywords.append('span')
+                    .attr('class', 'badge badge-warning mr-1 hide')
+                    .attr('type', 'button')
+                    .attr('onclick', 'inquire("' + kw[w] + '")')
+                    .html(kw[w]);
+            }
+        },
+        error: function (xhr) {
+            //Do Something to handle error
+        }
+    });
     imageID += 1;
 }
 
@@ -282,7 +289,7 @@ function addSubImage(x, y, i, input) {
         .attr('class', 'btn btn-info btn-sm hide')
         .attr('type', 'button')
         .attr('id', 'explore_' + i)
-        .attr('onclick', 'explore(' + i + ')')
+        .attr('onclick', 'explore(' + input['name'] + ',' + i + ')')
         .append('i')
         .attr('class', 'fas fa-arrow-right');
     buttons.append('button')
@@ -327,7 +334,7 @@ function explore(i) {
     let recHeight = 220, sec = 80;
 
     $.ajax({
-        url: "/browse/" + i,
+        url: "/explore/" + i,
         type: "get",
         data: i,
         success: function (response) {
@@ -338,7 +345,7 @@ function explore(i) {
             //Do Something to handle error
         }
     });
-    
+
     let d = {
         "input": "01.jpg",
         "semantic": [{
@@ -417,7 +424,7 @@ function explore(i) {
         .attr('d', lineGenerator(path1))
         .style('fill', 'none')
         .style('stroke', 'gray')
-        .style('stroke-width', '8')
+        .style('stroke-width', '3')
         .on('mouseover', function (d) {
             console.log(d);
         })
@@ -433,7 +440,7 @@ function explore(i) {
         .attr('d', lineGenerator(path2))
         .style('fill', 'none')
         .style('stroke', 'gray')
-        .style('stroke-width', '8')
+        .style('stroke-width', '3')
         .on('mouseover', function (d) {
             console.log(d);
         })
@@ -449,7 +456,7 @@ function explore(i) {
         .attr('d', lineGenerator(path3))
         .style('fill', 'none')
         .style('stroke', 'gray')
-        .style('stroke-width', '8')
+        .style('stroke-width', '3')
         .on('mouseover', function (d) {
             console.log(d);
         })

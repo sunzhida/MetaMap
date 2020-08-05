@@ -84,11 +84,28 @@ def search(i):
     return json.dumps(data)
 
 
-@app.route('/browse/<i>', methods=['GET', 'POST'])
-def browse(i):
+@app.route('/plot/<i>', methods=['GET', 'POST'])
+def plot(i):
+    # image name
     print(i)
     #################################
-    # Youwen: processing the data here
+    # Youwen: processing the data here, the data should return the keywords attribute
+    # This is the function for adding the keywords for the first selected image
+    #################################
+    d = {
+        "input": "01.jpg",
+        "keywords": ["xxx", "health", "health", "health"],
+        "status": "xxx"
+    }
+    return json.dumps(d)
+
+
+@app.route('/explore/<i>', methods=['GET', 'POST'])
+def explore(i):
+    print(i)
+    #################################
+    # Youwen: processing the data here, the data should return related attributes to the image
+    # This is the function for exploring the related materials along different dimensions
     #################################
     d = {
         "input": "01.jpg",

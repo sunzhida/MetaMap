@@ -171,7 +171,7 @@ def exploreShape(conn, image_name, keyword, topn=10):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    RELOAD_DATABASE = True
+    RELOAD_DATABASE = False
     conn = create_connection(DATABASE)
     if conn is not None and RELOAD_DATABASE:
         keyword_data = pd.read_csv('./data_csv/keywords_demo.csv')

@@ -107,6 +107,7 @@ def plot(i):
 def inquire(i):
     imgName = i.split(',')[0]
     keyword = i.split(',')[1]
+    imgID = i.split(',')[2]
     print(imgName)
     print(keyword)
     #################################

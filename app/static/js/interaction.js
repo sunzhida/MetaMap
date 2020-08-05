@@ -193,7 +193,7 @@ function addImage(input) {
                 keywords.append('span')
                     .attr('class', 'badge badge-warning mr-1 hide')
                     .attr('type', 'button')
-                    .attr('onclick', 'inquire("' + imageName + ',' + kw[w] + '")')
+                    .attr('onclick', 'inquire("' + imageName + ',' + kw[w] + ',' + imageID + '")')
                     .html(kw[w]);
             }
         },

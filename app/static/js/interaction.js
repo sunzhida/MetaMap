@@ -98,7 +98,7 @@ function addAndDrawHistory(value) {
     const history = addHistory(value);
     const ihtml = history
         .map(e =>
-            `<span class="badge badge-primary mr-1" type="button" onclick="fillInBadge(this)">${e}</span>`
+            `<span class="badge badge-info mr-1" type="button" onclick="fillInBadge(this)">${e}</span>`
         )
         .join('')
     document.getElementById("history").innerHTML = ihtml;

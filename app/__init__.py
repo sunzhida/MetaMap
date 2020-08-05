@@ -55,6 +55,9 @@ def searchImage(input):
     conn = create_connection(DATABASE)
     image_df = pd.read_sql_query("SELECT image_name from images where keyword == '%s'" % input, conn)
     imagelist = list(image_df.image_name.values)
+    for image_name in imagelist:
+        if image_name[-3:] not in ("jpg", "png"):
+            imagelist.remove(image_name)
     conn.commit()
     conn.close()
 

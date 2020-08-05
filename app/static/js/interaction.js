@@ -204,70 +204,23 @@ function zoomed() {
 
 // click on the image
 function browseImage(input) {
-    // console.log(input);
     let res = input.split(',');
-    // console.log(res);
     let image_url = res[0];
     let image_name = res[0].split('/');
     let image_id = res[1];
 
-    $.ajax({
-        url: "/browse/" + image_name,
-        type: "get",
-        data: image_name,
-        success: function (response) {
-            let re = JSON.parse(response);
-            console.log(re);
-        },
-        error: function (xhr) {
-            //Do Something to handle error
-        }
-    });
-
-    // sample data
-
-    // let d = {
-    //     "input": "01.jpg",
-    //     "semantic": [{
-    //         "name": "000e74ea347f08c0cae2b3cfc4f612cf.jpg",
-    //         "keywords": ["xxx", "health", "health", "health"],
-    //         "width": 276,
-    //         "height": 180
-    //     }, {
-    //         "name": "00a8885948a4a3abed0a27480c9f3fa6.png",
-    //         "keywords": ["xxx", "health", "health", "health"],
-    //         "width": 240,
-    //         "height": 180
-    //     }, {
-    //         "name": "00a5155ce76792c8aaef4bd67e2d4f44.jpg",
-    //         "keywords": ["xxx", "health", "health", "health"],
-    //         "width": 232,
-    //         "height": 180
-    //     }],
-    //     "color": [{
-    //         "name": "00ab0fe3d1d76da690d7438117eeea49.jpg",
-    //         "keywords": ["xxx", "health", "health", "health"],
-    //         "width": 270,
-    //         "height": 180
-    //     }, {
-    //         "name": "00e43e295097e2580d0178cb3cadd04b.jpg",
-    //         "keywords": ["xxx", "health", "health", "health"],
-    //         "width": 131,
-    //         "height": 180
-    //     }],
-    //     "shape": [{
-    //         "name": "00daeeb00b31e6f7fd9bf103a1733560.jpg",
-    //         "keywords": ["xxx", "health", "health", "health"],
-    //         "width": 131,
-    //         "height": 180
-    //     }, {
-    //         "name": "00dddfdfe4ad349925af78c3d04533f9.jpg",
-    //         "keywords": ["xxx", "health", "health", "health"],
-    //         "width": 116,
-    //         "height": 180
-    //     }],
-    //     "status": "xxx"
-    // };
+    // $.ajax({
+    //     url: "/browse/" + image_name,
+    //     type: "get",
+    //     data: image_name,
+    //     success: function (response) {
+    //         let re = JSON.parse(response);
+    //         console.log(re);
+    //     },
+    //     error: function (xhr) {
+    //         //Do Something to handle error
+    //     }
+    // });
 
     let popup_kw = document.getElementById('keywords_' + image_id);
     if (popup_kw.style.display === "none") {
@@ -372,6 +325,20 @@ function explore(i) {
     let imageY = img.y;
     console.log(img);
     let recHeight = 220, sec = 80;
+
+    $.ajax({
+        url: "/browse/" + i,
+        type: "get",
+        data: i,
+        success: function (response) {
+            let re = JSON.parse(response);
+            console.log(re);
+        },
+        error: function (xhr) {
+            //Do Something to handle error
+        }
+    });
+    
     let d = {
         "input": "01.jpg",
         "semantic": [{

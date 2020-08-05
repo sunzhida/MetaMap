@@ -16,11 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="974">
-              <caret line="107" column="89" selection-start-line="107" selection-start-column="89" selection-end-line="107" selection-end-column="89" />
+              <caret line="170" column="37" lean-forward="true" selection-start-line="170" selection-start-column="37" selection-end-line="170" selection-end-column="37" />
               <folding>
                 <element signature="e#0#106#0" expanded="true" />
               </folding>
@@ -54,11 +54,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/static/js/interaction.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="291" column="56" selection-start-line="291" selection-start-column="56" selection-end-line="291" selection-end-column="56" />
+            <state relative-caret-position="990">
+              <caret line="323" column="34" lean-forward="true" selection-start-line="323" selection-start-column="34" selection-end-line="323" selection-end-column="34" />
               <folding>
                 <element signature="n#!!block;n#resubmit#0" />
                 <element signature="e#2068#2638#0" />
@@ -66,7 +66,6 @@
                 <element signature="n#!!block;n#fillInBadge#0" />
                 <element signature="n#!!block;n#drawKeywords#0" />
                 <element signature="n#!!block;n#drawImages#0" />
-                <element signature="n#!!block;n#addImage#0" />
                 <element signature="n#!!block;n#zoomed#0" />
                 <element signature="n#!!block;n#screenshot#0" />
                 <element signature="n#!!block;n#printout#0" />
@@ -137,6 +136,8 @@
       <find>onmouse</find>
       <find>5</find>
       <find>explore</find>
+      <find>browse</find>
+      <find>/explore/</find>
     </findStrings>
     <replaceStrings>
       <replace>bg.</replace>
@@ -158,8 +159,8 @@
         <option value="$PROJECT_DIR$/app/static/js/tree.js" />
         <option value="$PROJECT_DIR$/app/templates/index.html" />
         <option value="$PROJECT_DIR$/app/static/css/template.css" />
-        <option value="$PROJECT_DIR$/app/__init__.py" />
         <option value="$PROJECT_DIR$/app/static/js/interaction.js" />
+        <option value="$PROJECT_DIR$/app/__init__.py" />
       </list>
     </option>
   </component>
@@ -265,12 +266,12 @@
       <workItem from="1596164904049" duration="4852000" />
       <workItem from="1596249098029" duration="45454000" />
       <workItem from="1596523654442" duration="1755000" />
-      <workItem from="1596603686149" duration="9706000" />
+      <workItem from="1596603686149" duration="11554000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="138767000" />
+    <option name="totallyTimeSpent" value="140615000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-582" width="1096" height="1896" extended-state="6" />
@@ -332,6 +333,16 @@
     <entry file="file://$PROJECT_DIR$/app/static/js/sankey.js">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/css/template.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="765">
+          <caret line="45" column="21" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/js/image-tree.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="646">
@@ -347,30 +358,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/css/template.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="45" column="21" selection-start-line="45" selection-start-column="21" selection-end-line="45" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/js/image-tree.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="974">
-          <caret line="107" column="89" selection-start-line="107" selection-start-column="89" selection-end-line="107" selection-end-column="89" />
-          <folding>
-            <element signature="e#0#106#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/static/js/interaction.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="291" column="56" selection-start-line="291" selection-start-column="56" selection-end-line="291" selection-end-column="56" />
+        <state relative-caret-position="990">
+          <caret line="323" column="34" lean-forward="true" selection-start-line="323" selection-start-column="34" selection-end-line="323" selection-end-column="34" />
           <folding>
             <element signature="n#!!block;n#resubmit#0" />
             <element signature="e#2068#2638#0" />
@@ -378,12 +369,21 @@
             <element signature="n#!!block;n#fillInBadge#0" />
             <element signature="n#!!block;n#drawKeywords#0" />
             <element signature="n#!!block;n#drawImages#0" />
-            <element signature="n#!!block;n#addImage#0" />
             <element signature="n#!!block;n#zoomed#0" />
             <element signature="n#!!block;n#screenshot#0" />
             <element signature="n#!!block;n#printout#0" />
             <element signature="n#!!block;n#shareto#0" />
             <element signature="n#!!block;n#refresh#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="974">
+          <caret line="170" column="37" lean-forward="true" selection-start-line="170" selection-start-column="37" selection-end-line="170" selection-end-column="37" />
+          <folding>
+            <element signature="e#0#106#0" expanded="true" />
           </folding>
         </state>
       </provider>

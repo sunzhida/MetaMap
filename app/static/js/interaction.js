@@ -163,7 +163,7 @@ function addImage(input) {
         .attr('class', 'btn btn-info btn-sm hide')
         .attr('type', 'button')
         .attr('id', 'explore_' + imageID)
-        .attr('onclick', 'explore(' + imageID + ')')
+        .attr('onclick', 'explore("' + imageName + ',' + imageID + '")')
         .append('i')
         .attr('class', 'fas fa-arrow-right');
     buttons.append('button')
@@ -193,7 +193,7 @@ function addImage(input) {
                 keywords.append('span')
                     .attr('class', 'badge badge-warning mr-1 hide')
                     .attr('type', 'button')
-                    .attr('onclick', 'inquire("' + kw[w] + '")')
+                    .attr('onclick', 'inquire("' + imageName + ',' + kw[w] + '")')
                     .html(kw[w]);
             }
         },
@@ -289,7 +289,7 @@ function addSubImage(x, y, i, input) {
         .attr('class', 'btn btn-info btn-sm hide')
         .attr('type', 'button')
         .attr('id', 'explore_' + i)
-        .attr('onclick', 'explore(' + input['name'] + ',' + i + ')')
+        .attr('onclick', 'explore("' + input['name'] + ',' + i + '")')
         .append('i')
         .attr('class', 'fas fa-arrow-right');
     buttons.append('button')
@@ -319,13 +319,30 @@ function addSubImage(x, y, i, input) {
 }
 
 function inquire(i) {
-    console.log(i);
+    let imgName = i.split(',')[0];
+    let keyword = i.split(',')[1];
+    console.log(imgName, keyword);
+
+    $.ajax({
+        url: "/explore/" + i,
+        type: "get",
+        data: i,
+        success: function (response) {
+            let re = JSON.parse(response);
+            console.log(re);
+        },
+        error: function (xhr) {
+            //Do Something to handle error
+        }
+    });
 }
 
 // should give input data
 function explore(i) {
     console.log(i);
-    let img = document.getElementById("boarding_" + i).getBBox();
+    let imgName = i.split(',')[0];
+    let imgID = i.split(',')[1];
+    let img = document.getElementById("boarding_" + imgID).getBBox();
     let imageWidth = img.width;
     let imageHeight = img.height;
     let imageX = img.x;
@@ -390,7 +407,7 @@ function explore(i) {
     };
     // console.log(d);
 
-    let g_id = "#image_" + i;
+    let g_id = "#image_" + imgID;
     let x1 = imageX + imageWidth, y1 = imageY + imageHeight / 2;
     let x2 = imageX + imageWidth + sec / 2;
     let y_semantic = y1 - recHeight / 2 - sec;

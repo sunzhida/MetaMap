@@ -115,7 +115,10 @@ def inquire(i):
     # This is the function for exploring the related materials along different dimensions
     #################################
     d = {
-        "input": "01.jpg",
+        "name": "01.jpg",
+        "keywords": ["xxx", "health", "health", "health"],
+        "width": 276,
+        "height": 180,
         "semantic": [{
             "name": "000e74ea347f08c0cae2b3cfc4f612cf.jpg",
             "keywords": ["xxx", "health", "health", "health"],

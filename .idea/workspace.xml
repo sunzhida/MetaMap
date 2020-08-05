@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47634e43-10ee-4812-ae17-2a32f46f168c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/static/js/interaction.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/interaction.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,11 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="109" column="27" lean-forward="true" selection-start-line="109" selection-start-column="27" selection-end-line="109" selection-end-column="27" />
+            <state relative-caret-position="634">
+              <caret line="120" column="22" selection-start-line="120" selection-start-column="22" selection-end-line="120" selection-end-column="22" />
               <folding>
                 <element signature="e#0#106#0" expanded="true" />
               </folding>
@@ -54,11 +54,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/static/js/interaction.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="727">
-              <caret line="398" column="12" lean-forward="true" selection-start-line="398" selection-start-column="12" selection-end-line="398" selection-end-column="12" />
+            <state relative-caret-position="229">
+              <caret line="325" column="60" selection-start-line="325" selection-start-column="60" selection-end-line="325" selection-end-column="60" />
               <folding>
                 <element signature="n#!!block;n#resubmit#0" />
                 <element signature="e#2068#2638#0" />
@@ -166,9 +166,9 @@
         <option value="$PROJECT_DIR$/app/templates/search.html" />
         <option value="$PROJECT_DIR$/app/static/js/tree.js" />
         <option value="$PROJECT_DIR$/app/static/css/template.css" />
-        <option value="$PROJECT_DIR$/app/__init__.py" />
         <option value="$PROJECT_DIR$/app/templates/index.html" />
         <option value="$PROJECT_DIR$/app/static/js/interaction.js" />
+        <option value="$PROJECT_DIR$/app/__init__.py" />
       </list>
     </option>
   </component>
@@ -274,12 +274,12 @@
       <workItem from="1596164904049" duration="4852000" />
       <workItem from="1596249098029" duration="45454000" />
       <workItem from="1596523654442" duration="1755000" />
-      <workItem from="1596603686149" duration="17621000" />
+      <workItem from="1596603686149" duration="19130000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="146682000" />
+    <option name="totallyTimeSpent" value="148191000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1918" y="-574" width="1084" height="1322" extended-state="0" />
@@ -348,16 +348,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="109" column="27" lean-forward="true" selection-start-line="109" selection-start-column="27" selection-end-line="109" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#106#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="561">
@@ -373,13 +363,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/js/image-tree.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/static/js/interaction.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="727">
-          <caret line="398" column="12" lean-forward="true" selection-start-line="398" selection-start-column="12" selection-end-line="398" selection-end-column="12" />
+        <state relative-caret-position="229">
+          <caret line="325" column="60" selection-start-line="325" selection-start-column="60" selection-end-line="325" selection-end-column="60" />
           <folding>
             <element signature="n#!!block;n#resubmit#0" />
             <element signature="e#2068#2638#0" />
@@ -395,6 +382,19 @@
             <element signature="n#!!block;n#refresh#0" />
             <element signature="e#10615#12049#0" />
             <element signature="n#!!block;n#explore#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/js/image-tree.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="634">
+          <caret line="120" column="22" selection-start-line="120" selection-start-column="22" selection-end-line="120" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#106#0" expanded="true" />
           </folding>
         </state>
       </provider>

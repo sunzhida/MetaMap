@@ -467,6 +467,10 @@ function inquire(i) {
         });
 }
 
+function drawTree(d) {
+    console.log(d);
+}
+
 // should give input data
 function explore(i) {
     console.log(i);

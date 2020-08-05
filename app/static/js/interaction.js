@@ -179,19 +179,19 @@ function addImage(input) {
         .attr('class', 'fas fa-trash-alt');
     let keywords = group.append("foreignObject")
         .attr('x', imagePlace)
-        .attr('y', (height - 112) / 2 - imageWidth / 2 - 80)
+        .attr('y', (height - 112) / 2 - imageWidth / 2 - 60)
         .attr('width', imageWidth)
-        .attr('height', 80)
+        .attr('height', 60)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
         .attr('style', 'display: none;')
         .attr('id', 'keywords_' + imageID);
     let kw = ["xxx", "health", "health", "health"];
     for (let w in kw) {
-        keywords.append('button')
-            .attr('class', 'btn btn-warning btn-sm hide')
+        keywords.append('span')
+            .attr('class', 'badge badge-warning mr-1 hide')
             .attr('type', 'button')
-            .attr('onclick', 'inquire(' + kw[w] + ')')
+            .attr('onclick', 'inquire("' + kw[w] + '")')
             .html(kw[w]);
     }
     imageID += 1;
@@ -211,48 +211,63 @@ function browseImage(input) {
     let image_name = res[0].split('/');
     let image_id = res[1];
 
-    let d = {
-        "input": "01.jpg",
-        "semantic": [{
-            "name": "000e74ea347f08c0cae2b3cfc4f612cf.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 276,
-            "height": 180
-        }, {
-            "name": "00a8885948a4a3abed0a27480c9f3fa6.png",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 240,
-            "height": 180
-        }, {
-            "name": "00a5155ce76792c8aaef4bd67e2d4f44.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 232,
-            "height": 180
-        }],
-        "color": [{
-            "name": "00ab0fe3d1d76da690d7438117eeea49.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 270,
-            "height": 180
-        }, {
-            "name": "00e43e295097e2580d0178cb3cadd04b.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 131,
-            "height": 180
-        }],
-        "shape": [{
-            "name": "00daeeb00b31e6f7fd9bf103a1733560.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 131,
-            "height": 180
-        }, {
-            "name": "00dddfdfe4ad349925af78c3d04533f9.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 116,
-            "height": 180
-        }],
-        "status": "xxx"
-    };
+    $.ajax({
+        url: "/browse/" + image_name,
+        type: "get",
+        data: image_name,
+        success: function (response) {
+            let re = JSON.parse(response);
+            console.log(re);
+        },
+        error: function (xhr) {
+            //Do Something to handle error
+        }
+    });
+
+    // sample data
+
+    // let d = {
+    //     "input": "01.jpg",
+    //     "semantic": [{
+    //         "name": "000e74ea347f08c0cae2b3cfc4f612cf.jpg",
+    //         "keywords": ["xxx", "health", "health", "health"],
+    //         "width": 276,
+    //         "height": 180
+    //     }, {
+    //         "name": "00a8885948a4a3abed0a27480c9f3fa6.png",
+    //         "keywords": ["xxx", "health", "health", "health"],
+    //         "width": 240,
+    //         "height": 180
+    //     }, {
+    //         "name": "00a5155ce76792c8aaef4bd67e2d4f44.jpg",
+    //         "keywords": ["xxx", "health", "health", "health"],
+    //         "width": 232,
+    //         "height": 180
+    //     }],
+    //     "color": [{
+    //         "name": "00ab0fe3d1d76da690d7438117eeea49.jpg",
+    //         "keywords": ["xxx", "health", "health", "health"],
+    //         "width": 270,
+    //         "height": 180
+    //     }, {
+    //         "name": "00e43e295097e2580d0178cb3cadd04b.jpg",
+    //         "keywords": ["xxx", "health", "health", "health"],
+    //         "width": 131,
+    //         "height": 180
+    //     }],
+    //     "shape": [{
+    //         "name": "00daeeb00b31e6f7fd9bf103a1733560.jpg",
+    //         "keywords": ["xxx", "health", "health", "health"],
+    //         "width": 131,
+    //         "height": 180
+    //     }, {
+    //         "name": "00dddfdfe4ad349925af78c3d04533f9.jpg",
+    //         "keywords": ["xxx", "health", "health", "health"],
+    //         "width": 116,
+    //         "height": 180
+    //     }],
+    //     "status": "xxx"
+    // };
 
     let popup_kw = document.getElementById('keywords_' + image_id);
     if (popup_kw.style.display === "none") {
@@ -335,12 +350,16 @@ function addSubImage(x, y, i, input) {
         .attr('id', 'keywords_' + i);
     let kw = ["xxx", "health", "health", "health"];
     for (let w in kw) {
-        keywords.append('button')
-            .attr('class', 'btn btn-warning btn-sm hide')
+        keywords.append('span')
+            .attr('class', 'badge badge-warning mr-1 hide')
             .attr('type', 'button')
-            .attr('onclick', 'inquire(' + kw[w] + ')')
+            .attr('onclick', 'inquire("' + kw[w] + '")')
             .html(kw[w]);
     }
+}
+
+function inquire(i) {
+    console.log(i);
 }
 
 // should give input data

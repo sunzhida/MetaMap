@@ -1,5 +1,5 @@
 .wrapper {
-    width: 388px;
+    width: auto;
     margin: 0 auto;
     overflow: hidden;
     column-count: 3;
@@ -42,7 +42,8 @@ text {
 }
 
 .scrollable {
-    height: 432px;
+    /*height: 432px;*/
+    max-height: 543px;
     overflow: auto;
 }
 

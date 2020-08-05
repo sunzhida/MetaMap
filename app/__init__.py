@@ -6,7 +6,6 @@ import sys
 import warnings
 import json
 
-
 if not sys.warnoptions:
     warnings.simplefilter("ignore")
 
@@ -35,11 +34,6 @@ def create_connection(db_file):
 
 # return suggest keywords based on input: a list of string
 def suggestKeayword(input):
-    print(input)
-    # if input == "test":
-    #     keywordlist = ['Key word 1', 'Key word 2', 'Key word 3', 'Key word 4']
-    # else:
-    #     keywordlist = ['Key word 1', 'Key word 2', 'Key word 3', 'Key word 4', 'test']
     conn = create_connection(DATABASE)
     search_df = pd.read_sql_query("SELECT suggestions from search where keyword == '%s'" % input, conn)
     conn.commit()
@@ -77,8 +71,8 @@ def index():
     if conn is not None and RELOAD_DATABASE:
         search_data = pd.read_csv('./data_csv/search_demo.csv')
         image_data = pd.read_csv('./data_csv/images_demo.csv')
-        search_data.to_sql('search', conn, if_exists='replace', index = False)
-        image_data.to_sql('images', conn, if_exists='replace', index = False)
+        search_data.to_sql('search', conn, if_exists='replace', index=False)
+        image_data.to_sql('images', conn, if_exists='replace', index=False)
     conn.commit()
     conn.close()
     message = 'OK'
@@ -89,8 +83,19 @@ def index():
 def search(i):
     keyword = suggestKeayword(i)
     image = searchImage(i)
-    data = {'search':i, 'keywords': keyword, 'images': image}
+    data = {'search': i, 'keywords': keyword, 'images': image}
     return json.dumps(data)
+
+
+@app.route('/browse/<i>', methods=['GET', 'POST'])
+def browse(i):
+    print(i)
+    #################################
+    # Youwen: processing the data here
+    #################################
+    data = "{\"input\":\"01.jpg\",\"semantic\":[{\"name\":\"000e74ea347f08c0cae2b3cfc4f612cf.jpg\",\"keywords\":[\"xxx\",\"health\",\"health\",\"health\"],\"width\":276,\"height\":180},{\"name\":\"00a8885948a4a3abed0a27480c9f3fa6.png\",\"keywords\":[\"xxx\",\"health\",\"health\",\"health\"],\"width\":240,\"height\":180},{\"name\":\"00a5155ce76792c8aaef4bd67e2d4f44.jpg\",\"keywords\":[\"xxx\",\"health\",\"health\",\"health\"],\"width\":232,\"height\":180}],\"color\":[{\"name\":\"00ab0fe3d1d76da690d7438117eeea49.jpg\",\"keywords\":[\"xxx\",\"health\",\"health\",\"health\"],\"width\":270,\"height\":180},{\"name\":\"00e43e295097e2580d0178cb3cadd04b.jpg\",\"keywords\":[\"xxx\",\"health\",\"health\",\"health\"],\"width\":131,\"height\":180}],\"shape\":[{\"name\":\"00daeeb00b31e6f7fd9bf103a1733560.jpg\",\"keywords\":[\"xxx\",\"health\",\"health\",\"health\"],\"width\":131,\"height\":180},{\"name\":\"00dddfdfe4ad349925af78c3d04533f9.jpg\",\"keywords\":[\"xxx\",\"health\",\"health\",\"health\"],\"width\":116,\"height\":180}],\"status\":\"xxx\"}"
+    return json.dumps(data)
+
 
 @app.route('/redir/<i>')
 def redir(i):
@@ -98,5 +103,3 @@ def redir(i):
     image = searchImage(i)
     message = 'OK'
     return render_template('index.html', keyword=keyword, image=image, message=message)
-
-

@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47634e43-10ee-4812-ae17-2a32f46f168c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/static/js/interaction.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/interaction.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -18,7 +18,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1008">
+            <state relative-caret-position="1241">
               <caret line="79" column="16" selection-start-line="79" selection-start-column="16" selection-end-line="79" selection-end-column="16" />
               <folding>
                 <element signature="e#0#106#0" expanded="true" />
@@ -30,7 +30,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/static/css/template.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="532">
+            <state relative-caret-position="1156">
               <caret line="68" column="1" selection-start-line="68" selection-start-column="1" selection-end-line="68" selection-end-column="1" />
             </state>
           </provider>
@@ -57,17 +57,15 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/static/js/interaction.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="348" column="62" selection-start-line="348" selection-start-column="55" selection-end-line="348" selection-end-column="62" />
+            <state relative-caret-position="1105">
+              <caret line="394" column="11" lean-forward="true" selection-start-line="394" selection-start-column="11" selection-end-line="394" selection-end-column="11" />
               <folding>
                 <element signature="n#!!block;n#submit#0" />
                 <element signature="n#!!block;n#resubmit#0" />
-                <element signature="e#2068#2637#0" />
                 <element signature="n#!!block;n#addAndDrawHistory#0" />
                 <element signature="n#!!block;n#fillInHistory#0" />
                 <element signature="n#!!block;n#drawImages#0" />
                 <element signature="n#!!block;n#zoomed#0" />
-                <element signature="n#!!block;n#clear#0" />
                 <element signature="n#!!block;n#screenshot#0" />
                 <element signature="n#!!block;n#printout#0" />
                 <element signature="n#!!block;n#shareto#0" />
@@ -157,10 +155,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1913" />
-    <option name="y" value="-571" />
-    <option name="width" value="1090" />
-    <option name="height" value="1223" />
+    <option name="x" value="956" />
+    <option name="y" value="-286" />
+    <option name="width" value="545" />
+    <option name="height" value="611" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -256,15 +254,16 @@
       <workItem from="1595939874031" duration="630000" />
       <workItem from="1596008146605" duration="1185000" />
       <workItem from="1596164904049" duration="4852000" />
-      <workItem from="1596249098029" duration="44854000" />
+      <workItem from="1596249098029" duration="45454000" />
+      <workItem from="1596523654442" duration="1755000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="126706000" />
+    <option name="totallyTimeSpent" value="129061000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1913" y="-571" width="1090" height="1223" extended-state="0" />
+    <frame x="956" y="-286" width="545" height="611" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" weight="0.18252428" />
@@ -329,30 +328,20 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/static/js/layout.js" />
-    <entry file="file://$PROJECT_DIR$/app/static/js/main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="31" column="48" selection-start-line="14" selection-end-line="31" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/js/sankey.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/js/tree.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="39" column="7" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1008">
+        <state relative-caret-position="1241">
           <caret line="79" column="16" selection-start-line="79" selection-start-column="16" selection-end-line="79" selection-end-column="16" />
           <folding>
             <element signature="e#0#106#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/css/template.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1156">
+          <caret line="68" column="1" selection-start-line="68" selection-start-column="1" selection-end-line="68" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -372,26 +361,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/css/template.css">
+    <entry file="file://$PROJECT_DIR$/app/static/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="68" column="1" selection-start-line="68" selection-start-column="1" selection-end-line="68" selection-end-column="1" />
+        <state relative-caret-position="527">
+          <caret line="31" column="48" selection-start-line="14" selection-end-line="31" selection-end-column="48" />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/js/tree.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="663">
+          <caret line="39" column="7" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/js/sankey.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/static/js/interaction.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="348" column="62" selection-start-line="348" selection-start-column="55" selection-end-line="348" selection-end-column="62" />
+        <state relative-caret-position="1105">
+          <caret line="394" column="11" lean-forward="true" selection-start-line="394" selection-start-column="11" selection-end-line="394" selection-end-column="11" />
           <folding>
             <element signature="n#!!block;n#submit#0" />
             <element signature="n#!!block;n#resubmit#0" />
-            <element signature="e#2068#2637#0" />
             <element signature="n#!!block;n#addAndDrawHistory#0" />
             <element signature="n#!!block;n#fillInHistory#0" />
             <element signature="n#!!block;n#drawImages#0" />
             <element signature="n#!!block;n#zoomed#0" />
-            <element signature="n#!!block;n#clear#0" />
             <element signature="n#!!block;n#screenshot#0" />
             <element signature="n#!!block;n#printout#0" />
             <element signature="n#!!block;n#shareto#0" />

@@ -135,6 +135,7 @@ function addImage(input) {
     let imageWidth = 120;
     let imagePlace = 0;
     canvas.select('text').remove();
+    imageID += 1;
 
     let imageName = input.split('/')[3];
 
@@ -153,7 +154,7 @@ function addImage(input) {
     let buttons = group.append("foreignObject")
         .attr('x', imagePlace + imageWidth - 61)
         .attr('y', (height - 112) / 2 - imageWidth / 2)
-        .attr('width', imageWidth)
+        .attr('width', imageWidth - 40)
         .attr('height', 30)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
@@ -201,7 +202,6 @@ function addImage(input) {
             //Do Something to handle error
         }
     });
-    imageID += 1;
 }
 
 //Function called on the zoom event. It translate the draw on the zoommed point and scale with a certain factor
@@ -313,7 +313,7 @@ function addSubImage(x, y, i, input) {
         keywords.append('span')
             .attr('class', 'badge badge-warning mr-1 hide')
             .attr('type', 'button')
-            .attr('onclick', 'inquire("' + kw[w] + '")')
+            .attr('onclick', 'inquire("' + input['name'] + ',' + kw[w] + ',' + i + '")')
             .html(kw[w]);
     }
 }
@@ -321,7 +321,16 @@ function addSubImage(x, y, i, input) {
 function inquire(i) {
     let imgName = i.split(',')[0];
     let keyword = i.split(',')[1];
-    console.log(imgName, keyword);
+    let imgID = i.split(',')[2];
+    console.log(imgName, keyword, imgID);
+    let img = document.getElementById("boarding_" + imgID).getBBox();
+    // let img1 = document.getElementById("boarding_" + imgID).getBoundingClientRect();
+    console.log(img);
+    let imageWidth = img.width;
+    let imageHeight = img.height;
+    let imageX = img.x;
+    let imageY = img.y;
+    let recHeight = 220, sec = 80;
 
     $.ajax({
         url: "/explore/" + i,
@@ -335,6 +344,127 @@ function inquire(i) {
             //Do Something to handle error
         }
     });
+
+    let d = {
+        "input": "01.jpg",
+        "semantic": [{
+            "name": "000e74ea347f08c0cae2b3cfc4f612cf.jpg",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 276,
+            "height": 180
+        }, {
+            "name": "00a8885948a4a3abed0a27480c9f3fa6.png",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 240,
+            "height": 180
+        }, {
+            "name": "00a5155ce76792c8aaef4bd67e2d4f44.jpg",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 232,
+            "height": 180
+        }],
+        "color": [{
+            "name": "00ab0fe3d1d76da690d7438117eeea49.jpg",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 270,
+            "height": 180
+        }, {
+            "name": "00e43e295097e2580d0178cb3cadd04b.jpg",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 131,
+            "height": 180
+        }],
+        "shape": [{
+            "name": "00daeeb00b31e6f7fd9bf103a1733560.jpg",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 131,
+            "height": 180
+        }, {
+            "name": "00dddfdfe4ad349925af78c3d04533f9.jpg",
+            "keywords": ["xxx", "health", "health", "health"],
+            "width": 116,
+            "height": 180
+        }],
+        "status": "xxx"
+    };
+    // console.log(d);
+
+    let g_id = "#image_" + imgID;
+    let x1 = imageX + imageWidth, y1 = imageY + imageHeight / 2;
+    let x2 = imageX + imageWidth + sec / 2;
+    let y_semantic = y1 - recHeight / 2 - sec;
+    let y_color = y1;
+    let y_shape = y1 + recHeight / 2 + sec;
+
+    // image
+    imageID += 1;
+    addSubImage(x1 + sec, y_semantic - recHeight / 2, imageID, d['semantic'][0]);
+    imageID += 1;
+    addSubImage(x1 + sec, y_color - recHeight / 2, imageID, d['color'][0]);
+    imageID += 1;
+    addSubImage(x1 + sec, y_shape - recHeight / 2, imageID, d['shape'][0]);
+
+    // line
+    let lineGenerator = d3.svg.line()
+        .x(function (d) {
+            return d.x;
+        })
+        .y(function (d) {
+            return d.y;
+        })
+        .interpolate('bundle');
+
+    let path1 = [{'x': x1, 'y': y1}, {'x': x2, 'y': y1}, {'x': x1, 'y': y_semantic}, {'x': x2, 'y': y_semantic}];
+    let path2 = [{'x': x1, 'y': y1}, {'x': x2, 'y': y1}, {'x': x1, 'y': y_color}, {'x': x2, 'y': y_color}];
+    let path3 = [{'x': x1, 'y': y1}, {'x': x2, 'y': y1}, {'x': x1, 'y': y_shape}, {'x': x2, 'y': y_shape}];
+
+    d3.select(g_id)
+        .append('path')
+        .attr('d', lineGenerator(path1))
+        .style('fill', 'none')
+        .style('stroke', 'gray')
+        .style('stroke-width', '3')
+        .on('mouseover', function (d) {
+            console.log(d);
+        })
+        .on('mouseout', function (d) {
+            console.log(d);
+        })
+        .on('click', function (d) {
+            console.log(d);
+        });
+
+    d3.select(g_id)
+        .append('path')
+        .attr('d', lineGenerator(path2))
+        .style('fill', 'none')
+        .style('stroke', 'gray')
+        .style('stroke-width', '3')
+        .on('mouseover', function (d) {
+            console.log(d);
+        })
+        .on('mouseout', function (d) {
+            console.log(d);
+        })
+        .on('click', function (d) {
+            console.log(d);
+        });
+
+    d3.select(g_id)
+        .append('path')
+        .attr('d', lineGenerator(path3))
+        .style('fill', 'none')
+        .style('stroke', 'gray')
+        .style('stroke-width', '3')
+        .on('mouseover', function (d) {
+            console.log(d);
+        })
+        .on('mouseout', function (d) {
+            console.log(d);
+        })
+        .on('click', function (d) {
+            console.log(d);
+        });
 }
 
 // should give input data

@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="47634e43-10ee-4812-ae17-2a32f46f168c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/static/js/interaction.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/interaction.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/templates/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,7 +16,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="396">
@@ -40,8 +40,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="646">
-              <caret line="60" column="30" selection-start-line="60" selection-start-column="30" selection-end-line="60" selection-end-column="30" />
+            <state relative-caret-position="561">
+              <caret line="55" column="37" selection-start-line="55" selection-start-column="37" selection-end-line="55" selection-end-column="37" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#main#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -54,11 +54,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/static/js/interaction.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2499">
-              <caret line="421" column="15" selection-start-line="421" selection-start-column="4" selection-end-line="421" selection-end-column="15" />
+            <state relative-caret-position="727">
+              <caret line="398" column="12" lean-forward="true" selection-start-line="398" selection-start-column="12" selection-end-line="398" selection-end-column="12" />
               <folding>
                 <element signature="n#!!block;n#resubmit#0" />
                 <element signature="e#2068#2638#0" />
@@ -66,11 +66,14 @@
                 <element signature="n#!!block;n#fillInBadge#0" />
                 <element signature="n#!!block;n#drawKeywords#0" />
                 <element signature="n#!!block;n#drawImages#0" />
+                <element signature="n#!!block;n#addImage#0" />
                 <element signature="n#!!block;n#zoomed#0" />
                 <element signature="n#!!block;n#screenshot#0" />
                 <element signature="n#!!block;n#printout#0" />
                 <element signature="n#!!block;n#shareto#0" />
                 <element signature="n#!!block;n#refresh#0" />
+                <element signature="e#10615#12049#0" />
+                <element signature="n#!!block;n#explore#0" />
               </folding>
             </state>
           </provider>
@@ -139,8 +142,10 @@
       <find>browse</find>
       <find>/explore/</find>
       <find>explore(</find>
+      <find>inquire</find>
       <find>inquire(</find>
       <find>addSubImage</find>
+      <find>d</find>
     </findStrings>
     <replaceStrings>
       <replace>bg.</replace>
@@ -160,18 +165,18 @@
         <option value="$PROJECT_DIR$/examples/templates/chat.html" />
         <option value="$PROJECT_DIR$/app/templates/search.html" />
         <option value="$PROJECT_DIR$/app/static/js/tree.js" />
-        <option value="$PROJECT_DIR$/app/templates/index.html" />
         <option value="$PROJECT_DIR$/app/static/css/template.css" />
-        <option value="$PROJECT_DIR$/app/static/js/interaction.js" />
         <option value="$PROJECT_DIR$/app/__init__.py" />
+        <option value="$PROJECT_DIR$/app/templates/index.html" />
+        <option value="$PROJECT_DIR$/app/static/js/interaction.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="2124" />
-    <option name="y" value="-583" />
-    <option name="width" value="545" />
-    <option name="height" value="696" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="1918" />
+    <option name="y" value="-574" />
+    <option name="width" value="1084" />
+    <option name="height" value="1322" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -269,18 +274,18 @@
       <workItem from="1596164904049" duration="4852000" />
       <workItem from="1596249098029" duration="45454000" />
       <workItem from="1596523654442" duration="1755000" />
-      <workItem from="1596603686149" duration="11995000" />
+      <workItem from="1596603686149" duration="17621000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="141056000" />
+    <option name="totallyTimeSpent" value="146682000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-582" width="1096" height="1896" extended-state="6" />
+    <frame x="1918" y="-574" width="1084" height="1322" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18243243" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18457031" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -343,13 +348,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/static/js/image-tree.js">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/app/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="109" column="27" lean-forward="true" selection-start-line="109" selection-start-column="27" selection-end-line="109" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#106#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="646">
-          <caret line="60" column="30" selection-start-line="60" selection-start-column="30" selection-end-line="60" selection-end-column="30" />
+        <state relative-caret-position="561">
+          <caret line="55" column="37" selection-start-line="55" selection-start-column="37" selection-end-line="55" selection-end-column="37" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#main#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -361,10 +373,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/js/image-tree.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/static/js/interaction.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2499">
-          <caret line="421" column="15" selection-start-line="421" selection-start-column="4" selection-end-line="421" selection-end-column="15" />
+        <state relative-caret-position="727">
+          <caret line="398" column="12" lean-forward="true" selection-start-line="398" selection-start-column="12" selection-end-line="398" selection-end-column="12" />
           <folding>
             <element signature="n#!!block;n#resubmit#0" />
             <element signature="e#2068#2638#0" />
@@ -372,21 +387,14 @@
             <element signature="n#!!block;n#fillInBadge#0" />
             <element signature="n#!!block;n#drawKeywords#0" />
             <element signature="n#!!block;n#drawImages#0" />
+            <element signature="n#!!block;n#addImage#0" />
             <element signature="n#!!block;n#zoomed#0" />
             <element signature="n#!!block;n#screenshot#0" />
             <element signature="n#!!block;n#printout#0" />
             <element signature="n#!!block;n#shareto#0" />
             <element signature="n#!!block;n#refresh#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="109" column="27" lean-forward="true" selection-start-line="109" selection-start-column="27" selection-end-line="109" selection-end-column="27" />
-          <folding>
-            <element signature="e#0#106#0" expanded="true" />
+            <element signature="e#10615#12049#0" />
+            <element signature="n#!!block;n#explore#0" />
           </folding>
         </state>
       </provider>

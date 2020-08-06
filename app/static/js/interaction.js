@@ -326,8 +326,8 @@ function inquire(i) {
     let img = document.getElementById("boarding_" + imgID).getBBox();
     // let img1 = document.getElementById("boarding_" + imgID).getBoundingClientRect();
     console.log(img);
-    let imageWidth = img.width;
-    let imageHeight = img.height;
+    let imageWidth = 240;
+    let imageHeight = 180;
     let imageX = img.x;
     let imageY = img.y;
     let recHeight = 220, sec = 80;
@@ -465,10 +465,6 @@ function inquire(i) {
         .on('click', function (d) {
             console.log(d);
         });
-}
-
-function drawTree(d) {
-    console.log(d);
 }
 
 // should give input data
@@ -617,6 +613,10 @@ function explore(i) {
         .on('click', function (d) {
             console.log(d);
         });
+}
+
+function drawTree(d) {
+    console.log(d);
 }
 
 function remove(i) {

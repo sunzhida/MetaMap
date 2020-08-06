@@ -216,19 +216,6 @@ function browseImage(input) {
     let image_name = res[0].split('/');
     let image_id = res[1];
 
-    // $.ajax({
-    //     url: "/browse/" + image_name,
-    //     type: "get",
-    //     data: image_name,
-    //     success: function (response) {
-    //         let re = JSON.parse(response);
-    //         console.log(re);
-    //     },
-    //     error: function (xhr) {
-    //         //Do Something to handle error
-    //     }
-    // });
-
     let popup_kw = document.getElementById('keywords_' + image_id);
     if (popup_kw.style.display === "none") {
         popup_kw.style.display = "block";

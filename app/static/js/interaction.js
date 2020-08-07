@@ -325,7 +325,7 @@ function inquire(i) {
     let img = document.getElementById("boarding_" + imgID).getBBox();
     // let img1 = document.getElementById("boarding_" + imgID).getBoundingClientRect();
     console.log(img);
-    let recHeight = 220, sec = 80, imageHeight = 120;
+    let recHeight = 220, sec = 80, imageHeight = 120, imageWidth = 240;
 
     let g_id = "#image_" + imgID;
     let x1 = img.x + img.width, y1 = img.y + img.height / 2;
@@ -342,7 +342,7 @@ function inquire(i) {
         data: i,
         success: function (response) {
             let re = JSON.parse(response);
-            console.log(re);
+            console.log(x1, y_semantic, y_color, y_shape);
             imageID += 1;
             addSubImage(x1 + sec, y_semantic - imageHeight / 2, imageID, re['semantic'][0]);
             imageID += 1;
@@ -364,6 +364,8 @@ function inquire(i) {
             return d.y;
         })
         .interpolate('bundle');
+
+    console.log(x1, y_semantic, y_color, y_shape);
 
     let path1 = [{'x': x1, 'y': y1}, {'x': x2, 'y': y1}, {'x': x1, 'y': y_semantic}, {'x': x2, 'y': y_semantic}];
     let path2 = [{'x': x1, 'y': y1}, {'x': x2, 'y': y1}, {'x': x1, 'y': y_color}, {'x': x2, 'y': y_color}];

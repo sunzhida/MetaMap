@@ -134,11 +134,13 @@ function drawImages(i) {
 function addImage(input) {
     let imageWidth = 120;
     let imagePlace = 0;
+    // remove text
     canvas.select('text').remove();
+    // remove the whole content
+    container.select('g').remove();
     imageID += 1;
 
     let imageName = input.split('/')[3];
-    console.log(imageName);
 
     let group = container.append("g")
         .attr("transform", "translate("
@@ -177,9 +179,9 @@ function addImage(input) {
         .attr('class', 'fas fa-trash-alt');
     let keywords = group.append("foreignObject")
         .attr('x', imagePlace)
-        .attr('y', (height - 112) / 2 - imageWidth / 2 - 60)
+        .attr('y', (height - 112) / 2 - imageWidth / 2 - 40)
         .attr('width', imageWidth)
-        .attr('height', 60)
+        .attr('height', 40)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
         .attr('style', 'display: none;')
@@ -234,7 +236,7 @@ function browseImage(input) {
 }
 
 function clearboard() {
-    console.log('clear');
+    // console.log('clear');
     container.selectAll('*').remove();
 }
 
@@ -317,22 +319,7 @@ function inquire(i) {
     console.log(img);
     let imageWidth = 240;
     let imageHeight = 180;
-    let imageX = img.x;
-    let imageY = img.y;
     let recHeight = 220, sec = 80;
-
-    $.ajax({
-        url: "/explore/" + i,
-        type: "get",
-        data: i,
-        success: function (response) {
-            let re = JSON.parse(response);
-            console.log(re);
-        },
-        error: function (xhr) {
-            //Do Something to handle error
-        }
-    });
 
     let d = {
         "input": "01.jpg",
@@ -379,19 +366,32 @@ function inquire(i) {
     // console.log(d);
 
     let g_id = "#image_" + imgID;
-    let x1 = imageX + imageWidth, y1 = imageY + imageHeight / 2;
-    let x2 = imageX + imageWidth + sec / 2;
+    let x1 = img.x + img.width, y1 = img.y + img.height / 2;
+    let x2 = img.x + img.width + sec / 2;
     let y_semantic = y1 - recHeight / 2 - sec;
     let y_color = y1;
     let y_shape = y1 + recHeight / 2 + sec;
 
     // image
-    imageID += 1;
-    addSubImage(x1 + sec, y_semantic - recHeight / 2, imageID, d['semantic'][0]);
-    imageID += 1;
-    addSubImage(x1 + sec, y_color - recHeight / 2, imageID, d['color'][0]);
-    imageID += 1;
-    addSubImage(x1 + sec, y_shape - recHeight / 2, imageID, d['shape'][0]);
+
+    $.ajax({
+        url: "/inquire/" + i,
+        type: "get",
+        data: i,
+        success: function (response) {
+            let re = JSON.parse(response);
+            console.log(re);
+            imageID += 1;
+            addSubImage(x1 + sec, y_semantic - recHeight / 2, imageID, d['semantic'][0]);
+            imageID += 1;
+            addSubImage(x1 + sec, y_color - recHeight / 2, imageID, d['color'][0]);
+            imageID += 1;
+            addSubImage(x1 + sec, y_shape - recHeight / 2, imageID, d['shape'][0]);
+        },
+        error: function (xhr) {
+            //Do Something to handle error
+        }
+    });
 
     // line
     let lineGenerator = d3.svg.line()
@@ -406,20 +406,29 @@ function inquire(i) {
     let path1 = [{'x': x1, 'y': y1}, {'x': x2, 'y': y1}, {'x': x1, 'y': y_semantic}, {'x': x2, 'y': y_semantic}];
     let path2 = [{'x': x1, 'y': y1}, {'x': x2, 'y': y1}, {'x': x1, 'y': y_color}, {'x': x2, 'y': y_color}];
     let path3 = [{'x': x1, 'y': y1}, {'x': x2, 'y': y1}, {'x': x1, 'y': y_shape}, {'x': x2, 'y': y_shape}];
+    let cen_x = (x1 + x2) / 2;
+    let cen_1 = (y1 + y_semantic) / 2;
+    let cen_2 = (y1 + y_color) / 2;
+    let cen_3 = (y1 + y_shape) / 2;
 
     d3.select(g_id)
         .append('path')
         .attr('d', lineGenerator(path1))
         .style('fill', 'none')
-        .style('stroke', 'gray')
-        .style('stroke-width', '3')
+        .style('stroke', '#e67e22')
+        .style('stroke-width', '3');
+    d3.select(g_id)
+        .append('text')
+        .text('Semantic')
+        .attr('transform', function (d) {
+            return "translate(" + (cen_x - 30) + "," + (cen_1 - 11) + ")"
+        })
+        // .style('visibility', 'hidden')
+        .style('fill', '#d35400')
         .on('mouseover', function (d) {
             console.log(d);
         })
         .on('mouseout', function (d) {
-            console.log(d);
-        })
-        .on('click', function (d) {
             console.log(d);
         });
 
@@ -427,8 +436,15 @@ function inquire(i) {
         .append('path')
         .attr('d', lineGenerator(path2))
         .style('fill', 'none')
-        .style('stroke', 'gray')
-        .style('stroke-width', '3')
+        .style('stroke', '#9b59b6')
+        .style('stroke-width', '3');
+    d3.select(g_id)
+        .append('text')
+        .text('Color')
+        .attr('transform', function (d) {
+            return "translate(" + (cen_x - 15) + "," + (cen_2 - 11) + ")"
+        })
+        .style('fill', '#8e44ad')
         .on('mouseover', function (d) {
             console.log(d);
         })
@@ -443,8 +459,15 @@ function inquire(i) {
         .append('path')
         .attr('d', lineGenerator(path3))
         .style('fill', 'none')
-        .style('stroke', 'gray')
-        .style('stroke-width', '3')
+        .style('stroke', '#2ecc71')
+        .style('stroke-width', '3');
+    d3.select(g_id)
+        .append('text')
+        .text('Shape')
+        .style('fill', '#27ae60')
+        .attr('transform', function (d) {
+            return "translate(" + (cen_x - 15) + "," + (cen_3 - 11) + ")"
+        })
         .on('mouseover', function (d) {
             console.log(d);
         })

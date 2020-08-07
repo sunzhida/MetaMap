@@ -69,7 +69,7 @@ function resubmit(i) {
 }
 
 /* Search History */
-var addHistory = (function () {
+let addHistory = (function () {
     const MAXLEN = 10;
     let history = [];
 
@@ -138,6 +138,7 @@ function addImage(input) {
     imageID += 1;
 
     let imageName = input.split('/')[3];
+    console.log(imageName);
 
     let group = container.append("g")
         .attr("transform", "translate("
@@ -183,9 +184,10 @@ function addImage(input) {
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
         .attr('style', 'display: none;')
         .attr('id', 'keywords_' + imageID);
+
     $.ajax({
+        type: "POST",
         url: "/plot/" + imageName,
-        type: "get",
         data: imageName,
         success: function (response) {
             let re = JSON.parse(response);

@@ -214,6 +214,7 @@ def plot(i):
     conn = create_connection(DATABASE)
     d = checkImageAttributes(conn, i)
     conn.close()
+    print(type(d))
 
     return json.dumps(d)
 

@@ -257,6 +257,7 @@ function refresh(i) {
 }
 
 function addSubImage(x, y, i, input) {
+    let imageWidth = 240, imageHeight = 180;
     let group = container.append("g")
         .attr("transform", "translate("
             + x + "," + y + ")")
@@ -264,7 +265,8 @@ function addSubImage(x, y, i, input) {
         .classed('draggable', true);
     group.append("image")
         .attr('href', '../static/img/' + input['name'])
-        .attr('height', input['height'])
+        .attr('width', input['width']/input['height']*imageHeight)
+        .attr('height', imageHeight)
         .attr('onmouseup', 'browseImage("' + input['name'] + ',' + i + '")')
         .attr("id", "boarding_" + i);
     let buttons = group.append("foreignObject")
@@ -317,53 +319,7 @@ function inquire(i) {
     let img = document.getElementById("boarding_" + imgID).getBBox();
     // let img1 = document.getElementById("boarding_" + imgID).getBoundingClientRect();
     console.log(img);
-    let imageWidth = 240;
-    let imageHeight = 180;
     let recHeight = 220, sec = 80;
-
-    let d = {
-        "input": "01.jpg",
-        "semantic": [{
-            "name": "000e74ea347f08c0cae2b3cfc4f612cf.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 276,
-            "height": 180
-        }, {
-            "name": "00a8885948a4a3abed0a27480c9f3fa6.png",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 240,
-            "height": 180
-        }, {
-            "name": "00a5155ce76792c8aaef4bd67e2d4f44.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 232,
-            "height": 180
-        }],
-        "color": [{
-            "name": "00ab0fe3d1d76da690d7438117eeea49.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 270,
-            "height": 180
-        }, {
-            "name": "00e43e295097e2580d0178cb3cadd04b.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 131,
-            "height": 180
-        }],
-        "shape": [{
-            "name": "00daeeb00b31e6f7fd9bf103a1733560.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 131,
-            "height": 180
-        }, {
-            "name": "00dddfdfe4ad349925af78c3d04533f9.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 116,
-            "height": 180
-        }],
-        "status": "xxx"
-    };
-    // console.log(d);
 
     let g_id = "#image_" + imgID;
     let x1 = img.x + img.width, y1 = img.y + img.height / 2;
@@ -382,11 +338,11 @@ function inquire(i) {
             let re = JSON.parse(response);
             console.log(re);
             imageID += 1;
-            addSubImage(x1 + sec, y_semantic - recHeight / 2, imageID, d['semantic'][0]);
+            addSubImage(x1 + sec, y_semantic - recHeight / 2, imageID, re['semantic'][0]);
             imageID += 1;
-            addSubImage(x1 + sec, y_color - recHeight / 2, imageID, d['color'][0]);
+            addSubImage(x1 + sec, y_color - recHeight / 2, imageID, re['color'][0]);
             imageID += 1;
-            addSubImage(x1 + sec, y_shape - recHeight / 2, imageID, d['shape'][0]);
+            addSubImage(x1 + sec, y_shape - recHeight / 2, imageID, re['shape'][0]);
         },
         error: function (xhr) {
             //Do Something to handle error
@@ -416,66 +372,74 @@ function inquire(i) {
         .attr('d', lineGenerator(path1))
         .style('fill', 'none')
         .style('stroke', '#e67e22')
-        .style('stroke-width', '3');
+        .style('stroke-width', '3')
+        .on('mouseover', function () {
+            d3.select('#path_s_' + imgID)
+                .style('visibility', 'visible');
+        })
+        .on('mouseout', function () {
+            d3.select('#path_s_' + imgID)
+                .style('visibility', 'hidden');
+        });
     d3.select(g_id)
         .append('text')
         .text('Semantic')
-        .attr('transform', function (d) {
+        .attr('transform', function () {
             return "translate(" + (cen_x - 30) + "," + (cen_1 - 11) + ")"
         })
-        // .style('visibility', 'hidden')
-        .style('fill', '#d35400')
-        .on('mouseover', function (d) {
-            console.log(d);
-        })
-        .on('mouseout', function (d) {
-            console.log(d);
-        });
+        .attr('id', 'path_s_' + imgID)
+        .style('visibility', 'hidden')
+        .style('fill', '#d35400');
 
     d3.select(g_id)
         .append('path')
         .attr('d', lineGenerator(path2))
         .style('fill', 'none')
         .style('stroke', '#9b59b6')
-        .style('stroke-width', '3');
+        .style('stroke-width', '3')
+        .on('mouseover', function () {
+            d3.select('#path_c_' + imgID)
+                .style('visibility', 'visible');
+        })
+        .on('mouseout', function () {
+            d3.select('#path_c_' + imgID)
+                .style('visibility', 'hidden');
+        });
     d3.select(g_id)
         .append('text')
         .text('Color')
-        .attr('transform', function (d) {
+        .attr('transform', function () {
             return "translate(" + (cen_x - 15) + "," + (cen_2 - 11) + ")"
         })
-        .style('fill', '#8e44ad')
-        .on('mouseover', function (d) {
-            console.log(d);
-        })
-        .on('mouseout', function (d) {
-            console.log(d);
-        })
-        .on('click', function (d) {
-            console.log(d);
-        });
+        .attr('id', 'path_c_' + imgID)
+        .style('visibility', 'hidden')
+        .style('fill', '#8e44ad');
 
     d3.select(g_id)
         .append('path')
         .attr('d', lineGenerator(path3))
         .style('fill', 'none')
         .style('stroke', '#2ecc71')
-        .style('stroke-width', '3');
+        .style('stroke-width', '3')
+        .on('mouseover', function (d) {
+            d3.select('#path_sh_' + imgID)
+                .style('visibility', 'visible');
+        })
+        .on('mouseout', function (d) {
+            d3.select('#path_sh_' + imgID)
+                .style('visibility', 'hidden');
+        })
+        .on('click', function (d) {
+            console.log(d);
+        });
     d3.select(g_id)
         .append('text')
         .text('Shape')
         .style('fill', '#27ae60')
+        .attr('id', 'path_sh_' + imgID)
+        .style('visibility', 'hidden')
         .attr('transform', function (d) {
             return "translate(" + (cen_x - 15) + "," + (cen_3 - 11) + ")"
-        })
-        .on('mouseover', function (d) {
-            console.log(d);
-        })
-        .on('mouseout', function (d) {
-            console.log(d);
-        })
-        .on('click', function (d) {
-            console.log(d);
         });
 }
 

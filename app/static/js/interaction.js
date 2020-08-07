@@ -257,20 +257,27 @@ function refresh(i) {
 }
 
 function addSubImage(x, y, i, input) {
-    let imageWidth = 240, imageHeight = 180;
+    console.log(input);
+    let imageWidth = 240, imageHeight = 120;
     let group = container.append("g")
         .attr("transform", "translate("
             + x + "," + y + ")")
         .attr('id', 'image_' + i)
         .classed('draggable', true);
+    group.append('rect')
+        .style('fill', 'white')
+        .style('stroke', 'black')
+        .style('stroke-width', 3)
+        .attr('width', imageWidth)
+        .attr('height', imageHeight);
     group.append("image")
         .attr('href', '../static/img/' + input['name'])
-        .attr('width', input['width']/input['height']*imageHeight)
+        .attr('width', input['width'] / input['height'] * imageHeight)
         .attr('height', imageHeight)
         .attr('onmouseup', 'browseImage("' + input['name'] + ',' + i + '")')
         .attr("id", "boarding_" + i);
     let buttons = group.append("foreignObject")
-        .attr('x', input['width'] - 61)
+        .attr('x', imageWidth - 61)
         .attr('y', 0)
         .attr('width', 62)
         .attr('height', 30)
@@ -295,19 +302,18 @@ function addSubImage(x, y, i, input) {
     let keywords = group.append("foreignObject")
         .attr('x', 0)
         .attr('y', -40)
-        .attr('width', input['width'])
+        .attr('width', imageWidth)
         .attr('height', 40)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
         .attr('style', 'display: none;')
         .attr('id', 'keywords_' + i);
-    let kw = ["xxx", "health", "health", "health"];
-    for (let w in kw) {
+    for (let w in input['keywords']) {
         keywords.append('span')
             .attr('class', 'badge badge-warning mr-1 hide')
             .attr('type', 'button')
-            .attr('onclick', 'inquire("' + input['name'] + ',' + kw[w] + ',' + i + '")')
-            .html(kw[w]);
+            .attr('onclick', 'inquire("' + input['name'] + ',' + input['keywords'][w] + ',' + i + '")')
+            .html(input['keywords'][w]);
     }
 }
 
@@ -319,7 +325,7 @@ function inquire(i) {
     let img = document.getElementById("boarding_" + imgID).getBBox();
     // let img1 = document.getElementById("boarding_" + imgID).getBoundingClientRect();
     console.log(img);
-    let recHeight = 220, sec = 80;
+    let recHeight = 220, sec = 80, imageHeight = 120;
 
     let g_id = "#image_" + imgID;
     let x1 = img.x + img.width, y1 = img.y + img.height / 2;
@@ -338,11 +344,11 @@ function inquire(i) {
             let re = JSON.parse(response);
             console.log(re);
             imageID += 1;
-            addSubImage(x1 + sec, y_semantic - recHeight / 2, imageID, re['semantic'][0]);
+            addSubImage(x1 + sec, y_semantic - imageHeight / 2, imageID, re['semantic'][0]);
             imageID += 1;
-            addSubImage(x1 + sec, y_color - recHeight / 2, imageID, re['color'][0]);
+            addSubImage(x1 + sec, y_color - imageHeight / 2, imageID, re['color'][0]);
             imageID += 1;
-            addSubImage(x1 + sec, y_shape - recHeight / 2, imageID, re['shape'][0]);
+            addSubImage(x1 + sec, y_shape - imageHeight / 2, imageID, re['shape'][0]);
         },
         error: function (xhr) {
             //Do Something to handle error

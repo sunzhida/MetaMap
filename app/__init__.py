@@ -66,8 +66,8 @@ def checkImageAttributes(conn, image_name):
     image_dict = {
         "name": image_name,
         "keywords": keywords,
-        "width": width,
-        "height": height,
+        "width": int(width),
+        "height": int(height),
     }
     return image_dict
 

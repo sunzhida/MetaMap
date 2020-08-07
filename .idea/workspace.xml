@@ -4,12 +4,16 @@
     <bookmark url="file://$PROJECT_DIR$/app/static/js/interaction.js" line="211" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="47634e43-10ee-4812-ae17-2a32f46f168c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/static/js/interaction.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/static/js/interaction.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
     </list>
+=======
+    <list default="true" id="47634e43-10ee-4812-ae17-2a32f46f168c" name="Default Changelist" comment="" />
+>>>>>>> d9b0d673d2a8df2cd7e30b7bb077cfe575530e3d
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,8 +25,18 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="339">
               <caret line="216" column="18" selection-start-line="216" selection-start-column="18" selection-end-line="216" selection-end-column="18" />
+=======
+<<<<<<< HEAD
+            <state relative-caret-position="4335">
+              <caret line="261" column="13" selection-start-line="261" selection-start-column="13" selection-end-line="261" selection-end-column="13" />
+=======
+            <state relative-caret-position="2070">
+              <caret line="146" column="25" selection-start-line="146" selection-start-column="25" selection-end-line="146" selection-end-column="25" />
+>>>>>>> 44d4fcc42f627c081892cdb554a6afd0c6a963f4
+>>>>>>> d9b0d673d2a8df2cd7e30b7bb077cfe575530e3d
               <folding>
                 <element signature="e#0#106#0" expanded="true" />
               </folding>
@@ -42,7 +56,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+            <state relative-caret-position="935">
+=======
             <state relative-caret-position="825">
+>>>>>>> 44d4fcc42f627c081892cdb554a6afd0c6a963f4
               <caret line="55" column="37" selection-start-line="55" selection-start-column="37" selection-end-line="55" selection-end-column="37" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -58,8 +76,18 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/static/js/interaction.js">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="310">
               <caret line="190" column="8" selection-start-line="190" selection-start-column="8" selection-end-line="190" selection-end-column="24" />
+=======
+<<<<<<< HEAD
+            <state relative-caret-position="178">
+              <caret line="328" column="25" selection-start-line="328" selection-start-column="25" selection-end-line="328" selection-end-column="25" />
+=======
+            <state relative-caret-position="121">
+              <caret line="216" column="26" selection-start-line="216" selection-start-column="26" selection-end-line="216" selection-end-column="26" />
+>>>>>>> 44d4fcc42f627c081892cdb554a6afd0c6a963f4
+>>>>>>> d9b0d673d2a8df2cd7e30b7bb077cfe575530e3d
               <folding>
                 <element signature="n#!!block;n#resubmit#0" />
                 <element signature="e#2068#2638#0" />
@@ -269,19 +297,43 @@
       <workItem from="1596249098029" duration="45454000" />
       <workItem from="1596523654442" duration="1755000" />
       <workItem from="1596603686149" duration="20914000" />
+<<<<<<< HEAD
       <workItem from="1596738039333" duration="157000" />
       <workItem from="1596764630520" duration="2772000" />
+=======
+<<<<<<< HEAD
+      <workItem from="1596678762328" duration="585000" />
+=======
+      <workItem from="1596738039333" duration="38000" />
+>>>>>>> 44d4fcc42f627c081892cdb554a6afd0c6a963f4
+>>>>>>> d9b0d673d2a8df2cd7e30b7bb077cfe575530e3d
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
+<<<<<<< HEAD
     <option name="totallyTimeSpent" value="152904000" />
+=======
+<<<<<<< HEAD
+    <option name="totallyTimeSpent" value="150560000" />
+=======
+    <option name="totallyTimeSpent" value="150013000" />
+>>>>>>> 44d4fcc42f627c081892cdb554a6afd0c6a963f4
+>>>>>>> d9b0d673d2a8df2cd7e30b7bb077cfe575530e3d
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
     <editor active="true" />
     <layout>
+<<<<<<< HEAD
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13731825" />
+=======
+<<<<<<< HEAD
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18847656" />
+=======
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13570274" />
+>>>>>>> 44d4fcc42f627c081892cdb554a6afd0c6a963f4
+>>>>>>> d9b0d673d2a8df2cd7e30b7bb077cfe575530e3d
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -320,7 +372,10 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/static/js/layout.js" />
+<<<<<<< HEAD
+=======
     <entry file="file://$PROJECT_DIR$/app/static/js/image-tree.js" />
+>>>>>>> 44d4fcc42f627c081892cdb554a6afd0c6a963f4
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -331,6 +386,24 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+=======
+    <entry file="file://$PROJECT_DIR$/app/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="4335">
+          <caret line="261" column="13" selection-start-line="261" selection-start-column="13" selection-end-line="261" selection-end-column="13" />
+=======
+        <state relative-caret-position="2070">
+          <caret line="146" column="25" selection-start-line="146" selection-start-column="25" selection-end-line="146" selection-end-column="25" />
+>>>>>>> 44d4fcc42f627c081892cdb554a6afd0c6a963f4
+          <folding>
+            <element signature="e#0#106#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+>>>>>>> d9b0d673d2a8df2cd7e30b7bb077cfe575530e3d
     <entry file="file://$PROJECT_DIR$/app/static/css/template.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="675">
@@ -340,7 +413,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="935">
+=======
         <state relative-caret-position="825">
+>>>>>>> 44d4fcc42f627c081892cdb554a6afd0c6a963f4
           <caret line="55" column="37" selection-start-line="55" selection-start-column="37" selection-end-line="55" selection-end-column="37" />
           <folding>
             <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
@@ -352,16 +429,29 @@
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
+    <entry file="file://$PROJECT_DIR$/app/static/js/image-tree.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/static/js/main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+=======
     <entry file="file://$PROJECT_DIR$/app/static/js/main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="465">
+>>>>>>> 44d4fcc42f627c081892cdb554a6afd0c6a963f4
           <caret line="31" column="48" selection-start-line="14" selection-end-line="31" selection-end-column="48" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/static/js/tree.js">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="663">
+=======
         <state relative-caret-position="585">
+>>>>>>> 44d4fcc42f627c081892cdb554a6afd0c6a963f4
           <caret line="39" column="7" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="7" />
         </state>
       </provider>
@@ -378,8 +468,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/static/js/interaction.js">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="310">
           <caret line="190" column="8" selection-start-line="190" selection-start-column="8" selection-end-line="190" selection-end-column="24" />
+=======
+<<<<<<< HEAD
+        <state relative-caret-position="178">
+          <caret line="328" column="25" selection-start-line="328" selection-start-column="25" selection-end-line="328" selection-end-column="25" />
+=======
+        <state relative-caret-position="121">
+          <caret line="216" column="26" selection-start-line="216" selection-start-column="26" selection-end-line="216" selection-end-column="26" />
+>>>>>>> 44d4fcc42f627c081892cdb554a6afd0c6a963f4
+>>>>>>> d9b0d673d2a8df2cd7e30b7bb077cfe575530e3d
           <folding>
             <element signature="n#!!block;n#resubmit#0" />
             <element signature="e#2068#2638#0" />

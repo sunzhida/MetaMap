@@ -164,13 +164,6 @@ function addImage(input) {
         .attr('style', 'display: none;')
         .attr('id', 'button_' + imageID);
     buttons.append('button')
-        .attr('class', 'btn btn-info btn-sm hide')
-        .attr('type', 'button')
-        .attr('id', 'explore_' + imageID)
-        .attr('onclick', 'explore("' + imageName + ',' + imageID + '")')
-        .append('i')
-        .attr('class', 'fas fa-arrow-right');
-    buttons.append('button')
         .attr('class', 'btn btn-danger btn-sm hide')
         .attr('type', 'button')
         .attr('id', 'remove_' + imageID)
@@ -285,13 +278,6 @@ function addSubImage(x, y, i, input) {
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
         .attr('style', 'display: none;')
         .attr('id', 'button_' + i);
-    buttons.append('button')
-        .attr('class', 'btn btn-info btn-sm hide')
-        .attr('type', 'button')
-        .attr('id', 'explore_' + i)
-        .attr('onclick', 'explore("' + input['name'] + ',' + i + '")')
-        .append('i')
-        .attr('class', 'fas fa-arrow-right');
     buttons.append('button')
         .attr('class', 'btn btn-danger btn-sm hide')
         .attr('type', 'button')
@@ -448,154 +434,6 @@ function inquire(i) {
         .style('visibility', 'hidden')
         .attr('transform', function (d) {
             return "translate(" + (cen_x - 15) + "," + (cen_3 - 11) + ")"
-        });
-}
-
-// should give input data
-function explore(i) {
-    console.log(i);
-    let imgName = i.split(',')[0];
-    let imgID = i.split(',')[1];
-    let img = document.getElementById("boarding_" + imgID).getBBox();
-    let imageWidth = img.width;
-    let imageHeight = img.height;
-    let imageX = img.x;
-    let imageY = img.y;
-    console.log(img);
-    let recHeight = 220, sec = 80;
-
-    $.ajax({
-        url: "/explore/" + i,
-        type: "get",
-        data: i,
-        success: function (response) {
-            let re = JSON.parse(response);
-            console.log(re);
-        },
-        error: function (xhr) {
-            //Do Something to handle error
-        }
-    });
-
-    let d = {
-        "input": "01.jpg",
-        "semantic": [{
-            "name": "000e74ea347f08c0cae2b3cfc4f612cf.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 276,
-            "height": 180
-        }, {
-            "name": "00a8885948a4a3abed0a27480c9f3fa6.png",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 240,
-            "height": 180
-        }, {
-            "name": "00a5155ce76792c8aaef4bd67e2d4f44.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 232,
-            "height": 180
-        }],
-        "color": [{
-            "name": "00ab0fe3d1d76da690d7438117eeea49.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 270,
-            "height": 180
-        }, {
-            "name": "00e43e295097e2580d0178cb3cadd04b.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 131,
-            "height": 180
-        }],
-        "shape": [{
-            "name": "00daeeb00b31e6f7fd9bf103a1733560.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 131,
-            "height": 180
-        }, {
-            "name": "00dddfdfe4ad349925af78c3d04533f9.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 116,
-            "height": 180
-        }],
-        "status": "xxx"
-    };
-    // console.log(d);
-
-    let g_id = "#image_" + imgID;
-    let x1 = imageX + imageWidth, y1 = imageY + imageHeight / 2;
-    let x2 = imageX + imageWidth + sec / 2;
-    let y_semantic = y1 - recHeight / 2 - sec;
-    let y_color = y1;
-    let y_shape = y1 + recHeight / 2 + sec;
-
-    // image
-    addSubImage(imageX + imageWidth + sec, y_semantic - recHeight / 2, imageID, d['semantic'][0]);
-    imageID += 1;
-    addSubImage(imageX + imageWidth + sec, y_color - recHeight / 2, imageID, d['color'][0]);
-    imageID += 1;
-    addSubImage(imageX + imageWidth + sec, y_shape - recHeight / 2, imageID, d['shape'][0]);
-    imageID += 1;
-
-    // line
-    let lineGenerator = d3.svg.line()
-        .x(function (d) {
-            return d.x;
-        })
-        .y(function (d) {
-            return d.y;
-        })
-        .interpolate('bundle');
-
-    let path1 = [{'x': x1, 'y': y1}, {'x': x2, 'y': y1}, {'x': x1, 'y': y_semantic}, {'x': x2, 'y': y_semantic}];
-    let path2 = [{'x': x1, 'y': y1}, {'x': x2, 'y': y1}, {'x': x1, 'y': y_color}, {'x': x2, 'y': y_color}];
-    let path3 = [{'x': x1, 'y': y1}, {'x': x2, 'y': y1}, {'x': x1, 'y': y_shape}, {'x': x2, 'y': y_shape}];
-
-    d3.select(g_id)
-        .append('path')
-        .attr('d', lineGenerator(path1))
-        .style('fill', 'none')
-        .style('stroke', 'gray')
-        .style('stroke-width', '3')
-        .on('mouseover', function (d) {
-            console.log(d);
-        })
-        .on('mouseout', function (d) {
-            console.log(d);
-        })
-        .on('click', function (d) {
-            console.log(d);
-        });
-
-    d3.select(g_id)
-        .append('path')
-        .attr('d', lineGenerator(path2))
-        .style('fill', 'none')
-        .style('stroke', 'gray')
-        .style('stroke-width', '3')
-        .on('mouseover', function (d) {
-            console.log(d);
-        })
-        .on('mouseout', function (d) {
-            console.log(d);
-        })
-        .on('click', function (d) {
-            console.log(d);
-        });
-
-    d3.select(g_id)
-        .append('path')
-        .attr('d', lineGenerator(path3))
-        .style('fill', 'none')
-        .style('stroke', 'gray')
-        .style('stroke-width', '3')
-        .on('mouseover', function (d) {
-            console.log(d);
-        })
-        .on('mouseout', function (d) {
-            console.log(d);
-        })
-        .on('click', function (d) {
-            console.log(d);
         });
 }
 

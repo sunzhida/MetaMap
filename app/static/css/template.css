@@ -41,6 +41,11 @@ text {
     font: 16px "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+.scrollimage{
+    overflow: scroll;
+    width: 300px;
+}
+
 .scrollable {
     /*height: 432px;*/
     max-height: 543px;

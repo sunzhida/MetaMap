@@ -155,9 +155,9 @@ function addImage(input) {
         .attr('onmouseup', 'browseImage("' + input + ',' + imageID + '")')
         .attr("id", "boarding_" + imageID);
     let buttons = group.append("foreignObject")
-        .attr('x', imagePlace + imageWidth - 61)
+        .attr('x', imagePlace + imageWidth - 30)
         .attr('y', (height - 112) / 2 - imageWidth / 2)
-        .attr('width', imageWidth - 40)
+        .attr('width', imageWidth - 30)
         .attr('height', 30)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
@@ -251,7 +251,7 @@ function refresh(i) {
 
 function addSubImage(x, y, i, input) {
     console.log(input);
-    let imageWidth = 240, imageHeight = 120;
+    let imageWidth = 300, imageHeight = 120;
     let group = container.append("g")
         .attr("transform", "translate("
             + x + "," + y + ")")
@@ -263,16 +263,38 @@ function addSubImage(x, y, i, input) {
         .style('stroke-width', 3)
         .attr('width', imageWidth)
         .attr('height', imageHeight);
-    group.append("image")
-        .attr('href', '../static/img/' + input['name'])
-        .attr('width', input['width'] / input['height'] * imageHeight)
+    let window = group.append('foreignObject')
+        .attr('width', imageWidth)
         .attr('height', imageHeight)
-        .attr('onmouseup', 'browseImage("' + input['name'] + ',' + i + '")')
-        .attr("id", "boarding_" + i);
+        .append('xhtml:div')
+        .attr('class', 'scrollimage')
+        .attr('xmlns', 'http://www.w3.org/1999/xhtml');
+    for (let m in input) {
+        // console.log(input[m]);
+        window.append('img')
+            .attr('src', '../static/img/' + input[m]['name'])
+            .attr('class', 'mr-1')
+            .attr('width', input[m]['width'] / input[m]['height'] * imageHeight)
+            .attr('height', imageHeight)
+            .attr('onmouseup', 'browseImage("' + input[m]['name'] + ',' + i + '")')
+            .attr("id", "boarding_" + i);
+    }
+    // window.append('img')
+    //     .attr('src', '../static/img/' + input[0]['name'])
+    //     .attr('width', input[0]['width'] / input[0]['height'] * imageHeight)
+    //     .attr('height', imageHeight)
+    //     .attr('onmouseup', 'browseImage("' + input[0]['name'] + ',' + i + '")')
+    //     .attr("id", "boarding_" + i);
+    // group.append("image")
+    //     .attr('href', '../static/img/' + input['name'])
+    //     .attr('width', input['width'] / input['height'] * imageHeight)
+    //     .attr('height', imageHeight)
+    //     .attr('onmouseup', 'browseImage("' + input['name'] + ',' + i + '")')
+    //     .attr("id", "boarding_" + i);
     let buttons = group.append("foreignObject")
-        .attr('x', imageWidth - 61)
+        .attr('x', imageWidth - 30)
         .attr('y', 0)
-        .attr('width', 62)
+        .attr('width', 30)
         .attr('height', 30)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
@@ -294,12 +316,12 @@ function addSubImage(x, y, i, input) {
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
         .attr('style', 'display: none;')
         .attr('id', 'keywords_' + i);
-    for (let w in input['keywords']) {
+    for (let w in input[0]['keywords']) {
         keywords.append('span')
             .attr('class', 'badge badge-warning mr-1 hide')
             .attr('type', 'button')
-            .attr('onclick', 'inquire("' + input['name'] + ',' + input['keywords'][w] + ',' + i + '")')
-            .html(input['keywords'][w]);
+            .attr('onclick', 'inquire("' + input[0]['name'] + ',' + input[0]['keywords'][w] + ',' + i + '")')
+            .html(input[0]['keywords'][w]);
     }
 }
 
@@ -311,7 +333,7 @@ function inquire(i) {
     let img = document.getElementById("boarding_" + imgID).getBBox();
     // let img1 = document.getElementById("boarding_" + imgID).getBoundingClientRect();
     console.log(img);
-    let recHeight = 220, sec = 80, imageHeight = 120, imageWidth = 240;
+    let recHeight = 220, sec = 80, imageHeight = 120, imageWidth = 300;
 
     let g_id = "#image_" + imgID;
     let x1 = img.x + img.width, y1 = img.y + img.height / 2;
@@ -330,11 +352,11 @@ function inquire(i) {
             let re = JSON.parse(response);
             console.log(x1, y_semantic, y_color, y_shape);
             imageID += 1;
-            addSubImage(x1 + sec, y_semantic - imageHeight / 2, imageID, re['semantic'][0]);
+            addSubImage(x1 + sec, y_semantic - imageHeight / 2, imageID, re['semantic']);
             imageID += 1;
-            addSubImage(x1 + sec, y_color - imageHeight / 2, imageID, re['color'][0]);
+            addSubImage(x1 + sec, y_color - imageHeight / 2, imageID, re['color']);
             imageID += 1;
-            addSubImage(x1 + sec, y_shape - imageHeight / 2, imageID, re['shape'][0]);
+            addSubImage(x1 + sec, y_shape - imageHeight / 2, imageID, re['shape']);
         },
         error: function (xhr) {
             //Do Something to handle error

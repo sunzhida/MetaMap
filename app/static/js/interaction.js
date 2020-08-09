@@ -251,15 +251,15 @@ function refresh(i) {
 
 function addSubImage(x, y, i, input) {
     console.log(input);
-    let imageWidth = 300, imageHeight = 120;
+    let imageWidth = 252, imageHeight = 120;
     let group = container.append("g")
         .attr("transform", "translate("
             + x + "," + y + ")")
         .attr('id', 'image_' + i)
         .classed('draggable', true);
     group.append('rect')
-        .style('fill', 'white')
-        .style('stroke', 'black')
+        .style('fill', '#95a5a6')
+        .style('stroke', '#7f8c8d')
         .style('stroke-width', 3)
         .attr('width', imageWidth)
         .attr('height', imageHeight);
@@ -267,18 +267,57 @@ function addSubImage(x, y, i, input) {
         .attr('width', imageWidth)
         .attr('height', imageHeight)
         .append('xhtml:div')
-        .attr('class', 'scrollimage')
+        .attr("id", "window_" + i)
+        .attr('class', 'carousel slide')
+        .attr('data-ride', 'carousel')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml');
+    let subwindow = window.append('div')
+        .attr('class', 'carousel-inner');
     for (let m in input) {
-        // console.log(input[m]);
-        window.append('img')
-            .attr('src', '../static/img/' + input[m]['name'])
-            .attr('class', 'mr-1')
-            .attr('width', input[m]['width'] / input[m]['height'] * imageHeight)
-            .attr('height', imageHeight)
-            .attr('onmouseup', 'browseImage("' + input[m]['name'] + ',' + i + '")')
-            .attr("id", "boarding_" + i);
+        if (m === '0') {
+            subwindow.append('div')
+                .attr('class', 'carousel-item active')
+                .attr('data-interval', '3000')
+                .append('img')
+                .attr('src', '../static/img/' + input[m]['name'])
+                .attr("id", "boarding_" + i + "_" + m)
+                .attr('width', input[m]['width'] / input[m]['height'] * imageHeight)
+                .attr('height', imageHeight)
+                .attr('onmouseup', 'browseImage("' + input[m]['name'] + ',' + i + '")');
+        } else {
+            subwindow.append('div')
+                .attr('class', 'carousel-item')
+                .attr('data-interval', '3000')
+                .append('img')
+                .attr('src', '../static/img/' + input[m]['name'])
+                .attr("id", "boarding_" + i + "_" + m)
+                .attr('width', input[m]['width'] / input[m]['height'] * imageHeight)
+                .attr('height', imageHeight)
+                .attr('onmouseup', 'browseImage("' + input[m]['name'] + ',' + i + '")');
+        }
     }
+    let leftcon = window.append('a')
+        .attr('class', 'carousel-control-prev')
+        .attr('href', "#window_" + i)
+        .attr('role', 'button')
+        .attr('data-slide', 'prev');
+    leftcon.append('span')
+        .attr('class', 'carousel-control-prev-icon')
+        .attr('aria-hidden', 'true');
+    leftcon.append('span')
+        .attr('class', 'sr-only')
+        .html('Previous');
+    let rightcon = window.append('a')
+        .attr('class', 'carousel-control-next')
+        .attr('href', "#window_" + i)
+        .attr('role', 'button')
+        .attr('data-slide', 'next');
+    rightcon.append('span')
+        .attr('class', 'carousel-control-next-icon')
+        .attr('aria-hidden', 'true');
+    rightcon.append('span')
+        .attr('class', 'sr-only')
+        .html('Next');
     // window.append('img')
     //     .attr('src', '../static/img/' + input[0]['name'])
     //     .attr('width', input[0]['width'] / input[0]['height'] * imageHeight)
@@ -333,7 +372,7 @@ function inquire(i) {
     let img = document.getElementById("boarding_" + imgID).getBBox();
     // let img1 = document.getElementById("boarding_" + imgID).getBoundingClientRect();
     console.log(img);
-    let recHeight = 220, sec = 80, imageHeight = 120, imageWidth = 300;
+    let recHeight = 220, sec = 80, imageHeight = 120, imageWidth = 252;
 
     let g_id = "#image_" + imgID;
     let x1 = img.x + img.width, y1 = img.y + img.height / 2;
@@ -350,7 +389,10 @@ function inquire(i) {
         data: i,
         success: function (response) {
             let re = JSON.parse(response);
-            console.log(x1, y_semantic, y_color, y_shape);
+            console.log(re);
+            let test = ImageTree.initialize(re);
+            console.log(test);
+            // console.log(x1, y_semantic, y_color, y_shape);
             imageID += 1;
             addSubImage(x1 + sec, y_semantic - imageHeight / 2, imageID, re['semantic']);
             imageID += 1;

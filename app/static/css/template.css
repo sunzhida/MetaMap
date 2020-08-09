@@ -42,7 +42,7 @@ text {
 }
 
 .scrollimage{
-    overflow: scroll;
+    overflow-x: scroll;
     width: 2000px;
 }
 

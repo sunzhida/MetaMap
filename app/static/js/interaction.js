@@ -1,3 +1,7 @@
+$().ready(function () {
+    $('.toast').toast();
+});
+
 // Set the dimensions and margins of the diagram
 const w = window.innerWidth / 3 * 2 - 30;
 const h = window.innerHeight - 100;
@@ -169,14 +173,7 @@ function showColorToast() {
     $('#color-clipboard-toast').toast('show');
 }
 
-function addImage(input) {
-    let imageWidth = 120;
-    let imagePlace = 0;
-    // remove text
-    canvas.select('text').remove();
-    // remove the whole content
-    container.select('g').remove();
-    imageID += 1;
+
 //Function called on the zoom event. It translate the draw on the zoomed point and scale with a certain factor
 
 function zoomed() {
@@ -677,6 +674,3 @@ function remove(i) {
     d3.select(g_id).remove();
 }
 
-$().ready(function () {
-    $('.toast').toast();
-})

@@ -78,6 +78,7 @@ function resubmit(i) {
     });
 }
 
+////////////////////////////////////////////////////////////////////////
 // The following functions are used for the left-side control bar
 
 /* Search History */
@@ -173,13 +174,13 @@ function showColorToast() {
     $('#color-clipboard-toast').toast('show');
 }
 
-
 //Function called on the zoom event. It translate the draw on the zoomed point and scale with a certain factor
 
 function zoomed() {
     container.attr("transform", "translate(" + (d3.event.translate[0]) + "," + (d3.event.translate[1]) + ")scale(" + d3.event.scale + ")");
 }
 
+////////////////////////////////////////////////////////////////////////
 // The following functions are used for manipulating the mood board area
 
 function clearboard() {
@@ -199,6 +200,7 @@ function shareto() {
     console.log('share to');
 }
 
+////////////////////////////////////////////////////////////////////////
 // The following functions are used for updating the data structure
 
 function _addImage(input) {
@@ -252,6 +254,7 @@ function browseImage(input) {
     let image_url = res[0];
     let image_name = res[0].split('/');
     let image_id = res[1];
+    console.log(image_id);
 
     let popup_kw = document.getElementById('keywords_' + image_id);
     if (popup_kw.style.display === "none") {
@@ -268,6 +271,29 @@ function browseImage(input) {
     }
 }
 
+function browseImageList(input) {
+    console.log(input);
+    let res = input.split(',');
+    let image_url = res[0];
+    let image_name = res[0].split('/');
+    let window_id = res[1];
+    let image_id = res[2];
+
+    let popup_kw = document.getElementById('keywords_' + window_id + '_' + image_id);
+    if (popup_kw.style.display === "none") {
+        popup_kw.style.display = "block";
+    } else {
+        popup_kw.style.display = "none";
+    }
+
+    let popup = document.getElementById('button_' + window_id);
+    if (popup.style.display === "none") {
+        popup.style.display = "block";
+    } else {
+        popup.style.display = "none";
+    }
+}
+
 function drawTree(d) {
     // remove text
     canvas.select('text').remove();
@@ -275,142 +301,177 @@ function drawTree(d) {
     container.select('g').remove();
     let imageWidth = 120, rectWidth = 252, rectHeight = 120;
     let group = container.append("g")
-        .attr("transform", "translate(0," + (margin.top + height / 2 - imageWidth / 2) + ")")
+        .attr("transform", "translate(0," + (height / 2 - imageWidth / d['images'][0]['width'] * d['images'][0]['height'] / 2) + ")")
         .attr('id', 'image_' + d.id);
-    if (d['color']['images'] === undefined && d['shape']['images'] === undefined && d['semantic']['images'] === undefined) {
-        group.append("image")
-            .attr('href', '../static/img/' + d['images'][0]['name'])
-            .attr('width', imageWidth)
-            .attr('x', d.x)
-            .attr('y', d.y)
-            .attr('onmouseup', 'browseImage("../static/img/' + d['images'][0]['name'] + ',' + d.id + '")')
-            .attr("id", "boarding_" + d.id);
-        let buttons = group.append("foreignObject")
-            .attr('x', d.x + imageWidth - 30)
-            .attr('y', d.y)
-            .attr('width', imageWidth - 30)
-            .attr('height', 30)
-            .append('xhtml:div')
-            .attr('xmlns', 'http://www.w3.org/1999/xhtml')
-            .attr('style', 'display: none;')
-            .attr('id', 'button_' + d.id);
-        buttons.append('button')
-            .attr('class', 'btn btn-danger btn-sm hide')
+    // the root image
+    group.append("image")
+        .attr('href', '../static/img/' + d['images'][0]['name'])
+        .attr('width', imageWidth)
+        .attr('x', d.x)
+        .attr('y', d.y)
+        .attr('onmouseup', 'browseImage("../static/img/' + d['images'][0]['name'] + ',' + d.id + '")')
+        .attr("id", "boarding_" + d.id);
+    let buttons = group.append("foreignObject")
+        .attr('x', d.x + imageWidth - 30)
+        .attr('y', d.y)
+        .attr('width', imageWidth - 30)
+        .attr('height', 30)
+        .append('xhtml:div')
+        .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+        .attr('style', 'display: none;')
+        .attr('id', 'button_' + d.id);
+    buttons.append('button')
+        .attr('class', 'btn btn-danger btn-sm hide')
+        .attr('type', 'button')
+        .attr('id', 'remove_' + d.id)
+        .attr('onclick', 'remove(' + d.id + ')')
+        .append('i')
+        .attr('class', 'fas fa-trash-alt');
+    let keywords = group.append("foreignObject")
+        .attr('x', d.x)
+        .attr('y', d.y - 40)
+        .attr('width', imageWidth)
+        .attr('height', 40)
+        .append('xhtml:div')
+        .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+        .attr('style', 'display: none;')
+        .attr('id', 'keywords_' + d.id);
+    for (let w in d['images'][0]['keywords']) {
+        keywords.append('span')
+            .attr('class', 'badge badge-warning mr-1 hide')
             .attr('type', 'button')
-            .attr('id', 'remove_' + d.id)
-            .attr('onclick', 'remove(' + d.id + ')')
-            .append('i')
-            .attr('class', 'fas fa-trash-alt');
-        let keywords = group.append("foreignObject")
-            .attr('x', d.x)
-            .attr('y', d.y - 40)
-            .attr('width', imageWidth)
-            .attr('height', 40)
-            .append('xhtml:div')
-            .attr('xmlns', 'http://www.w3.org/1999/xhtml')
-            .attr('style', 'display: none;')
-            .attr('id', 'keywords_' + d.id);
-        for (let w in d['images'][0]['keywords']) {
-            keywords.append('span')
-                .attr('class', 'badge badge-warning mr-1 hide')
-                .attr('type', 'button')
-                .attr('onclick', '_exploreImage("' + d['images'][0]['name'] + ',' + d['images'][0]['keywords'][w] + ',' + d.id + '")')
-                .html(d['images'][0]['keywords'][w]);
-        }
+            .attr('onclick', '_exploreImage("' + d['images'][0]['name'] + ',' + d['images'][0]['keywords'][w] + ',' + d.id + '")')
+            .html(d['images'][0]['keywords'][w]);
+    }
+    // the rest image
+    if (d['color']['images'] === undefined && d['shape']['images'] === undefined && d['semantic']['images'] === undefined) {
+        console.log(d);
+        // the first level
     } else {
         console.log(d);
-        group.append("image")
-            .attr('href', '../static/img/' + d['images'][0]['name'])
-            .attr('width', imageWidth)
-            .attr('x', d.x)
-            .attr('y', d.y)
-            .attr('onmouseup', 'browseImage("../static/img/' + d['images'][0]['name'] + ',' + d.id + '")')
-            .attr("id", "boarding_" + d.id);
-        group.append('rect')
-            .attr("transform", "translate("
-                + d['color']['x'] + "," + d['color']['y'] + ")")
-            .attr('id', 'image_' + d['color']['id'])
-            .style('fill', '#95a5a6')
-            .style('fill-opacity', '0.2')
-            .style('stroke', '#7f8c8d')
-            .style('stroke-width', 3)
-            .attr('width', rectWidth)
-            .attr('height', rectHeight);
+        drawRect(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight);
+        drawWin(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight, d['color']['images']);
+        drawRect(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight);
+        drawWin(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight, d['shape']['images']);
+        drawRect(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight);
+        drawWin(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight, d['semantic']['images']);
     }
 }
 
+function drawRect(c, x, y, i, w, h) {
+    c.append('rect')
+        .attr("transform", "translate("
+            + x + "," + y + ")")
+        .attr('id', 'image_' + i)
+        .style('fill', '#95a5a6')
+        .style('fill-opacity', '0.2')
+        .style('stroke', '#7f8c8d')
+        .style('stroke-width', 3)
+        .attr('width', w)
+        .attr('height', h);
+}
 
-// function addImage(input) {
-//     let imageWidth = 120;
-//     let imagePlace = 0;
-//     // remove text
-//     canvas.select('text').remove();
-//     // remove the whole content
-//     container.select('g').remove();
-//     imageID += 1;
-//
-//     let imageName = input.split('/')[3];
-//
-//     let group = container.append("g")
-//         .attr("transform", "translate("
-//             + margin.left + "," + margin.top + ")")
-//         .attr('id', 'image_' + imageID)
-//         .classed('draggable', true);
-//     group.append("image")
-//         .attr('href', input)
-//         .attr('width', imageWidth)
-//         .attr('x', imagePlace)
-//         .attr('y', (height - 112) / 2 - imageWidth / 2)
-//         .attr('onmouseup', 'browseImage("' + input + ',' + imageID + '")')
-//         .attr("id", "boarding_" + imageID);
-//     let buttons = group.append("foreignObject")
-//         .attr('x', imagePlace + imageWidth - 30)
-//         .attr('y', (height - 112) / 2 - imageWidth / 2)
-//         .attr('width', imageWidth - 30)
-//         .attr('height', 30)
-//         .append('xhtml:div')
-//         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
-//         .attr('style', 'display: none;')
-//         .attr('id', 'button_' + imageID);
-//     buttons.append('button')
-//         .attr('class', 'btn btn-danger btn-sm hide')
-//         .attr('type', 'button')
-//         .attr('id', 'remove_' + imageID)
-//         .attr('onclick', 'remove(' + imageID + ')')
-//         .append('i')
-//         .attr('class', 'fas fa-trash-alt');
-//     let keywords = group.append("foreignObject")
-//         .attr('x', imagePlace)
-//         .attr('y', (height - 112) / 2 - imageWidth / 2 - 40)
-//         .attr('width', imageWidth)
-//         .attr('height', 40)
-//         .append('xhtml:div')
-//         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
-//         .attr('style', 'display: none;')
-//         .attr('id', 'keywords_' + imageID);
-//
-//     $.ajax({
-//         type: "POST",
-//         url: "/plot/" + imageName,
-//         data: imageName,
-//         success: function (response) {
-//             let re = JSON.parse(response);
-//             let initTree = ImageTree.initialize(re);
-//             console.log(initTree);
-//             let kw = re['keywords'];
-//             for (let w in kw) {
-//                 keywords.append('span')
-//                     .attr('class', 'badge badge-warning mr-1 hide')
-//                     .attr('type', 'button')
-//                     .attr('onclick', 'inquire("' + imageName + ',' + kw[w] + ',' + imageID + '")')
-//                     .html(kw[w]);
-//             }
-//         },
-//         error: function (xhr) {
-//             //Do Something to handle error
-//         }
-//     });
-// }
+function drawWin(c, x, y, i, w, h, input) {
+    console.log(i);
+    let window = c.append('foreignObject')
+        .attr("transform", "translate("
+            + x + "," + y + ")")
+        .attr('width', w)
+        .attr('height', h)
+        .append('xhtml:div')
+        .attr("id", "window_" + i)
+        .attr('class', 'carousel slide')
+        .attr('data-interval', 'false')
+        .attr('xmlns', 'http://www.w3.org/1999/xhtml');
+    let subwindow = window.append('div')
+        .attr('class', 'carousel-inner');
+    for (let m in input) {
+        if (m === '0') {
+            subwindow.append('div')
+                .attr('class', 'carousel-item active')
+                .attr('data-interval', 'false')
+                .append('img')
+                .attr('src', '../static/img/' + input[m]['name'])
+                .attr("id", "boarding_" + i + "_" + m)
+                .attr('width', input[m]['width'] / input[m]['height'] * h)
+                .attr('height', h)
+                .attr('onmouseup', 'browseImageList("' + input[m]['name'] + ',' + i + ',' + m + '")');
+        } else {
+            subwindow.append('div')
+                .attr('class', 'carousel-item')
+                .attr('data-interval', 'false')
+                .append('img')
+                .attr('src', '../static/img/' + input[m]['name'])
+                .attr("id", "boarding_" + i + "_" + m)
+                .attr('width', input[m]['width'] / input[m]['height'] * h)
+                .attr('height', h)
+                .attr('onmouseup', 'browseImageList("' + input[m]['name'] + ',' + i + ',' + m + '")');
+        }
+    }
+    let leftcon = window.append('a')
+        .attr('class', 'carousel-control-prev')
+        .attr('href', "#window_" + i)
+        .attr('role', 'button')
+        .attr('data-slide', 'prev');
+    leftcon.append('span')
+        .attr('class', 'carousel-control-prev-icon')
+        .attr('aria-hidden', 'true');
+    leftcon.append('span')
+        .attr('class', 'sr-only')
+        .html('Previous');
+    let rightcon = window.append('a')
+        .attr('class', 'carousel-control-next')
+        .attr('href', "#window_" + i)
+        .attr('role', 'button')
+        .attr('data-slide', 'next');
+    rightcon.append('span')
+        .attr('class', 'carousel-control-next-icon')
+        .attr('aria-hidden', 'true');
+    rightcon.append('span')
+        .attr('class', 'sr-only')
+        .html('Next');
+    let buttons = c.append("foreignObject")
+        .attr('x', x + w - 30)
+        .attr('y', y)
+        .attr('width', 30)
+        .attr('height', 30)
+        .append('xhtml:div')
+        .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+        .attr('style', 'display: none;')
+        .attr('id', 'button_' + i);
+    buttons.append('button')
+        .attr('class', 'btn btn-danger btn-sm hide')
+        .attr('type', 'button')
+        .attr('id', 'remove_' + i)
+        .attr('onclick', 'remove(' + i + ')')
+        .append('i')
+        .attr('class', 'fas fa-trash-alt');
+    drawKeywordsList(c, x, y, i, w, h, input);
+}
+
+function drawKeywordsList(c, x, y, i, w, h, input) {
+    // d3.select('#keywords_' + i).remove();
+    let keywords = c.append("foreignObject")
+        .attr('x', x)
+        .attr('y', y - 40)
+        .attr('width', w)
+        .attr('height', 40)
+        .append('xhtml:div')
+        .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+        .attr('style', 'display: none;')
+        .attr('id', 'keywords_' + i);
+    for (let m in input) {
+        for (let t in input[m]['keywords']) {
+            keywords.append('div')
+                .attr('id', 'keywords_' + i + '_' + m)
+                .append('span')
+                .attr('class', 'badge badge-warning mr-1 hide')
+                .attr('type', 'button')
+                .attr('onclick', '_exploreImage("' + input[m]['name'] + ',' + input[m]['keywords'][t] + ',' + i + '")')
+                .html(input[m]['keywords'][t]);
+        }
+    }
+}
 
 
 function addSubImage(x, y, i, input) {

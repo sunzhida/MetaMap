@@ -74,6 +74,32 @@ text {
   background: #0056b3;
 }
 
+.color-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.color-block {
+    height: 2rem;
+    cursor: pointer;
+}
+
+.color-block:last-child {
+    border-top-right-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+
+.color-block:first-child {
+    border-top-left-radius: 0.25rem;
+    border-bottom-left-radius: 0.25rem;
+}
+
+.toast-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
 /*!*body {*!*/
 /*!*  height: 100vh;*!*/
 /*!*}*!*/

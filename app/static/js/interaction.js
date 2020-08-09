@@ -11,6 +11,9 @@ let MAX_ZOOM_IN = 10;
 let MAX_ZOOM_OUT = 0.5;
 let zoom = d3.behavior.zoom().scaleExtent([MAX_ZOOM_OUT, MAX_ZOOM_IN]).on('zoom', zoomed);
 
+// 绑定在调色盘上的clipboardJS对象
+let colorClipboard;
+
 let canvas = d3.select("#board")
     .attr('width', width)
     .attr('height', height)
@@ -41,8 +44,10 @@ function submit() {
             let re = JSON.parse(response);
             let keywords = re['keywords'];
             let images = re['images'];
+            let colors = re.colors;
             drawKeywords(keywords);
             drawImages(images);
+            drawColors(colors);
         },
         error: function (xhr) {
             //Do Something to handle error
@@ -134,6 +139,44 @@ function drawImages(i) {
     document.getElementById("images").innerHTML = ihtml;
 }
 
+function drawColors(colors) {
+    colors.sort((a, b) => b.portion - a.portion);
+    const ihtml = colors
+        .map(c => `<div class="color-block"
+            style="width:${(c.portion * 100).toFixed(2)}%; background:${c.color};"
+            title="${c.color}"
+            data-clipboard-text="${c.color}"
+            data-toggle="tooltip"
+            onclick="showColorToast()"></div>`)
+        .join('');
+    document.getElementById('colors').innerHTML = ihtml;
+    // 挂载tooltip事件和clipboard事件
+    // 必须等到HTML片段挂载到DOM之后，使用setTimeout在下一个event loop tick执行
+    setTimeout(() => {
+        if (colorClipboard) colorClipboard.destroy();
+        colorClipboard = new ClipboardJS('.color-block');
+        $('.color-block').tooltip({
+            trigger: 'hover'
+        });
+        $('.color-block').tooltip({
+            trigger: 'click',
+            title: 'Color code coplied',
+        });
+    });
+}
+
+function showColorToast() {
+    $('#color-clipboard-toast').toast('show');
+}
+
+function addImage(input) {
+    let imageWidth = 120;
+    let imagePlace = 0;
+    // remove text
+    canvas.select('text').remove();
+    // remove the whole content
+    container.select('g').remove();
+    imageID += 1;
 //Function called on the zoom event. It translate the draw on the zoomed point and scale with a certain factor
 
 function zoomed() {
@@ -634,3 +677,6 @@ function remove(i) {
     d3.select(g_id).remove();
 }
 
+$().ready(function () {
+    $('.toast').toast();
+})

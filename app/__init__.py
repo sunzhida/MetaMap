@@ -200,16 +200,12 @@ def search(i):
     image = searchImage(conn, i)
     # Fake Color Palette Here
     color_palette = [
-        {'color': "#111111", 'portion': 0.3},
-        {'color': "#222222", 'portion': 0.2},
-        {'color': "#333333", 'portion': 0.1},
-        {'color': "#444444", 'portion': 0.1},
-        {'color': "#555555", 'portion': 0.05},
-        {'color': "#666666", 'portion': 0.05},
-        {'color': "#777777", 'portion': 0.05},
-        {'color': "#888888", 'portion': 0.05},
-        {'color': "#999999", 'portion': 0.05},
-        {'color': "#101010", 'portion': 0.05}
+        {'color':"#1F77B4", 'portion':0.3},
+        {'color':"#FF7F0E", 'portion':0.2},
+        {'color':"#2CA02C", 'portion':0.2},
+        {'color':"#D62728", 'portion':0.1},
+        {'color':"#9467BD", 'portion':0.1},
+        {'color':"#8C564B", 'portion':0.1},
     ]
     data = {'search': i, 'keywords': keyword, 'images': image, 'colors': color_palette}
     conn.commit()

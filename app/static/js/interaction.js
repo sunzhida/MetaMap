@@ -345,7 +345,7 @@ function drawTree(d) {
     }
     // the rest image
     if (d['color']['images'] === undefined && d['shape']['images'] === undefined && d['semantic']['images'] === undefined) {
-        console.log(d);
+        // console.log(d);
         // the first level
     } else {
         console.log(d);
@@ -451,19 +451,19 @@ function drawWin(c, x, y, i, w, h, input) {
 
 function drawKeywordsList(c, x, y, i, w, h, input) {
     // d3.select('#keywords_' + i).remove();
-    let keywords = c.append("foreignObject")
-        .attr('x', x)
-        .attr('y', y - 40)
-        .attr('width', w)
-        .attr('height', 40)
-        .append('xhtml:div')
-        .attr('xmlns', 'http://www.w3.org/1999/xhtml')
-        .attr('style', 'display: none;')
-        .attr('id', 'keywords_' + i);
     for (let m in input) {
+        let keywords = c.append("foreignObject")
+            .attr('x', x)
+            .attr('y', y - 40)
+            .attr('width', w)
+            .attr('height', 40)
+            .append('xhtml:div')
+            .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+            .attr('style', 'display: none;')
+            .attr('id', 'keywords_' + i + '_' + m);
         for (let t in input[m]['keywords']) {
             keywords.append('div')
-                .attr('id', 'keywords_' + i + '_' + m)
+                .attr('id', 'subkeywords_' + i + '_' + m)
                 .append('span')
                 .attr('class', 'badge badge-warning mr-1 hide')
                 .attr('type', 'button')

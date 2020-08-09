@@ -83,12 +83,12 @@ class TreeNode {
      * @returns {[Image, Image, Image]}
      */
     getThreeImages() {
-        const prevIdx = this.imageIndex - 1;
+        let prevIdx = this.imageIndex - 1;
         while (prevIdx < 0) {
             prevIdx += this.images.length;
         }
         
-        const nextIdx = this.imageIndex + 1;
+        let nextIdx = this.imageIndex + 1;
         if (nextIdx >= this.images.length) {
             nextIdx %= this.images.length;
         }

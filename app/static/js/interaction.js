@@ -6,6 +6,7 @@ let width = w - margin.right - margin.left;
 let height = h - margin.top - margin.bottom;
 
 let imageID = 0;
+let imageTree = new ImageTree();
 let MAX_ZOOM_IN = 10;
 let MAX_ZOOM_OUT = 0.5;
 let zoom = d3.behavior.zoom().scaleExtent([MAX_ZOOM_OUT, MAX_ZOOM_IN]).on('zoom', zoomed);
@@ -169,8 +170,7 @@ function _addImage(input) {
         data: imageName,
         success: function (response) {
             let re = JSON.parse(response);
-            let initTree = new ImageTree();
-            drawTree(initTree.initialize(re));
+            drawTree(imageTree.initialize(re));
         },
         error: function (xhr) {
             //Do Something to handle error
@@ -178,8 +178,11 @@ function _addImage(input) {
     });
 }
 
-function _exploreImage(input) {
-    console.log(input);
+function _exploreImage(i) {
+    let imgName = i.split(',')[0];
+    let keyword = i.split(',')[1];
+    let imgID = i.split(',')[2];
+    console.log(i);
     $.ajax({
         url: "/inquire/" + i,
         type: "get",
@@ -187,15 +190,9 @@ function _exploreImage(input) {
         success: function (response) {
             let re = JSON.parse(response);
             console.log(re);
-            // let currentTree = ImageTree.explore(imgID, re);
-            // console.log(currentTree);
+            let currentTree = imageTree.explore(imgID, re);
+            console.log(currentTree);
             // console.log(x1, y_semantic, y_color, y_shape);
-            imageID += 1;
-            addSubImage(x1 + sec, y_semantic - imageHeight / 2, imageID, re['semantic']);
-            imageID += 1;
-            addSubImage(x1 + sec, y_color - imageHeight / 2, imageID, re['color']);
-            imageID += 1;
-            addSubImage(x1 + sec, y_shape - imageHeight / 2, imageID, re['shape']);
         },
         error: function (xhr) {
             //Do Something to handle error
@@ -205,6 +202,31 @@ function _exploreImage(input) {
 
 function _removeImage(input) {
     console.log(input);
+}
+
+
+// The interactive functions
+
+/* click on the image and show the keywords and remove button */
+function browseImage(input) {
+    let res = input.split(',');
+    let image_url = res[0];
+    let image_name = res[0].split('/');
+    let image_id = res[1];
+
+    let popup_kw = document.getElementById('keywords_' + image_id);
+    if (popup_kw.style.display === "none") {
+        popup_kw.style.display = "block";
+    } else {
+        popup_kw.style.display = "none";
+    }
+
+    let popup = document.getElementById('button_' + image_id);
+    if (popup.style.display === "none") {
+        popup.style.display = "block";
+    } else {
+        popup.style.display = "none";
+    }
 }
 
 function drawTree(d) {
@@ -258,7 +280,7 @@ function drawTree(d) {
             keywords.append('span')
                 .attr('class', 'badge badge-warning mr-1 hide')
                 .attr('type', 'button')
-                .attr('onclick', 'inquire("' + d['images'][0]['name'] + ',' + d['images'][0]['keywords'][w] + ',' + d.id + '")')
+                .attr('onclick', '_exploreImage("' + d['images'][0]['name'] + ',' + d['images'][0]['keywords'][w] + ',' + d.id + '")')
                 .html(d['images'][0]['keywords'][w]);
         }
     }
@@ -338,27 +360,7 @@ function drawTree(d) {
 // }
 
 
-// click on the image
-function browseImage(input) {
-    let res = input.split(',');
-    let image_url = res[0];
-    let image_name = res[0].split('/');
-    let image_id = res[1];
 
-    let popup_kw = document.getElementById('keywords_' + image_id);
-    if (popup_kw.style.display === "none") {
-        popup_kw.style.display = "block";
-    } else {
-        popup_kw.style.display = "none";
-    }
-
-    let popup = document.getElementById('button_' + image_id);
-    if (popup.style.display === "none") {
-        popup.style.display = "block";
-    } else {
-        popup.style.display = "none";
-    }
-}
 
 
 function addSubImage(x, y, i, input) {
@@ -475,7 +477,7 @@ function addSubImage(x, y, i, input) {
         keywords.append('span')
             .attr('class', 'badge badge-warning mr-1 hide')
             .attr('type', 'button')
-            .attr('onclick', 'inquire("' + input[0]['name'] + ',' + input[0]['keywords'][w] + ',' + i + '")')
+            .attr('onclick', '_exploreImage("' + input[0]['name'] + ',' + input[0]['keywords'][w] + ',' + i + '")')
             .html(input[0]['keywords'][w]);
     }
 }

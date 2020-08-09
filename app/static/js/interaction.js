@@ -285,6 +285,7 @@ function addSubImage(x, y, i, input) {
                 .append('img')
                 .attr('src', '../static/img/' + input[m]['name'])
                 .attr("id", "boarding_" + i + "_" + m)
+                .attr('data-carousel-id', 'carousel_' + m)
                 .attr('width', input[m]['width'] / input[m]['height'] * imageHeight)
                 .attr('height', imageHeight)
                 .attr('onmouseup', 'browseImage("' + input[m]['name'] + ',' + i + '")');
@@ -295,6 +296,7 @@ function addSubImage(x, y, i, input) {
                 .append('img')
                 .attr('src', '../static/img/' + input[m]['name'])
                 .attr("id", "boarding_" + i + "_" + m)
+                .attr('data-carousel-id', 'carousel_' + m)
                 .attr('width', input[m]['width'] / input[m]['height'] * imageHeight)
                 .attr('height', imageHeight)
                 .attr('onmouseup', 'browseImage("' + input[m]['name'] + ',' + i + '")');

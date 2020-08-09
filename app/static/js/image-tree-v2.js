@@ -131,8 +131,8 @@ const ImageTree = (function() {
             || (cur.shape && cur.shape.id == id))
             return cur;
         return __findParentInner(id, cur.semantic)
-            || (id, cur.color)
-            || (id, cur.shape);
+            || __findParentInner(id, cur.color)
+            || __findParentInner(id, cur.shape);
     }
 
     /**

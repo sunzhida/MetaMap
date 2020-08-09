@@ -181,7 +181,7 @@ function _addImage(input) {
 function _exploreImage(i) {
     let imgName = i.split(',')[0];
     let keyword = i.split(',')[1];
-    let imgID = i.split(',')[2];
+    let imgID = parseInt(i.split(',')[2]);
     console.log(i);
     $.ajax({
         url: "/inquire/" + i,
@@ -191,8 +191,7 @@ function _exploreImage(i) {
             let re = JSON.parse(response);
             console.log(re);
             let currentTree = imageTree.explore(imgID, re);
-            console.log(currentTree);
-            // console.log(x1, y_semantic, y_color, y_shape);
+            drawTree(currentTree);
         },
         error: function (xhr) {
             //Do Something to handle error
@@ -230,30 +229,25 @@ function browseImage(input) {
 }
 
 function drawTree(d) {
-    console.log(d);
     // remove text
     canvas.select('text').remove();
     // remove the whole content
     container.select('g').remove();
-    if (d.level === 0) {
-        let imageWidth = 120;
-        let imagePlace = 0;
-        console.log('first image');
-        let group = container.append("g")
-            .attr("transform", "translate("
-                + margin.left + "," + margin.top + ")")
-            .attr('id', 'image_' + d.id)
-            .classed('draggable', true);
+    let imageWidth = 120, rectWidth = 252, rectHeight = 120;
+    let group = container.append("g")
+        .attr("transform", "translate(0," + (margin.top + height / 2 - imageWidth / 2) + ")")
+        .attr('id', 'image_' + d.id);
+    if (d['color']['images'] === undefined && d['shape']['images'] === undefined && d['semantic']['images'] === undefined) {
         group.append("image")
             .attr('href', '../static/img/' + d['images'][0]['name'])
             .attr('width', imageWidth)
-            .attr('x', imagePlace)
-            .attr('y', (height - 112) / 2 - imageWidth / 2)
+            .attr('x', d.x)
+            .attr('y', d.y)
             .attr('onmouseup', 'browseImage("../static/img/' + d['images'][0]['name'] + ',' + d.id + '")')
             .attr("id", "boarding_" + d.id);
         let buttons = group.append("foreignObject")
-            .attr('x', imagePlace + imageWidth - 30)
-            .attr('y', (height - 112) / 2 - imageWidth / 2)
+            .attr('x', d.x + imageWidth - 30)
+            .attr('y', d.y)
             .attr('width', imageWidth - 30)
             .attr('height', 30)
             .append('xhtml:div')
@@ -268,8 +262,8 @@ function drawTree(d) {
             .append('i')
             .attr('class', 'fas fa-trash-alt');
         let keywords = group.append("foreignObject")
-            .attr('x', imagePlace)
-            .attr('y', (height - 112) / 2 - imageWidth / 2 - 40)
+            .attr('x', d.x)
+            .attr('y', d.y - 40)
             .attr('width', imageWidth)
             .attr('height', 40)
             .append('xhtml:div')
@@ -283,6 +277,25 @@ function drawTree(d) {
                 .attr('onclick', '_exploreImage("' + d['images'][0]['name'] + ',' + d['images'][0]['keywords'][w] + ',' + d.id + '")')
                 .html(d['images'][0]['keywords'][w]);
         }
+    } else {
+        console.log(d);
+        group.append("image")
+            .attr('href', '../static/img/' + d['images'][0]['name'])
+            .attr('width', imageWidth)
+            .attr('x', d.x)
+            .attr('y', d.y)
+            .attr('onmouseup', 'browseImage("../static/img/' + d['images'][0]['name'] + ',' + d.id + '")')
+            .attr("id", "boarding_" + d.id);
+        group.append('rect')
+            .attr("transform", "translate("
+                + d['color']['x'] + "," + d['color']['y'] + ")")
+            .attr('id', 'image_' + d['color']['id'])
+            .style('fill', '#95a5a6')
+            .style('fill-opacity', '0.2')
+            .style('stroke', '#7f8c8d')
+            .style('stroke-width', 3)
+            .attr('width', rectWidth)
+            .attr('height', rectHeight);
     }
 }
 
@@ -358,9 +371,6 @@ function drawTree(d) {
 //         }
 //     });
 // }
-
-
-
 
 
 function addSubImage(x, y, i, input) {

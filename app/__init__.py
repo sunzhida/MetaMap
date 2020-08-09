@@ -192,7 +192,20 @@ def search(i):
     conn = create_connection(DATABASE)
     keyword = suggestKeyword(conn, i)
     image = searchImage(conn, i)
-    data = {'search': i, 'keywords': keyword, 'images': image}
+    # Fake Color Palette Here
+    color_palette = [
+        {'color':"#111111", 'portion':0.3},
+        {'color':"#222222", 'portion':0.2},
+        {'color':"#333333", 'portion':0.1},
+        {'color':"#444444", 'portion':0.1},
+        {'color':"#555555", 'portion':0.05},
+        {'color':"#666666", 'portion':0.05},
+        {'color':"#777777", 'portion':0.05},
+        {'color':"#888888", 'portion':0.05},
+        {'color':"#999999", 'portion':0.05},
+        {'color':"#101010", 'portion':0.05}
+    ]
+    data = {'search': i, 'keywords': keyword, 'images': image, 'colors': color_palette}
     conn.commit()
     conn.close()
     return json.dumps(data)

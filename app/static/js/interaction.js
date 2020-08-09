@@ -186,6 +186,8 @@ function addImage(input) {
         data: imageName,
         success: function (response) {
             let re = JSON.parse(response);
+            let initTree = ImageTree.initialize(re);
+            console.log(initTree);
             let kw = re['keywords'];
             for (let w in kw) {
                 keywords.append('span')
@@ -259,6 +261,7 @@ function addSubImage(x, y, i, input) {
         .classed('draggable', true);
     group.append('rect')
         .style('fill', '#95a5a6')
+        .style('fill-opacity', '0.2')
         .style('stroke', '#7f8c8d')
         .style('stroke-width', 3)
         .attr('width', imageWidth)
@@ -269,7 +272,8 @@ function addSubImage(x, y, i, input) {
         .append('xhtml:div')
         .attr("id", "window_" + i)
         .attr('class', 'carousel slide')
-        .attr('data-ride', 'carousel')
+        .attr('data-interval', 'false')
+        // .attr('data-ride', 'carousel')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml');
     let subwindow = window.append('div')
         .attr('class', 'carousel-inner');
@@ -277,7 +281,7 @@ function addSubImage(x, y, i, input) {
         if (m === '0') {
             subwindow.append('div')
                 .attr('class', 'carousel-item active')
-                .attr('data-interval', '3000')
+                .attr('data-interval', 'false')
                 .append('img')
                 .attr('src', '../static/img/' + input[m]['name'])
                 .attr("id", "boarding_" + i + "_" + m)
@@ -287,7 +291,7 @@ function addSubImage(x, y, i, input) {
         } else {
             subwindow.append('div')
                 .attr('class', 'carousel-item')
-                .attr('data-interval', '3000')
+                .attr('data-interval', 'false')
                 .append('img')
                 .attr('src', '../static/img/' + input[m]['name'])
                 .attr("id", "boarding_" + i + "_" + m)
@@ -390,8 +394,8 @@ function inquire(i) {
         success: function (response) {
             let re = JSON.parse(response);
             console.log(re);
-            let test = ImageTree.initialize(re);
-            console.log(test);
+            // let currentTree = ImageTree.explore(imgID, re);
+            // console.log(currentTree);
             // console.log(x1, y_semantic, y_color, y_shape);
             imageID += 1;
             addSubImage(x1 + sec, y_semantic - imageHeight / 2, imageID, re['semantic']);

@@ -160,12 +160,12 @@ const ImageTree = (function() {
             id: _getId(),
             images: dto.semantic,
             imageIndex: 0,
-        }
+        };
         found.color = {
             id: _getId(),
             images: dto.semantic,
             imageIndex: 0,
-        }
+        };
         found.shape = {
             id: _getId(),
             images: dto.shape,

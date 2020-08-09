@@ -55,6 +55,7 @@ def searchImage(conn, keyword):
 
     return imagelist
 
+
 def checkImageAttributes(conn, image_name):
     keyword_df = pd.read_sql_query("SELECT keyword from keywords_images where image_name = '%s'" % image_name, conn)
     keywords = keyword_df.keyword.values.tolist()
@@ -71,6 +72,7 @@ def checkImageAttributes(conn, image_name):
     }
     return image_dict
 
+
 def imagelistRetrieve(conn, imagelist):
     image_dict_list = []
     for image in imagelist:
@@ -79,10 +81,11 @@ def imagelistRetrieve(conn, imagelist):
 
     return image_dict_list
 
+
 def exploreSemantic(conn, image_name, keyword, topn=10):
     search_df = pd.read_sql_query("SELECT semantic_match from keywords where keyword == '%s'" % keyword, conn)
     keywordlist = search_df.semantic_match.values
-    
+
     if keywordlist == ['[]']:
         keywordlist = [keyword]
     else:
@@ -99,32 +102,34 @@ def exploreSemantic(conn, image_name, keyword, topn=10):
         for k in keywordlist:
             if len(imagelist) >= 10:
                 break
-            if len(semantic_dict[k]) < i+1:
+            if len(semantic_dict[k]) < i + 1:
                 continue
             if semantic_dict[k][i] != image_name:
                 imagelist.append(semantic_dict[k][i])
-        i = i+1
+        i = i + 1
 
     return imagelist
+
 
 def exploreColor(conn, image_name, keyword, topn=10):
     related_keywords = pd.read_sql_query("SELECT related from keywords where keyword == '%s'" % keyword, conn)
     related_keywords = "('" + keyword + "', " + related_keywords.related[0][1:-1] + ")"
-    
+
     image_df = pd.read_sql_query("SELECT image_name from keywords_images where keyword in %s" % related_keywords, conn)
     related_images = "(" + str(image_df.image_name.tolist())[1:-1] + ")"
-    color_df = pd.read_sql_query("SELECT image_name, color_hist from images where image_name in %s" % related_images, conn)
+    color_df = pd.read_sql_query("SELECT image_name, color_hist from images where image_name in %s" % related_images,
+                                 conn)
 
     hist_1 = color_df[color_df["image_name"] == image_name].color_hist.values
     if len(hist_1) == 0:
         print("hist_1 is null: ", hist_1)
         return []
-    
+
     hist_1 = np.array(eval(hist_1[0]), dtype="float32")
 
     d = []
 
-    for _,image in color_df.iterrows():
+    for _, image in color_df.iterrows():
         if pd.isnull(image.color_hist):
             print('nan')
             continue
@@ -132,15 +137,16 @@ def exploreColor(conn, image_name, keyword, topn=10):
         distance = cv2.compareHist(hist_1, hist_2, cv2.HISTCMP_CORREL)
         if distance <= 0.95:
             d.append((image.image_name, distance))
-        
+
     imagelist = [i[0] for i in sorted(d, key=lambda x: x[1], reverse=True)[:topn]]
 
     return imagelist
 
+
 def exploreShape(conn, image_name, keyword, topn=10):
     related_keywords = pd.read_sql_query("SELECT related from keywords where keyword == '%s'" % keyword, conn)
     related_keywords = "('" + keyword + "', " + related_keywords.related[0][1:-1] + ")"
-    
+
     image_df = pd.read_sql_query("SELECT image_name from keywords_images where keyword in %s" % related_keywords, conn)
     related_images = "(" + str(image_df.image_name.tolist())[1:-1] + ")"
 
@@ -150,12 +156,12 @@ def exploreShape(conn, image_name, keyword, topn=10):
     if len(shape_1) == 0:
         print("shape_1 is null: ", shape_1)
         return []
-    
+
     shape_1 = np.array(eval(shape_1[0]), dtype="float32")
 
     d = []
 
-    for _,image in shape_df.iterrows():
+    for _, image in shape_df.iterrows():
         if pd.isnull(image.contour) or image.contour == []:
             print('nan')
             continue
@@ -163,7 +169,7 @@ def exploreShape(conn, image_name, keyword, topn=10):
         distance = cv2.matchShapes(shape_1, shape_2, 1, 0.0)
         if distance >= 0.01:
             d.append((image.image_name, distance))
-        
+
     imagelist = [i[0] for i in sorted(d, key=lambda x: x[1], reverse=False)[:topn]]
 
     return imagelist
@@ -232,9 +238,9 @@ def plot(i):
 def inquire(i):
     imgName = i.split(',')[0]
     keyword = i.split(',')[1]
-    imgID = i.split(',')[2]
-    print(imgName)
-    print(keyword)
+    # imgID = i.split(',')[2]
+    # print(imgName)
+    # print(keyword)
     #################################
     # Youwen: processing the data here, the data should return related attributes to the image
     # This is the function for exploring the related materials along different dimensions
@@ -245,7 +251,7 @@ def inquire(i):
     d['semantic'] = imagelistRetrieve(conn, exploreSemantic(conn, imgName, keyword, topn=10))
     d['color'] = imagelistRetrieve(conn, exploreColor(conn, imgName, keyword, topn=10))
     d['shape'] = imagelistRetrieve(conn, exploreShape(conn, imgName, keyword, topn=10))
-    
+
     conn.close()
     return json.dumps(d)
 

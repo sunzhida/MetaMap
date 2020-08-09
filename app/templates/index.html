@@ -83,6 +83,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card bg-light mb-1">
+                            <div class="card-body" style="padding-top: 15px;">
+                                <p>Color Palette</p>
+                                <div id="colors" class="color-container">
+                                    <p>No Colors</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-9">
                         <div class="card mb-1">
@@ -133,21 +141,38 @@
         </footer>
     </div>
 
+    <div class="toast-container" aria-live="polite" aria-atomic="true">
+        <!-- 如果之后还有定制toast的需求，在这里加入另一个div class="toast"
+        然后用JS控制$('#toast-id').toast('show') -->
+        <div
+            id="color-clipboard-toast"
+            class="toast"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+            data-delay="1500"
+        >
+            <div class="toast-body">
+                <i class="fa fa-clipboard"></i>&nbsp;
+                Color code copied to clipboard!
+            </div>
+        </div>
+    </div>
+
 </main><!-- /.container -->
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script type="text/javascript" src="../static/js/vendor/jquery-latest.min.js"></script>
-{#
-<script src="../static/js/vendor/jquery-3.4.1.min.js"></script>
-#}
+<!-- <script src="../static/js/vendor/jquery-3.4.1.min.js"></script> -->
+<script src="../static/js/vendor/jquery-ui.min.js"></script>
 <script src="../static/js/vendor/popper.min.js"></script>
 <script src="../static/js/vendor/bootstrap.min.js"></script>
-<script src="../static/js/vendor/jquery-ui.min.js"></script>
 <!--<script src="https://d3js.org/d3.v4.min.js"></script>-->
 <script src="../static/js/vendor/d3.v3.min.js"></script>
 <script src="../static/js/vendor/textures.js"></script>
+<script src="../static/js/vendor/clipboard.min.js"></script>
 <!--<script src="../static/js/layout.js"></script>-->
 <!--<script src="../static/js/tree.js"></script>-->
 <script src="../static/js/image-tree-v2.js"></script>

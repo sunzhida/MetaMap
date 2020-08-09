@@ -53,6 +53,7 @@ d = {
 ```
 
 ### 前端图树状态存储
+树的结构长这样
 ```javascript
 {
     id: 0,
@@ -83,7 +84,7 @@ d = {
         imageIndex: 0,
         level: 1,
         x: 200,
-        y: -200
+        y: -200,
     },
     color: {
         id: 2,
@@ -130,6 +131,59 @@ d = {
     level: 0,
     x: 0,
     y: 0
+}
+```
+除了数据结构，还有以下方法：
+```javascript
+/* 一个ImageTree实例有以下方法 */
+get() => TreeNode // 当前树的根节点
+// 以下都返回执行这次修改后，update过的树的根节点
+initialize(res) => TreeNode
+remove(id) => TreeNode // throws when id node found
+explore(id, res) => TreeNode // throws when id not found
+// 以下都返回指定id处的节点
+find(id) => TreeNode | undefined
+findParent(id) => TreeNode | undefined
+
+_updateTreeXY() => number // 一般不需要外部调用，在init, remove, explore的时候会自动调用一次。更新每个节点的的x, y, 返回新的树的层数（从0开始数）
+
+/* 一个TreeNode示例有 */
+getImage() => Image // 返回当前imageIndex指向的图片
+nextImage() => Image // 自增imageIndex并返回新图片
+prevImage() => Image // 自减imageIndex并返回新图片
+getThreeImages() => [Image, Image, Image] // 返回 [上一张，这一张，下一张]
+```
+使用方式如下
+```javascript
+// 在新tab里面
+const tree = new ImageTree(res);
+tree.get() // 返回上述数据结构
+// 或者
+const tree = new ImageTree();
+tree.get() // 错误！must initialize a tree first
+tree.inizialize(res)
+tree.get() // OK 返回上述结构
+
+// 在点击轮播右箭头的时候
+function handleNextImage(e) {
+    // 从e获取轮播框节点id
+    const imageObject = tree.find(id).nextImage()
+    // 重新设置轮播框的img src=".."
+}
+
+// 在点击explore的时候
+function handleExplore(e) {
+    // 从e获取轮播框节点id
+    const imageObject = tree.find(id).getImage()
+    sendRequest(imageObject.name).then(
+        res => renderTree(tree.explore(id, res))
+    )
+}
+
+// 在点击remove的时候
+function handleRemoveImage(e) {
+    // 从e获取轮播框节点id
+    renderTree(tree.remove(id))
 }
 ```
 

@@ -68,6 +68,8 @@ function resubmit(i) {
     });
 }
 
+// The following functions are used for the left-side control bar
+
 /* Search History */
 let addHistory = (function () {
     const MAXLEN = 10;
@@ -126,76 +128,49 @@ function drawImages(i) {
     // console.log(i);
     let ihtml = '';
     for (let e in i) {
-        ihtml = ihtml + '<img src="../static/img/' + i[e] + '" alt="..." class="img-fluid img-thumbnail" onclick="addImage(\'../static/img/' + i[e] + '\')">'
+        ihtml = ihtml + '<img src="../static/img/' + i[e] + '" alt="..." class="img-fluid img-thumbnail" onclick="_addImage(\'../static/img/' + i[e] + '\')">'
     }
     document.getElementById("images").innerHTML = ihtml;
 }
 
-function addImage(input) {
-    let imageWidth = 120;
-    let imagePlace = 0;
-    // remove text
-    canvas.select('text').remove();
-    // remove the whole content
-    container.select('g').remove();
-    imageID += 1;
+//Function called on the zoom event. It translate the draw on the zoomed point and scale with a certain factor
 
+function zoomed() {
+    container.attr("transform", "translate(" + (d3.event.translate[0]) + "," + (d3.event.translate[1]) + ")scale(" + d3.event.scale + ")");
+}
+
+// The following functions are used for manipulating the mood board area
+
+function clearboard() {
+    // console.log('clear');
+    container.selectAll('*').remove();
+}
+
+function screenshot() {
+    console.log('screenshot');
+}
+
+function printout() {
+    console.log('print out');
+}
+
+function shareto() {
+    console.log('share to');
+}
+
+// The following functions are used for updating the data structure
+
+function _addImage(input) {
+    console.log(input);
     let imageName = input.split('/')[3];
-
-    let group = container.append("g")
-        .attr("transform", "translate("
-            + margin.left + "," + margin.top + ")")
-        .attr('id', 'image_' + imageID)
-        .classed('draggable', true);
-    group.append("image")
-        .attr('href', input)
-        .attr('width', imageWidth)
-        .attr('x', imagePlace)
-        .attr('y', (height - 112) / 2 - imageWidth / 2)
-        .attr('onmouseup', 'browseImage("' + input + ',' + imageID + '")')
-        .attr("id", "boarding_" + imageID);
-    let buttons = group.append("foreignObject")
-        .attr('x', imagePlace + imageWidth - 30)
-        .attr('y', (height - 112) / 2 - imageWidth / 2)
-        .attr('width', imageWidth - 30)
-        .attr('height', 30)
-        .append('xhtml:div')
-        .attr('xmlns', 'http://www.w3.org/1999/xhtml')
-        .attr('style', 'display: none;')
-        .attr('id', 'button_' + imageID);
-    buttons.append('button')
-        .attr('class', 'btn btn-danger btn-sm hide')
-        .attr('type', 'button')
-        .attr('id', 'remove_' + imageID)
-        .attr('onclick', 'remove(' + imageID + ')')
-        .append('i')
-        .attr('class', 'fas fa-trash-alt');
-    let keywords = group.append("foreignObject")
-        .attr('x', imagePlace)
-        .attr('y', (height - 112) / 2 - imageWidth / 2 - 40)
-        .attr('width', imageWidth)
-        .attr('height', 40)
-        .append('xhtml:div')
-        .attr('xmlns', 'http://www.w3.org/1999/xhtml')
-        .attr('style', 'display: none;')
-        .attr('id', 'keywords_' + imageID);
-
     $.ajax({
         type: "POST",
         url: "/plot/" + imageName,
         data: imageName,
         success: function (response) {
             let re = JSON.parse(response);
-            let initTree = ImageTree.initialize(re);
-            console.log(initTree);
-            let kw = re['keywords'];
-            for (let w in kw) {
-                keywords.append('span')
-                    .attr('class', 'badge badge-warning mr-1 hide')
-                    .attr('type', 'button')
-                    .attr('onclick', 'inquire("' + imageName + ',' + kw[w] + ',' + imageID + '")')
-                    .html(kw[w]);
-            }
+            let initTree = new ImageTree();
+            drawTree(initTree.initialize(re));
         },
         error: function (xhr) {
             //Do Something to handle error
@@ -203,10 +178,165 @@ function addImage(input) {
     });
 }
 
-//Function called on the zoom event. It translate the draw on the zoommed point and scale with a certain factor
-function zoomed() {
-    container.attr("transform", "translate(" + (d3.event.translate[0]) + "," + (d3.event.translate[1]) + ")scale(" + d3.event.scale + ")");
+function _exploreImage(input) {
+    console.log(input);
+    $.ajax({
+        url: "/inquire/" + i,
+        type: "get",
+        data: i,
+        success: function (response) {
+            let re = JSON.parse(response);
+            console.log(re);
+            // let currentTree = ImageTree.explore(imgID, re);
+            // console.log(currentTree);
+            // console.log(x1, y_semantic, y_color, y_shape);
+            imageID += 1;
+            addSubImage(x1 + sec, y_semantic - imageHeight / 2, imageID, re['semantic']);
+            imageID += 1;
+            addSubImage(x1 + sec, y_color - imageHeight / 2, imageID, re['color']);
+            imageID += 1;
+            addSubImage(x1 + sec, y_shape - imageHeight / 2, imageID, re['shape']);
+        },
+        error: function (xhr) {
+            //Do Something to handle error
+        }
+    });
 }
+
+function _removeImage(input) {
+    console.log(input);
+}
+
+function drawTree(d) {
+    console.log(d);
+    // remove text
+    canvas.select('text').remove();
+    // remove the whole content
+    container.select('g').remove();
+    if (d.level === 0) {
+        let imageWidth = 120;
+        let imagePlace = 0;
+        console.log('first image');
+        let group = container.append("g")
+            .attr("transform", "translate("
+                + margin.left + "," + margin.top + ")")
+            .attr('id', 'image_' + d.id)
+            .classed('draggable', true);
+        group.append("image")
+            .attr('href', '../static/img/' + d['images'][0]['name'])
+            .attr('width', imageWidth)
+            .attr('x', imagePlace)
+            .attr('y', (height - 112) / 2 - imageWidth / 2)
+            .attr('onmouseup', 'browseImage("../static/img/' + d['images'][0]['name'] + ',' + d.id + '")')
+            .attr("id", "boarding_" + d.id);
+        let buttons = group.append("foreignObject")
+            .attr('x', imagePlace + imageWidth - 30)
+            .attr('y', (height - 112) / 2 - imageWidth / 2)
+            .attr('width', imageWidth - 30)
+            .attr('height', 30)
+            .append('xhtml:div')
+            .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+            .attr('style', 'display: none;')
+            .attr('id', 'button_' + d.id);
+        buttons.append('button')
+            .attr('class', 'btn btn-danger btn-sm hide')
+            .attr('type', 'button')
+            .attr('id', 'remove_' + d.id)
+            .attr('onclick', 'remove(' + d.id + ')')
+            .append('i')
+            .attr('class', 'fas fa-trash-alt');
+        let keywords = group.append("foreignObject")
+            .attr('x', imagePlace)
+            .attr('y', (height - 112) / 2 - imageWidth / 2 - 40)
+            .attr('width', imageWidth)
+            .attr('height', 40)
+            .append('xhtml:div')
+            .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+            .attr('style', 'display: none;')
+            .attr('id', 'keywords_' + d.id);
+        for (let w in d['images'][0]['keywords']) {
+            keywords.append('span')
+                .attr('class', 'badge badge-warning mr-1 hide')
+                .attr('type', 'button')
+                .attr('onclick', 'inquire("' + d['images'][0]['name'] + ',' + d['images'][0]['keywords'][w] + ',' + d.id + '")')
+                .html(d['images'][0]['keywords'][w]);
+        }
+    }
+}
+
+
+// function addImage(input) {
+//     let imageWidth = 120;
+//     let imagePlace = 0;
+//     // remove text
+//     canvas.select('text').remove();
+//     // remove the whole content
+//     container.select('g').remove();
+//     imageID += 1;
+//
+//     let imageName = input.split('/')[3];
+//
+//     let group = container.append("g")
+//         .attr("transform", "translate("
+//             + margin.left + "," + margin.top + ")")
+//         .attr('id', 'image_' + imageID)
+//         .classed('draggable', true);
+//     group.append("image")
+//         .attr('href', input)
+//         .attr('width', imageWidth)
+//         .attr('x', imagePlace)
+//         .attr('y', (height - 112) / 2 - imageWidth / 2)
+//         .attr('onmouseup', 'browseImage("' + input + ',' + imageID + '")')
+//         .attr("id", "boarding_" + imageID);
+//     let buttons = group.append("foreignObject")
+//         .attr('x', imagePlace + imageWidth - 30)
+//         .attr('y', (height - 112) / 2 - imageWidth / 2)
+//         .attr('width', imageWidth - 30)
+//         .attr('height', 30)
+//         .append('xhtml:div')
+//         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+//         .attr('style', 'display: none;')
+//         .attr('id', 'button_' + imageID);
+//     buttons.append('button')
+//         .attr('class', 'btn btn-danger btn-sm hide')
+//         .attr('type', 'button')
+//         .attr('id', 'remove_' + imageID)
+//         .attr('onclick', 'remove(' + imageID + ')')
+//         .append('i')
+//         .attr('class', 'fas fa-trash-alt');
+//     let keywords = group.append("foreignObject")
+//         .attr('x', imagePlace)
+//         .attr('y', (height - 112) / 2 - imageWidth / 2 - 40)
+//         .attr('width', imageWidth)
+//         .attr('height', 40)
+//         .append('xhtml:div')
+//         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+//         .attr('style', 'display: none;')
+//         .attr('id', 'keywords_' + imageID);
+//
+//     $.ajax({
+//         type: "POST",
+//         url: "/plot/" + imageName,
+//         data: imageName,
+//         success: function (response) {
+//             let re = JSON.parse(response);
+//             let initTree = ImageTree.initialize(re);
+//             console.log(initTree);
+//             let kw = re['keywords'];
+//             for (let w in kw) {
+//                 keywords.append('span')
+//                     .attr('class', 'badge badge-warning mr-1 hide')
+//                     .attr('type', 'button')
+//                     .attr('onclick', 'inquire("' + imageName + ',' + kw[w] + ',' + imageID + '")')
+//                     .html(kw[w]);
+//             }
+//         },
+//         error: function (xhr) {
+//             //Do Something to handle error
+//         }
+//     });
+// }
+
 
 // click on the image
 function browseImage(input) {
@@ -230,26 +360,6 @@ function browseImage(input) {
     }
 }
 
-function clearboard() {
-    // console.log('clear');
-    container.selectAll('*').remove();
-}
-
-function screenshot() {
-    console.log('screenshot');
-}
-
-function printout() {
-    console.log('print out');
-}
-
-function shareto() {
-    console.log('share to');
-}
-
-function refresh(i) {
-    console.log(i);
-}
 
 function addSubImage(x, y, i, input) {
     console.log(input);
@@ -505,10 +615,6 @@ function inquire(i) {
         .attr('transform', function (d) {
             return "translate(" + (cen_x - 15) + "," + (cen_3 - 11) + ")"
         });
-}
-
-function drawTree(d) {
-    console.log(d);
 }
 
 function remove(i) {

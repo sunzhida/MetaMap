@@ -241,9 +241,9 @@ function _exploreImage(i) {
 }
 
 function _removeImage(input) {
-    console.log(input);
+    // console.log(input);
     let curTree = imageTree.remove(input);
-    console.log(curTree);
+    // console.log(curTree);
     drawTree(curTree);
 }
 

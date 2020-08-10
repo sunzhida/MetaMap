@@ -1,7 +1,7 @@
 const HEIGHT = 180;
-const WIDTH = 180;
+const WIDTH = 252;
 const MIN_H_GUTTER = 20;
-const W_GUTTER = 20;
+const W_GUTTER = 30;
 
 /**
  * DTO - Data Transfer Object (btw frontend & backend)
@@ -191,6 +191,13 @@ class ImageTree {
      * @throws When id not found
      */
     explore(id, dto) {
+        // 删除id的兄弟节点的发散
+        const parent = this.findParent(id);
+        if (parent) {
+            if (parent.semantic && parent.semantic.id !== id) this.__removeChild(parent.semantic);
+            if (parent.color && parent.color.id !== id) this.__removeChild(parent.color);
+            if (parent.shape && parent.shape.id !== id) this.__removeChild(parent.shape);
+        }
         const found = this.find(id);
         if (!found) throw new Error(`[explore] id ${id} not found`);
         found.semantic = new TreeNode(
@@ -245,7 +252,8 @@ class ImageTree {
         gutters[0] = 0;
         gutters[totalLevel] = MIN_H_GUTTER;
         for (let lev = totalLevel - 1; lev > 0; lev--) {
-            gutters[lev] = 2 * HEIGHT + 3 * gutters[lev + 1];
+            // gutters[lev] = 2 * HEIGHT + 3 * gutters[lev + 1];
+            gutters[lev] = MIN_H_GUTTER;
         }
     
         this.__injectTreeHeight(this.tree, 0, gutters);
@@ -289,6 +297,17 @@ class ImageTree {
         return this.__findParentInner(id, cur.semantic)
             || this.__findParentInner(id, cur.color)
             || this.__findParentInner(id, cur.shape);
+    }
+
+    /**
+     * @private
+     * @param {TreeNode | undefined} node 
+     */
+    __removeChild(node) {
+        if (!node) return;
+        if (node.semantic) delete node.semantic;
+        if (node.color) delete node.color;
+        if (node.shape) delete node.shape;
     }
 
     /**

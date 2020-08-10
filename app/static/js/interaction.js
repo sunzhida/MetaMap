@@ -284,12 +284,16 @@ function browseImageList(input) {
     let currentImageList = imageTree.find(parseInt(window_id));
     console.log(currentImageList);
 
+    d3.select('#kwindow_'+ window_id).remove();
+    d3.select('#kbutton_'+ window_id).remove();
+
     let keywords = d3.select('#image_' + currentRoot.id)
         .append("foreignObject")
         .attr('x', currentImageList.x)
         .attr('y', currentImageList.y - rectHeight)
         .attr('width', rectWidth)
         .attr('height', rectHeight)
+        .attr('id', 'kwindow_' + window_id)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
         .attr('id', 'keywords_' + window_id + '_' + image_id);
@@ -302,6 +306,24 @@ function browseImageList(input) {
             .attr('onclick', '_exploreImage("' + currentImageList['images'][image_id]['name'] + ',' + currentImageList['images'][image_id]['keywords'][t] + ',' + window_id + '")')
             .html(currentImageList['images'][image_id]['keywords'][t]);
     }
+
+    let buttons = d3.select('#image_' + currentRoot.id)
+        .append("foreignObject")
+        .attr('x', currentImageList.x + rectWidth - 30)
+        .attr('y', currentImageList.y)
+        .attr('width', 30)
+        .attr('height', 30)
+        .attr('id', 'kbutton_' + window_id)
+        .append('xhtml:div')
+        .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+        .attr('id', 'button_' + window_id);
+    buttons.append('button')
+        .attr('class', 'btn btn-danger btn-sm')
+        .attr('type', 'button')
+        .attr('id', 'remove_' + window_id)
+        .attr('onclick', 'remove(' + window_id + ')')
+        .append('i')
+        .attr('class', 'fas fa-trash-alt');
 }
 
 function drawTree(d) {
@@ -396,7 +418,7 @@ function drawRect(c, x, y, i, w, h) {
 }
 
 function drawWin(c, x, y, i, w, h, input) {
-    console.log(i);
+    // console.log(i);
     let window = c.append('foreignObject')
         .attr("transform", "translate("
             + x + "," + y + ")")
@@ -436,6 +458,7 @@ function drawWin(c, x, y, i, w, h, input) {
         .attr('class', 'carousel-control-prev')
         .attr('href', "#window_" + i)
         .attr('role', 'button')
+        .attr('onclick', 'prevSlide(' + i + ')')
         .attr('data-slide', 'prev');
     leftcon.append('span')
         .attr('class', 'carousel-control-prev-icon')
@@ -447,6 +470,7 @@ function drawWin(c, x, y, i, w, h, input) {
         .attr('class', 'carousel-control-next')
         .attr('href', "#window_" + i)
         .attr('role', 'button')
+        .attr('onclick', 'nextSlide(' + i + ')')
         .attr('data-slide', 'next');
     rightcon.append('span')
         .attr('class', 'carousel-control-next-icon')
@@ -454,47 +478,14 @@ function drawWin(c, x, y, i, w, h, input) {
     rightcon.append('span')
         .attr('class', 'sr-only')
         .html('Next');
-    let buttons = c.append("foreignObject")
-        .attr('x', x + w - 30)
-        .attr('y', y)
-        .attr('width', 30)
-        .attr('height', 30)
-        .append('xhtml:div')
-        .attr('xmlns', 'http://www.w3.org/1999/xhtml')
-        .attr('style', 'display: none;')
-        .attr('id', 'button_' + i);
-    buttons.append('button')
-        .attr('class', 'btn btn-danger btn-sm hide')
-        .attr('type', 'button')
-        .attr('id', 'remove_' + i)
-        .attr('onclick', 'remove(' + i + ')')
-        .append('i')
-        .attr('class', 'fas fa-trash-alt');
-    // drawKeywordsList(c, x, y, i, w, h, input);
 }
 
-function drawKeywordsList(c, x, y, i, w, h, input) {
-    // d3.select('#keywords_' + i).remove();
-    for (let m in input) {
-        let keywords = c.append("foreignObject")
-            .attr('x', x)
-            .attr('y', y - 40)
-            .attr('width', w)
-            .attr('height', 40)
-            .append('xhtml:div')
-            .attr('xmlns', 'http://www.w3.org/1999/xhtml')
-            .attr('style', 'display: none;')
-            .attr('id', 'keywords_' + i + '_' + m);
-        for (let t in input[m]['keywords']) {
-            keywords.append('div')
-                .attr('id', 'subkeywords_' + i + '_' + m)
-                .append('span')
-                .attr('class', 'badge badge-warning mr-1 hide')
-                .attr('type', 'button')
-                .attr('onclick', '_exploreImage("' + input[m]['name'] + ',' + input[m]['keywords'][t] + ',' + i + '")')
-                .html(input[m]['keywords'][t]);
-        }
-    }
+function prevSlide(e) {
+    console.log(e);
+}
+
+function nextSlide(e) {
+    console.log(e);
 }
 
 function addSubImage(x, y, i, input) {

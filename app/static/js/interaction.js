@@ -482,10 +482,14 @@ function drawWin(c, x, y, i, w, h, input) {
 
 function prevSlide(e) {
     console.log(e);
+    d3.select('#kwindow_'+ e).remove();
+    d3.select('#kbutton_'+ e).remove();
 }
 
 function nextSlide(e) {
     console.log(e);
+    d3.select('#kwindow_'+ e).remove();
+    d3.select('#kbutton_'+ e).remove();
 }
 
 function addSubImage(x, y, i, input) {

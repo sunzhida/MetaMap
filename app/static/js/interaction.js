@@ -9,9 +9,7 @@ const margin = {top: 10, right: 20, bottom: 10, left: 20};
 let width = w - margin.right - margin.left;
 let height = h - margin.top - margin.bottom;
 
-let imageID = 0;
 let imageTree = new ImageTree();
-console.log(imageTree);
 let MAX_ZOOM_IN = 10;
 let MAX_ZOOM_OUT = 0.5;
 let zoom = d3.behavior.zoom().scaleExtent([MAX_ZOOM_OUT, MAX_ZOOM_IN]).on('zoom', zoomed);
@@ -244,7 +242,7 @@ function _exploreImage(i) {
 function _removeImage(input) {
     // console.log(input);
     let curTree = imageTree.remove(input);
-    console.log(curTree);
+    // console.log(curTree);
     drawTree(curTree);
 }
 

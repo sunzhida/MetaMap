@@ -231,7 +231,7 @@ function _exploreImage(i) {
         data: i,
         success: function (response) {
             let re = JSON.parse(response);
-            console.log(re);
+            // console.log(re);
             let currentTree = imageTree.explore(imgID, re);
             drawTree(currentTree);
         },
@@ -295,6 +295,7 @@ function browseImageList(input) {
 }
 
 function drawTree(d) {
+    console.log(d);
     // remove text
     canvas.select('text').remove();
     // remove the whole content
@@ -343,20 +344,35 @@ function drawTree(d) {
             .attr('onclick', '_exploreImage("' + d['images'][0]['name'] + ',' + d['images'][0]['keywords'][w] + ',' + d.id + '")')
             .html(d['images'][0]['keywords'][w]);
     }
+
     // the rest image
     if (d['color']['images'] === undefined && d['shape']['images'] === undefined && d['semantic']['images'] === undefined) {
         // console.log(d);
         // the first level
     } else {
-        console.log(d);
-        drawRect(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight);
-        drawWin(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight, d['color']['images']);
-        drawRect(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight);
-        drawWin(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight, d['shape']['images']);
-        drawRect(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight);
-        drawWin(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight, d['semantic']['images']);
+        drawTreeNode(d, group, rectWidth, rectHeight);
     }
 }
+
+function drawTreeNode(d, group, rectWidth, rectHeight) {
+    console.log(d);
+    if (d['color']) {
+        drawRect(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight);
+        drawWin(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight, d['color']['images']);
+        drawTreeNode(d['color'], group, rectWidth, rectHeight);
+    }
+    if (d['shape']) {
+        drawRect(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight);
+        drawWin(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight, d['shape']['images']);
+        drawTreeNode(d['shape'], group, rectWidth, rectHeight);
+    }
+    if (d['semantic']) {
+        drawRect(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight);
+        drawWin(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight, d['semantic']['images']);
+        drawTreeNode(d['semantic'], group, rectWidth, rectHeight);
+    }
+}
+
 
 function drawRect(c, x, y, i, w, h) {
     c.append('rect')
@@ -472,7 +488,6 @@ function drawKeywordsList(c, x, y, i, w, h, input) {
         }
     }
 }
-
 
 function addSubImage(x, y, i, input) {
     console.log(input);

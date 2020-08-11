@@ -9,6 +9,7 @@ const margin = {top: 10, right: 20, bottom: 10, left: 20};
 let width = w - margin.right - margin.left;
 let height = h - margin.top - margin.bottom;
 
+let boardID = 0;
 let imageTree = new ImageTree();
 let MAX_ZOOM_IN = 10;
 let MAX_ZOOM_OUT = 0.5;
@@ -27,14 +28,17 @@ let canvas = d3.select("#board")
     .attr("height", height - 112)
     .attr('id', 'canvas')
     .call(zoom);
+canvas.append('text')
+    .attr('x', width / 2 - 320)
+    .attr('y', height / 2)
+    .attr('id', 'intro')
+    .attr('fill', 'grey')
+    .style('font-size', '50px')
+    .text('Please click a image for browsing.');
 let container = canvas.append('g')
     .attr('id', 'container')
     .attr('width', '100%')
     .attr('height', '100%');
-canvas.append('text')
-    .attr('x', width / 2 - 50)
-    .attr('y', 100)
-    .text('Please click a image for boarding.');
 
 function submit() {
     let input = document.getElementById("search").value;
@@ -338,9 +342,15 @@ function browseImageList(input) {
 function drawTree(d) {
     // console.log(d);
     // remove text
-    canvas.select('text').remove();
+    canvas.select('#intro').remove();
+
     // remove the whole content
-    container.select('g').remove();
+    // container.select('g').remove();
+
+    // create a new tab for the container
+
+
+
     let imageWidth = 120, rectWidth = 252, rectHeight = 120;
     let group = container.append("g")
         .attr("transform", "translate(0," + (height / 2 - imageWidth / d['images'][0]['width'] * d['images'][0]['height'] / 2) + ")")
@@ -501,10 +511,26 @@ function drawWin(c, x, y, i, w, h, input) {
 
 function drawLine(c, x1, y1, x2, y2, w, h, t) {
     // console.log(x1, y1, x2, y2, w, h);
+    let path;
     if (!w || !h) {
         // console.log(w, h);
         w = 252;
         h = 120;
+        path = [{'x': x1 + w, 'y': y1 + h / 2}, {
+            'x': x2,
+            'y': y1 + h / 2
+        }, {'x': x1 + w, 'y': y2 + 60}, {
+            'x': x2,
+            'y': y2 + 60
+        }];
+    } else {
+        path = [{'x': x1 + w, 'y': y1 + h / 2}, {
+            'x': x2 - (x2 - x1) / 3,
+            'y': y1 + h / 2
+        }, {'x': x1 + w + (x2 - x1) / 3, 'y': y2 + 60}, {
+            'x': x2,
+            'y': y2 + 60
+        }];
     }
     // line
     let lineGenerator = d3.svg.line()
@@ -515,10 +541,6 @@ function drawLine(c, x1, y1, x2, y2, w, h, t) {
             return d.y;
         })
         .interpolate('bundle');
-    let path = [{'x': x1 + w, 'y': y1 + h / 2}, {'x': x2, 'y': y1 + h / 2}, {'x': x1 + w, 'y': y2 + 60}, {
-        'x': x2,
-        'y': y2 + 60
-    }];
 
     if (t === 'semantic') {
         c.append('path')
@@ -593,142 +615,6 @@ function nextSlide(e) {
     // console.log(e);
     d3.select('#kwindow_' + e).remove();
     d3.select('#kbutton_' + e).remove();
-}
-
-function inquire(i) {
-    let imgName = i.split(',')[0];
-    let keyword = i.split(',')[1];
-    let imgID = i.split(',')[2];
-    console.log(imgName, keyword, imgID);
-    let img = document.getElementById("boarding_" + imgID).getBBox();
-    // let img1 = document.getElementById("boarding_" + imgID).getBoundingClientRect();
-    console.log(img);
-    let recHeight = 220, sec = 80, imageHeight = 120, imageWidth = 252;
-
-    let g_id = "#image_" + imgID;
-    let x1 = img.x + img.width, y1 = img.y + img.height / 2;
-    let x2 = img.x + img.width + sec / 2;
-    let y_semantic = y1 - recHeight / 2 - sec;
-    let y_color = y1;
-    let y_shape = y1 + recHeight / 2 + sec;
-
-    // image
-
-    $.ajax({
-        url: "/inquire/" + i,
-        type: "get",
-        data: i,
-        success: function (response) {
-            let re = JSON.parse(response);
-            console.log(re);
-            // console.log(currentTree);
-            // console.log(x1, y_semantic, y_color, y_shape);
-            imageID += 1;
-            addSubImage(x1 + sec, y_semantic - imageHeight / 2, imageID, re['semantic']);
-            imageID += 1;
-            addSubImage(x1 + sec, y_color - imageHeight / 2, imageID, re['color']);
-            imageID += 1;
-            addSubImage(x1 + sec, y_shape - imageHeight / 2, imageID, re['shape']);
-        },
-        error: function (xhr) {
-            //Do Something to handle error
-        }
-    });
-
-    // line
-    let lineGenerator = d3.svg.line()
-        .x(function (d) {
-            return d.x;
-        })
-        .y(function (d) {
-            return d.y;
-        })
-        .interpolate('bundle');
-
-    console.log(x1, y_semantic, y_color, y_shape);
-
-    let path1 = [{'x': x1, 'y': y1}, {'x': x2, 'y': y1}, {'x': x1, 'y': y_semantic}, {'x': x2, 'y': y_semantic}];
-    let path2 = [{'x': x1, 'y': y1}, {'x': x2, 'y': y1}, {'x': x1, 'y': y_color}, {'x': x2, 'y': y_color}];
-    let path3 = [{'x': x1, 'y': y1}, {'x': x2, 'y': y1}, {'x': x1, 'y': y_shape}, {'x': x2, 'y': y_shape}];
-    let cen_x = (x1 + x2) / 2;
-    let cen_1 = (y1 + y_semantic) / 2;
-    let cen_2 = (y1 + y_color) / 2;
-    let cen_3 = (y1 + y_shape) / 2;
-
-    d3.select(g_id)
-        .append('path')
-        .attr('d', lineGenerator(path1))
-        .style('fill', 'none')
-        .style('stroke', '#e67e22')
-        .style('stroke-width', '3')
-        .on('mouseover', function () {
-            d3.select('#path_s_' + imgID)
-                .style('visibility', 'visible');
-        })
-        .on('mouseout', function () {
-            d3.select('#path_s_' + imgID)
-                .style('visibility', 'hidden');
-        });
-    d3.select(g_id)
-        .append('text')
-        .text('Semantic')
-        .attr('transform', function () {
-            return "translate(" + (cen_x - 30) + "," + (cen_1 - 11) + ")"
-        })
-        .attr('id', 'path_s_' + imgID)
-        .style('visibility', 'hidden')
-        .style('fill', '#d35400');
-
-    d3.select(g_id)
-        .append('path')
-        .attr('d', lineGenerator(path2))
-        .style('fill', 'none')
-        .style('stroke', '#9b59b6')
-        .style('stroke-width', '3')
-        .on('mouseover', function () {
-            d3.select('#path_c_' + imgID)
-                .style('visibility', 'visible');
-        })
-        .on('mouseout', function () {
-            d3.select('#path_c_' + imgID)
-                .style('visibility', 'hidden');
-        });
-    d3.select(g_id)
-        .append('text')
-        .text('Color')
-        .attr('transform', function () {
-            return "translate(" + (cen_x - 15) + "," + (cen_2 - 11) + ")"
-        })
-        .attr('id', 'path_c_' + imgID)
-        .style('visibility', 'hidden')
-        .style('fill', '#8e44ad');
-
-    d3.select(g_id)
-        .append('path')
-        .attr('d', lineGenerator(path3))
-        .style('fill', 'none')
-        .style('stroke', '#2ecc71')
-        .style('stroke-width', '3')
-        .on('mouseover', function (d) {
-            d3.select('#path_sh_' + imgID)
-                .style('visibility', 'visible');
-        })
-        .on('mouseout', function (d) {
-            d3.select('#path_sh_' + imgID)
-                .style('visibility', 'hidden');
-        })
-        .on('click', function (d) {
-            console.log(d);
-        });
-    d3.select(g_id)
-        .append('text')
-        .text('Shape')
-        .style('fill', '#27ae60')
-        .attr('id', 'path_sh_' + imgID)
-        .style('visibility', 'hidden')
-        .attr('transform', function (d) {
-            return "translate(" + (cen_x - 15) + "," + (cen_3 - 11) + ")"
-        });
 }
 
 function remove(i) {

@@ -323,7 +323,7 @@ function browseImageList(input) {
         .attr('class', 'btn btn-dark btn-sm')
         .attr('type', 'button')
         .attr('id', 'collect_' + image_id)
-        .attr('onclick', 'collect(' + image_name + ')')
+        .attr('onclick', '_collectImage("' + image_name + '")')
         .append('i')
         .attr('class', 'fas fa-thumbtack');
     buttons.append('button')
@@ -366,7 +366,7 @@ function drawTree(d) {
         .attr('class', 'btn btn-dark btn-sm')
         .attr('type', 'button')
         .attr('id', 'collect_' + d.id)
-        .attr('onclick', 'collect(' + d['images'][0]['name'] + ')')
+        .attr('onclick', '_collectImage("' + d['images'][0]['name'] + '")')
         .append('i')
         .attr('class', 'fas fa-thumbtack');
     buttons.append('button')
@@ -736,6 +736,8 @@ function remove(i) {
     d3.select(g_id).remove();
 }
 
-function collect(i) {
+
+//for Zeyu
+function _collectImage(i) {
     console.log(i);
 }

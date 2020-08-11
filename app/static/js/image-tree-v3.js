@@ -1,7 +1,7 @@
 const HEIGHT = 180;
 const WIDTH = 252;
-const MIN_H_GUTTER = 20;
-const W_GUTTER = 30;
+const MIN_H_GUTTER = 8;
+const W_GUTTER = 83;
 
 /**
  * DTO - Data Transfer Object (btw frontend & backend)

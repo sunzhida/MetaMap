@@ -397,26 +397,29 @@ function drawTree(d) {
         // console.log(d);
         // the first level
     } else {
-        drawTreeNode(d, group, rectWidth, rectHeight);
+        drawTreeNode(d, group, rectWidth, rectHeight, imageWidth);
     }
 }
 
-function drawTreeNode(d, group, rectWidth, rectHeight) {
+function drawTreeNode(d, group, rectWidth, rectHeight, imageWidth) {
     // console.log(d);
-    if (d['color']) {
-        drawRect(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight);
-        drawWin(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight, d['color']['images']);
-        drawTreeNode(d['color'], group, rectWidth, rectHeight);
-    }
     if (d['shape']) {
         drawRect(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight);
         drawWin(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight, d['shape']['images']);
+        drawLine(group, d.x, d.y, d['shape']['x'], d['shape']['y'], imageWidth, imageWidth / d['images'][0]['height'] * d['images'][0]['height'], 'shape');
         drawTreeNode(d['shape'], group, rectWidth, rectHeight);
     }
     if (d['semantic']) {
         drawRect(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight);
         drawWin(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight, d['semantic']['images']);
+        drawLine(group, d.x, d.y, d['semantic']['x'], d['semantic']['y'], imageWidth, imageWidth / d['images'][0]['height'] * d['images'][0]['height'], 'semantic');
         drawTreeNode(d['semantic'], group, rectWidth, rectHeight);
+    }
+    if (d['color']) {
+        drawRect(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight);
+        drawWin(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight, d['color']['images']);
+        drawLine(group, d.x, d.y, d['color']['x'], d['color']['y'], imageWidth, imageWidth / d['images'][0]['height'] * d['images'][0]['height'], 'color');
+        drawTreeNode(d['color'], group, rectWidth, rectHeight);
     }
 }
 
@@ -496,8 +499,88 @@ function drawWin(c, x, y, i, w, h, input) {
         .html('Next');
 }
 
-function drawLine(x1, x2, y1, y2) {
-    console.log(x1, x2, y1, y2);
+function drawLine(c, x1, y1, x2, y2, w, h, t) {
+    // console.log(x1, y1, x2, y2, w, h);
+    if (!w || !h) {
+        // console.log(w, h);
+        w = 252;
+        h = 120;
+    }
+    // line
+    let lineGenerator = d3.svg.line()
+        .x(function (d) {
+            return d.x;
+        })
+        .y(function (d) {
+            return d.y;
+        })
+        .interpolate('bundle');
+    let path = [{'x': x1 + w, 'y': y1 + h / 2}, {'x': x2, 'y': y1 + h / 2}, {'x': x1 + w, 'y': y2 + 60}, {
+        'x': x2,
+        'y': y2 + 60
+    }];
+
+    if (t === 'semantic') {
+        c.append('path')
+            .attr('d', lineGenerator(path))
+            .style('fill', 'none')
+            .style('stroke', '#e67e22')
+            .style('stroke-width', '3');
+        c.append('rect')
+            .attr('width', '77')
+            .attr('height', '30')
+            .attr('rx', '8')
+            .attr('transform', function () {
+                return "translate(" + ((x1 + w + x2) / 2 - 35) + "," + ((y1 + h / 2 + y2) / 2 + 15) + ")"
+            })
+            .style('fill', '#d35400');
+        c.append('text')
+            .text('Semantic')
+            .attr('transform', function () {
+                return "translate(" + ((x1 + w + x2) / 2 - 30) + "," + ((y1 + h / 2 + y2) / 2 + 34) + ")"
+            })
+            .style('fill', 'white');
+    } else if (t === 'color') {
+        c.append('path')
+            .attr('d', lineGenerator(path))
+            .style('fill', 'none')
+            .style('stroke', '#9b59b6')
+            .style('stroke-width', '3');
+        c.append('rect')
+            .attr('width', '52')
+            .attr('height', '30')
+            .attr('rx', '8')
+            .attr('transform', function () {
+                return "translate(" + ((x1 + w + x2) / 2 - 20) + "," + ((y1 + h / 2 + y2) / 2 + 15) + ")"
+            })
+            .style('fill', '#8e44ad');
+        c.append('text')
+            .text('Color')
+            .attr('transform', function () {
+                return "translate(" + ((x1 + w + x2) / 2 - 15) + "," + ((y1 + h / 2 + y2) / 2 + 34) + ")"
+            })
+            .style('fill', 'white');
+    } else if (t === 'shape') {
+        c.append('path')
+            .attr('d', lineGenerator(path))
+            .style('fill', 'none')
+            .style('stroke', '#2ecc71')
+            .style('stroke-width', '3');
+        c.append('rect')
+            .attr('width', '58')
+            .attr('height', '30')
+            .attr('rx', '8')
+            .attr('transform', function () {
+                return "translate(" + ((x1 + w + x2) / 2 - 25) + "," + ((y1 + h / 2 + y2) / 2 + 15) + ")"
+            })
+            .style('fill', '#27ae60');
+        c.append('text')
+            .text('Shape')
+            .attr('transform', function () {
+                return "translate(" + ((x1 + w + x2) / 2 - 20) + "," + ((y1 + h / 2 + y2) / 2 + 34) + ")"
+            })
+            .style('fill', 'white');
+    }
 }
 
 function prevSlide(e) {

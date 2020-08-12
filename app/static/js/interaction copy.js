@@ -9,7 +9,7 @@ const margin = {top: 10, right: 20, bottom: 10, left: 20};
 let width = w - margin.right - margin.left;
 let height = h - margin.top - margin.bottom;
 
-let boardID = 0;
+let tapID = 0;
 let imageTree = new ImageTree();
 let MAX_ZOOM_IN = 10;
 let MAX_ZOOM_OUT = 0.5;
@@ -18,27 +18,28 @@ let zoom = d3.behavior.zoom().scaleExtent([MAX_ZOOM_OUT, MAX_ZOOM_IN]).on('zoom'
 // 绑定在调色盘上的clipboardJS对象
 let colorClipboard;
 
-let canvas = d3.select("#board")
-    .attr('width', width)
-    .attr('height', height)
-    .append("svg")
-    .attr('viewBox', '0 0 ' + width + ' ' + height)
-    .attr('xmlns', 'http://www.w3.org/2000/svg')
-    .attr("width", width + margin.right + margin.left)
-    .attr("height", height - 112)
-    .attr('id', 'canvas')
-    .call(zoom);
-canvas.append('text')
-    .attr('x', width / 2 - 320)
-    .attr('y', height / 2)
-    .attr('id', 'intro')
-    .attr('fill', 'grey')
-    .style('font-size', '50px')
-    .text('Please click a image for browsing.');
-let container = canvas.append('g')
-    .attr('id', 'container')
-    .attr('width', '100%')
-    .attr('height', '100%');
+// let canvas = d3.select("#board")
+//     .attr('width', width)
+//     .attr('height', height);
+// .append("svg")
+// .attr('viewBox', '0 0 ' + width + ' ' + height)
+// .attr('xmlns', 'http://www.w3.org/2000/svg')
+// .attr("width", width + margin.right + margin.left)
+// .attr("height", height - 112)
+// .attr('id', 'canvas')
+// .call(zoom);
+// canvas.append('text')
+//     .attr('x', width / 2 - 320)
+//     .attr('y', height / 2)
+//     .attr('id', 'intro')
+//     .attr('fill', 'grey')
+//     .style('font-size', '50px')
+//     .text('Please click a image for browsing.');
+// let container = canvas.append('g')
+//     .attr('id', 'container')
+//     .attr('class', 'zoomable')
+//     .attr('width', '100%')
+//     .attr('height', '100%');
 
 function submit() {
     let input = document.getElementById("search").value;
@@ -180,15 +181,15 @@ function showColorToast() {
 //Function called on the zoom event. It translate the draw on the zoomed point and scale with a certain factor
 
 function zoomed() {
-    container.attr("transform", "translate(" + (d3.event.translate[0]) + "," + (d3.event.translate[1]) + ")scale(" + d3.event.scale + ")");
+    d3.selectAll('.zoomable').attr("transform", "translate(" + (d3.event.translate[0]) + "," + (d3.event.translate[1]) + ")scale(" + d3.event.scale + ")");
 }
 
 ////////////////////////////////////////////////////////////////////////
 // The following functions are used for manipulating the mood board area
 
 function clearboard() {
-    // console.log('clear');
-    container.selectAll('*').remove();
+    console.log('clear');
+    // container.selectAll('*').remove();
 }
 
 function screenshot() {
@@ -221,6 +222,7 @@ function _addImage(input) {
             //Do Something to handle error
         }
     });
+    tapID += 1;
 }
 
 function _exploreImage(i) {
@@ -260,14 +262,14 @@ function browseImage(input) {
     let image_id = res[1];
     // console.log(image_id);
 
-    let popup_kw = document.getElementById('keywords_' + image_id);
+    let popup_kw = document.getElementById('keywords_' + image_id + '_' + tapID);
     if (popup_kw.style.display === "none") {
         popup_kw.style.display = "block";
     } else {
         popup_kw.style.display = "none";
     }
 
-    let popup = document.getElementById('button_' + image_id);
+    let popup = document.getElementById('button_' + image_id + '_' + tapID);
     if (popup.style.display === "none") {
         popup.style.display = "block";
     } else {
@@ -286,12 +288,11 @@ function browseImageList(input) {
 
     let currentRoot = imageTree.get(parseInt(window_id));
     // console.log(currentRoot);
-    // console.log();
     let currentImageList = imageTree.find(parseInt(window_id));
     // console.log(currentImageList);
 
-    d3.select('#kwindow_' + window_id).remove();
-    d3.select('#kbutton_' + window_id).remove();
+    d3.select('#kwindow_' + window_id + '_' + tapID).remove();
+    d3.select('#kbutton_' + window_id + '_' + tapID).remove();
 
     let keywords = d3.select('#image_' + currentRoot.id)
         .append("foreignObject")
@@ -299,13 +300,13 @@ function browseImageList(input) {
         .attr('y', currentImageList.y - rectHeight)
         .attr('width', rectWidth)
         .attr('height', rectHeight)
-        .attr('id', 'kwindow_' + window_id)
+        .attr('id', 'kwindow_' + window_id+ '_' + tapID)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
-        .attr('id', 'keywords_' + window_id + '_' + image_id);
+        .attr('id', 'keywords_' + window_id + '_' + image_id+ '_' + tapID);
     for (let t in currentImageList['images'][image_id]['keywords']) {
         keywords.append('div')
-            .attr('id', 'subkeywords_' + window_id + '_' + image_id)
+            .attr('id', 'subkeywords_' + window_id + '_' + image_id+ '_' + tapID)
             .append('span')
             .attr('class', 'badge badge-warning mr-1')
             .attr('type', 'button')
@@ -342,17 +343,51 @@ function browseImageList(input) {
 function drawTree(d) {
     // console.log(d);
     // remove text
-    canvas.select('#intro').remove();
-
+    d3.select('#intro').remove();
     // remove the whole content
-    // container.select('g').remove();
-
-    // create a new tab for the container
-
-
+    d3.select('#nav_tab_' + tapID).remove();
+    d3.select('#nav_' + tapID).remove();
+    $('div.active').removeClass('active').removeClass('show');
+    $('a.active').removeClass('active');
 
     let imageWidth = 120, rectWidth = 252, rectHeight = 120;
+
+    // if (d3.select('#nav_' + tapID)[0][0]) {
+    //     console.log('yes');
+    // } else {
+    //     // create a new tab for the container
+    //
+    // }
+
+    d3.select('#nav_tab')
+        .append('a')
+        .attr('class', 'nav-item nav-link active')
+        .attr('id', 'nav_tab_' + tapID)
+        .attr('data-toggle', 'tab')
+        .attr('href', '#nav_' + tapID)
+        .attr('role', 'tab')
+        .attr('aria-controls', 'nav_' + tapID)
+        .attr('aria-selected', 'true')
+        .html('Option ' + tapID);
+    d3.select('#nav_tabContent')
+        .append('div')
+        .attr('class', 'tab-pane fade show active')
+        .attr('id', 'nav_' + tapID)
+        .attr('role', 'tappanel')
+        .attr('aria-labelledby', 'nav_tab_' + tapID);
+
+    let container = d3.select('#nav_' + tapID)
+        .append("svg")
+        .attr('viewBox', '0 0 ' + width + ' ' + height)
+        .attr('xmlns', 'http://www.w3.org/2000/svg')
+        .attr("width", width + margin.right + margin.left)
+        .attr("height", height - 112)
+        .attr('id', 'canvas')
+        .call(zoom);
     let group = container.append("g")
+        .attr('class', 'zoomable')
+        .attr('width', '100%')
+        .attr('height', '100%')
         .attr("transform", "translate(0," + (height / 2 - imageWidth / d['images'][0]['width'] * d['images'][0]['height'] / 2) + ")")
         .attr('id', 'image_' + d.id);
     // the root image
@@ -624,18 +659,6 @@ function remove(i) {
 
 
 //for Zeyu
-const collection = new Set();
 function _collectImage(i) {
-    if (collection.has(i)) return;
-    collection.add(i);
-    $('#starred').append(`<div class="item">
-        <button type="button" class="btn btn-danger btn-sm mr-3" data-image="${i}" onclick="_decollectImage($(this))"><i class="fas fa-trash-alt" /></button>
-        <img class="img-thumbnail mr-3 pb-2" src="../static/img/${i}" alt="...">
-    </div>`);
-}
-
-function _decollectImage(elem) {
-    const image = elem.attr('data-image')
-    collection.delete(image);
-    elem.parent().remove();
+    console.log(i);
 }

@@ -13,7 +13,7 @@
     <link href="../static/css/bootstrap.css" rel="stylesheet">
     <link href="../static/css/jquery-ui.min.css" rel="stylesheet">
     <!--    <link href="../static/css/style.min.css" rel="stylesheet">-->
-    <!--    <link rel="stylesheet" href="../static/css/fontawesome-5.8.2-all.min.css">-->
+    <!-- <link rel="stylesheet" href="./static/css/fontawesome-5.8.2-all.min.css"> -->
 
     <!-- Custom styles for this template -->
     <link href="../static/css/template.css" rel="stylesheet">
@@ -75,7 +75,7 @@
                         <div class="card bg-light mb-1">
                             <div class="card-body" style="padding-top: 15px; padding-bottom: 6px;">
                                 <p>Image Collection</p>
-                                <div class="wrapper scrollable" id="images">
+                                <div class="wrapper scrollable" style="max-height: 543px;" id="images">
                                     {% if image|length != 0 %}
                                     {% for elem in image %}
                                     <img src="../static/img/{{ elem }}" alt="..." class="img-fluid img-thumbnail item"
@@ -130,6 +130,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card mb-1">
+                            <div class="card-header">
+                                Starred Images
+                            </div>
+                            <div class="card-body">
+                                <div class="scrollable" id="starred" style="height: 200px;"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -146,12 +154,12 @@
         <!-- 如果之后还有定制toast的需求，在这里加入另一个div class="toast"
         然后用JS控制$('#toast-id').toast('show') -->
         <div
-                id="color-clipboard-toast"
-                class="toast"
-                role="alert"
-                aria-live="assertive"
-                aria-atomic="true"
-                data-delay="1500"
+            id="color-clipboard-toast"
+            class="toast"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+            data-delay="1500"
         >
             <div class="toast-body">
                 <i class="fa fa-clipboard"></i>&nbsp;

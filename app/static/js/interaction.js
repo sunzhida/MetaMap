@@ -624,6 +624,18 @@ function remove(i) {
 
 
 //for Zeyu
+const collection = new Set();
 function _collectImage(i) {
-    console.log(i);
+    if (collection.has(i)) return;
+    collection.add(i);
+    $('#starred').append(`<div class="item">
+        <button type="button" class="btn btn-danger btn-sm mr-3" data-image="${i}" onclick="_decollectImage($(this))"><i class="fas fa-trash-alt" /></button>
+        <img class="img-thumbnail mr-3 pb-2" src="../static/img/${i}" alt="...">
+    </div>`);
+}
+
+function _decollectImage(elem) {
+    const image = elem.attr('data-image')
+    collection.delete(image);
+    elem.parent().remove();
 }

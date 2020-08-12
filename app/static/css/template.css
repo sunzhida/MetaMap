@@ -48,7 +48,7 @@ text {
 
 .scrollable {
     /*height: 432px;*/
-    max-height: 543px;
+    /* max-height: 543px; */
     overflow: auto;
 }
 
@@ -98,6 +98,20 @@ text {
     position: fixed;
     bottom: 20px;
     right: 20px;
+}
+
+#starred {
+    display: flex;
+}
+#starred .item, #starred .item img {
+    height: 100%;
+    position: relative;
+}
+#starred .item button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
 }
 
 /*!*body {*!*/

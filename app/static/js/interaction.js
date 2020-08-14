@@ -758,18 +758,19 @@ const collection = new Set();
 function _collectImage(i) {
     if (collection.has(i)) return;
     collection.add(i);
-    $('#starred').append(`<div class="item">
-    <div class="btn-group mr-3" role="group">
+    $('#starred').append(`<div class="item mr-3 mb-2 border border-light" data-image="${i}">
+    <div class="btn-group" role="group">
         <button type="button" class="btn btn-secondary btn-sm" onclick="_setComment('${i}')"><i class="fas fa-comment-alt" /></button>
-        <button type="button" class="btn btn-danger btn-sm" data-image="${i}" onclick="_decollectImage($(this))"><i class="fas fa-trash-alt" /></button>
+        <button type="button" class="btn btn-danger btn-sm" onclick="_decollectImage($(this))"><i class="fas fa-trash-alt" /></button>
     </div>
-    <img class="img-thumbnail mr-3 pb-2" src="../static/img/${i}" alt="...">
+    <img class="img-thumbnail" src="../static/img/${i}" alt="...">
     </div>`);
 }
 function _decollectImage(elem) {
-    const image = elem.attr('data-image')
+    const item = elem.parent().parent();
+    const image = item.attr('data-image')
     collection.delete(image);
-    elem.parent().parent().remove();
+    item.remove();
 }
 
 // Starred Image
@@ -785,6 +786,8 @@ function _setComment(key) {
     if (hasUnsavedComment && !confirm('You have unsaved image comments. Discard and comment a new image?')) return;
     hasUnsavedComment = false;
     $('#image-comments-btn').addClass('btn-outline-secondary').removeClass('btn-secondary');
+    $('#starred .item').removeClass('border-secondary').addClass('border-light');
+    $(`#starred .item[data-image="${key}"]`).addClass('border-secondary').removeClass('border-light');
     $('#image-comments > fieldset').removeAttr('disabled');
     curCommentKey = key;
     document.forms['image-comments'].content.value = comments[key] || '';

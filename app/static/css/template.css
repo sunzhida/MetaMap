@@ -103,9 +103,14 @@ text {
 #starred {
     display: flex;
 }
-#starred .item, #starred .item img {
-    height: 100%;
+#starred .item {
+    height: calc(100% - 0.5rem);
     position: relative;
+    flex: 0 0 auto;
+}
+#starred .item img {
+    height: 100%;
+    width: auto;
 }
 #starred .item .btn-group {
     position: absolute;

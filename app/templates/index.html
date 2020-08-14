@@ -135,6 +135,23 @@
                             </div>
                             <div class="card-body">
                                 <div class="scrollable" id="starred" style="height: 200px;"></div>
+                                <hr/>
+                                <form id="image-comments">
+                                    <fieldset disabled>
+                                        <div class="form-group">
+                                            <label for="image-comments-text">Comments...</label>
+                                            <textarea
+                                                id="image-comments-text"
+                                                name="content"
+                                                class="form-control"
+                                                rows="5"
+                                                placeholder="Write image comments here"
+                                                oninput="_inputComment()"
+                                            ></textarea>
+                                        </div>
+                                        <button type="submit" id="image-comments-btn" class="btn btn-outline-secondary">Save</button>
+                                    </fieldset>
+                                </form>
                             </div>
                         </div>
                     </div>

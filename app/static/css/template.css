@@ -107,7 +107,7 @@ text {
     height: 100%;
     position: relative;
 }
-#starred .item button {
+#starred .item .btn-group {
     position: absolute;
     top: 0;
     right: 0;

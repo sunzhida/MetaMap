@@ -1,5 +1,9 @@
 $().ready(function () {
     $('.toast').toast();
+    $('#image-comments').submit(function (e) {
+        e.preventDefault();
+        _saveComment(e.target.content.value);
+    })
 });
 
 // Set the dimensions and margins of the diagram
@@ -749,21 +753,44 @@ function remove(i) {
 }
 
 
-//for Zeyu
-
+// Image Collection
 const collection = new Set();
-
 function _collectImage(i) {
     if (collection.has(i)) return;
     collection.add(i);
     $('#starred').append(`<div class="item">
-        <button type="button" class="btn btn-danger btn-sm mr-3" data-image="${i}" onclick="_decollectImage($(this))"><i class="fas fa-trash-alt" /></button>
-        <img class="img-thumbnail mr-3 pb-2" src="../static/img/${i}" alt="...">
+    <div class="btn-group mr-3" role="group">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="_setComment('${i}')"><i class="fas fa-comment-alt" /></button>
+        <button type="button" class="btn btn-danger btn-sm" data-image="${i}" onclick="_decollectImage($(this))"><i class="fas fa-trash-alt" /></button>
+    </div>
+    <img class="img-thumbnail mr-3 pb-2" src="../static/img/${i}" alt="...">
     </div>`);
 }
-
 function _decollectImage(elem) {
     const image = elem.attr('data-image')
     collection.delete(image);
-    elem.parent().remove();
+    elem.parent().parent().remove();
+}
+
+// Starred Image
+var comments = {};
+var curCommentKey = null;
+var hasUnsavedComment = false;
+function _saveComment(value) {
+    hasUnsavedComment = false;
+    $('#image-comments-btn').addClass('btn-outline-secondary').removeClass('btn-secondary');
+    comments[curCommentKey] = value;
+}
+function _setComment(key) {
+    if (hasUnsavedComment && !confirm('You have unsaved image comments. Discard and comment a new image?')) return;
+    hasUnsavedComment = false;
+    $('#image-comments-btn').addClass('btn-outline-secondary').removeClass('btn-secondary');
+    $('#image-comments > fieldset').removeAttr('disabled');
+    curCommentKey = key;
+    document.forms['image-comments'].content.value = comments[key] || '';
+}
+function _inputComment() {
+    if (hasUnsavedComment) return;
+    hasUnsavedComment = true;
+    $('#image-comments-btn').addClass('btn-secondary').removeClass('btn-outline-secondary');
 }

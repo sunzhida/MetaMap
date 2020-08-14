@@ -501,10 +501,26 @@ function drawWin(c, x, y, i, w, h, input) {
 
 function drawLine(c, x1, y1, x2, y2, w, h, t) {
     // console.log(x1, y1, x2, y2, w, h);
+    let path;
     if (!w || !h) {
         // console.log(w, h);
         w = 252;
         h = 120;
+        path = [{'x': x1 + w, 'y': y1 + h / 2}, {
+            'x': x2,
+            'y': y1 + h / 2
+        }, {'x': x1 + w, 'y': y2 + 60}, {
+            'x': x2,
+            'y': y2 + 60
+        }];
+    } else {
+        path = [{'x': x1 + w, 'y': y1 + h / 2}, {
+            'x': x2 - (x2 - x1) / 3,
+            'y': y1 + h / 2
+        }, {'x': x1 + w + (x2 - x1) / 3, 'y': y2 + 60}, {
+            'x': x2,
+            'y': y2 + 60
+        }];
     }
     // line
     let lineGenerator = d3.svg.line()
@@ -515,10 +531,6 @@ function drawLine(c, x1, y1, x2, y2, w, h, t) {
             return d.y;
         })
         .interpolate('bundle');
-    let path = [{'x': x1 + w, 'y': y1 + h / 2}, {'x': x2, 'y': y1 + h / 2}, {'x': x1 + w, 'y': y2 + 60}, {
-        'x': x2,
-        'y': y2 + 60
-    }];
 
     if (t === 'semantic') {
         c.append('path')

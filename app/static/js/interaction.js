@@ -16,26 +16,11 @@ let height = h - margin.top - margin.bottom;
 let tapID = 0;
 let imageTree = new ImageTree();
 let MAX_ZOOM_IN = 10;
-let MAX_ZOOM_OUT = 0.5;
+let MAX_ZOOM_OUT = 0.1;
 let zoom = d3.behavior.zoom().scaleExtent([MAX_ZOOM_OUT, MAX_ZOOM_IN]).on('zoom', zoomed);
 
 // 绑定在调色盘上的clipboardJS对象
 let colorClipboard;
-
-let canvas = d3.select("#board")
-    .attr('width', width)
-    .attr('height', height)
-    .append("svg")
-    .attr('viewBox', '0 0 ' + width + ' ' + height)
-    .attr('xmlns', 'http://www.w3.org/2000/svg')
-    .attr("width", width + margin.right + margin.left)
-    .attr("height", height - 112)
-    .attr('id', 'canvas')
-    .call(zoom);
-let container = canvas.append('g')
-    .attr('id', 'container')
-    .attr('width', '100%')
-    .attr('height', '100%');
 
 function submit() {
     let input = document.getElementById("search").value;
@@ -175,17 +160,15 @@ function showColorToast() {
 }
 
 //Function called on the zoom event. It translate the draw on the zoomed point and scale with a certain factor
-
 function zoomed() {
-    container.attr("transform", "translate(" + (d3.event.translate[0]) + "," + (d3.event.translate[1]) + ")scale(" + d3.event.scale + ")");
+    d3.selectAll('.zoomable').attr("transform", "translate(" + (d3.event.translate[0]) + "," + (d3.event.translate[1]) + ")scale(" + d3.event.scale + ")");
 }
 
 ////////////////////////////////////////////////////////////////////////
 // The following functions are used for manipulating the mood board area
 
 function clearboard() {
-    // console.log('clear');
-    container.selectAll('*').remove();
+    console.log('clear');
 }
 
 function screenshot() {
@@ -212,7 +195,7 @@ function _addImage(input) {
         data: imageName,
         success: function (response) {
             let re = JSON.parse(response);
-            drawTree(imageTree.initialize(re));
+            drawTree(imageTree.initialize(re), tapID);
         },
         error: function (xhr) {
             //Do Something to handle error
@@ -225,6 +208,7 @@ function _exploreImage(i) {
     let imgName = i.split(',')[0];
     let keyword = i.split(',')[1];
     let imgID = parseInt(i.split(',')[2]);
+    let treeID = parseInt(i.split(',')[3]);
     // console.log(i);
     $.ajax({
         url: "/inquire/" + i,
@@ -233,7 +217,7 @@ function _exploreImage(i) {
         success: function (response) {
             let re = JSON.parse(response);
             let currentTree = imageTree.explore(imgID, re);
-            drawTree(currentTree);
+            drawTree(currentTree, treeID);
         },
         error: function (xhr) {
             //Do Something to handle error
@@ -241,12 +225,12 @@ function _exploreImage(i) {
     });
 }
 
-function _removeImage(input) {
-    // console.log(input);
-    let curTree = imageTree.remove(input);
-    // console.log(curTree);
-    drawTree(curTree);
-}
+// function _removeImage(input) {
+//     // console.log(input);
+//     let curTree = imageTree.remove(input);
+//     // console.log(curTree);
+//     drawTree(curTree, t);
+// }
 
 // The interactive functions
 
@@ -256,16 +240,17 @@ function browseImage(input) {
     let image_url = res[0];
     let image_name = res[0].split('/');
     let image_id = res[1];
+    let tree_id = res[2];
     // console.log(image_id);
 
-    let popup_kw = document.getElementById('keywords_' + image_id);
+    let popup_kw = document.getElementById('keywords_' + image_id + '_' + tree_id);
     if (popup_kw.style.display === "none") {
         popup_kw.style.display = "block";
     } else {
         popup_kw.style.display = "none";
     }
 
-    let popup = document.getElementById('button_' + image_id);
+    let popup = document.getElementById('button_' + image_id + '_' + tree_id);
     if (popup.style.display === "none") {
         popup.style.display = "block";
     } else {
@@ -274,115 +259,123 @@ function browseImage(input) {
 }
 
 function browseImageList(input) {
-    // console.log(input);
+    console.log(input);
     let res = input.split(',');
     let image_url = res[0];
     let image_name = res[0].split('/');
     let window_id = res[1];
     let image_id = res[2];
+    let tree_id = res[3];
     let rectWidth = 252, rectHeight = 40;
 
     let currentRoot = imageTree.get(parseInt(window_id));
     // console.log(currentRoot);
-    // console.log();
     let currentImageList = imageTree.find(parseInt(window_id));
     // console.log(currentImageList);
 
-    d3.select('#kwindow_' + window_id).remove();
-    d3.select('#kbutton_' + window_id).remove();
+    d3.select('#kwindow_' + window_id + '_' + tree_id).remove();
+    d3.select('#kbutton_' + window_id + '_' + tree_id).remove();
 
-    let keywords = d3.select('#image_' + currentRoot.id)
+    let keywords = d3.select('#image_' + currentRoot.id + '_' + tree_id)
         .append("foreignObject")
         .attr('x', currentImageList.x)
         .attr('y', currentImageList.y - rectHeight)
         .attr('width', rectWidth)
         .attr('height', rectHeight)
-        .attr('id', 'kwindow_' + window_id)
+        .attr('id', 'kwindow_' + window_id + '_' + tree_id)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
         .attr('id', 'keywords_' + window_id + '_' + image_id);
     for (let t in currentImageList['images'][image_id]['keywords']) {
         keywords.append('div')
-            .attr('id', 'subkeywords_' + window_id + '_' + image_id)
+            .attr('id', 'subkeywords_' + window_id + '_' + image_id + '_' + tree_id)
             .append('span')
             .attr('class', 'badge badge-warning mr-1')
             .attr('type', 'button')
-            .attr('onclick', '_exploreImage("' + currentImageList['images'][image_id]['name'] + ',' + currentImageList['images'][image_id]['keywords'][t] + ',' + window_id + '")')
+            .attr('onclick', '_exploreImage("' + currentImageList['images'][image_id]['name'] + ',' + currentImageList['images'][image_id]['keywords'][t] + ',' + window_id + ',' + tree_id + '")')
             .html(currentImageList['images'][image_id]['keywords'][t]);
     }
 
-    let buttons = d3.select('#image_' + currentRoot.id)
+    let buttons = d3.select('#image_' + currentRoot.id + '_' + tree_id)
         .append("foreignObject")
         .attr('x', currentImageList.x + rectWidth - 60)
         .attr('y', currentImageList.y)
         .attr('width', 60)
         .attr('height', 30)
-        .attr('id', 'kbutton_' + window_id)
+        .attr('id', 'kbutton_' + window_id + '_' + tree_id)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
-        .attr('id', 'button_' + window_id);
+        .attr('id', 'button_' + window_id + '_' + tree_id);
     buttons.append('button')
         .attr('class', 'btn btn-dark btn-sm')
         .attr('type', 'button')
-        .attr('id', 'collect_' + image_id)
+        .attr('id', 'collect_' + image_id + '_' + tree_id)
         .attr('onclick', '_collectImage("' + image_name + '")')
         .append('i')
         .attr('class', 'fas fa-thumbtack');
-    buttons.append('button')
-        .attr('class', 'btn btn-danger btn-sm')
-        .attr('type', 'button')
-        .attr('id', 'remove_' + window_id)
-        .attr('onclick', '_removeImage(' + window_id + ')')
-        .append('i')
-        .attr('class', 'fas fa-trash-alt');
+    // buttons.append('button')
+    //     .attr('class', 'btn btn-danger btn-sm')
+    //     .attr('type', 'button')
+    //     .attr('id', 'remove_' + window_id)
+    //     .attr('onclick', '_removeImage(' + window_id + '_' + tree_id + ')')
+    //     .append('i')
+    //     .attr('class', 'fas fa-trash-alt');
 }
 
-function drawTree(d) {
+function drawTree(d, t) {
     // console.log(d);
     // remove text
     d3.select('#intro').remove();
     // remove the whole content
-    d3.select('#nav_tab_' + tapID).remove();
-    d3.select('#nav_' + tapID).remove();
+    d3.select('#nav_tab_' + t).remove();
+    d3.select('#nav_' + t).remove();
     $('div.active').removeClass('active').removeClass('show');
     $('a.active').removeClass('active');
 
-    container.select('g').remove();
-
     let imageWidth = 120, rectWidth = 252, rectHeight = 120;
 
+    // create the tab to hold the image
     d3.select('#nav_tab')
         .append('a')
         .attr('class', 'nav-item nav-link active')
-        .attr('id', 'nav_tab_' + tapID)
+        .attr('id', 'nav_tab_' + t)
         .attr('data-toggle', 'tab')
-        .attr('href', '#nav_' + tapID)
+        .attr('href', '#nav_' + t)
         .attr('role', 'tab')
-        .attr('aria-controls', 'nav_' + tapID)
+        .attr('aria-controls', 'nav_' + t)
         .attr('aria-selected', 'true')
         .append('img')
         .attr('width', '16px')
         .attr('src', '../static/img/' + d['images'][0]['name']);
-        // .html('Option ' + tapID);
     d3.select('#nav_tabContent')
         .append('div')
         .attr('class', 'tab-pane fade show active')
-        .attr('id', 'nav_' + tapID)
+        .attr('id', 'nav_' + t)
         .attr('role', 'tappanel')
-        .attr('aria-labelledby', 'nav_tab_' + tapID);
+        .attr('aria-labelledby', 'nav_tab_' + t);
 
-
+    let container = d3.select('#nav_' + t)
+        .append("svg")
+        .attr('viewBox', '0 0 ' + width + ' ' + height)
+        .attr('xmlns', 'http://www.w3.org/2000/svg')
+        .attr("width", width + margin.right + margin.left)
+        .attr("height", height - 112)
+        .attr('id', 'canvas_' + t)
+        .call(zoom);
     let group = container.append("g")
+        .attr('class', 'zoomable')
+        .attr('width', '100%')
+        .attr('height', '100%')
         .attr("transform", "translate(0," + (height / 2 - imageWidth / d['images'][0]['width'] * d['images'][0]['height'] / 2) + ")")
-        .attr('id', 'image_' + d.id);
+        .attr('id', 'image_' + d.id + '_' + t);
     // the root image
     group.append("image")
         .attr('href', '../static/img/' + d['images'][0]['name'])
         .attr('width', imageWidth)
         .attr('x', d.x)
         .attr('y', d.y)
-        .attr('onmouseup', 'browseImage("../static/img/' + d['images'][0]['name'] + ',' + d.id + '")')
-        .attr("id", "boarding_" + d.id);
+        .attr('onmouseup', 'browseImage("../static/img/' + d['images'][0]['name'] + ',' + d.id + ',' + t + '")')
+        .attr("id", "boarding_" + d.id + '_' + t);
     let buttons = group.append("foreignObject")
         .attr('x', d.x + imageWidth - 60)
         .attr('y', d.y)
@@ -391,21 +384,21 @@ function drawTree(d) {
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
         .attr('style', 'display: none;')
-        .attr('id', 'button_' + d.id);
+        .attr('id', 'button_' + d.id + '_' + t);
     buttons.append('button')
         .attr('class', 'btn btn-dark btn-sm')
         .attr('type', 'button')
-        .attr('id', 'collect_' + d.id)
+        .attr('id', 'collect_' + d.id + '_' + t)
         .attr('onclick', '_collectImage("' + d['images'][0]['name'] + '")')
         .append('i')
         .attr('class', 'fas fa-thumbtack');
-    buttons.append('button')
-        .attr('class', 'btn btn-danger btn-sm hide')
-        .attr('type', 'button')
-        .attr('id', 'remove_' + d.id)
-        .attr('onclick', 'remove(' + d.id + ')')
-        .append('i')
-        .attr('class', 'fas fa-trash-alt');
+    // buttons.append('button')
+    //     .attr('class', 'btn btn-danger btn-sm hide')
+    //     .attr('type', 'button')
+    //     .attr('id', 'remove_' + d.id + '_' + t)
+    //     .attr('onclick', 'remove(' + d.id + '_' + t + ')')
+    //     .append('i')
+    //     .attr('class', 'fas fa-trash-alt');
     let keywords = group.append("foreignObject")
         .attr('x', d.x)
         .attr('y', d.y - 40)
@@ -414,12 +407,12 @@ function drawTree(d) {
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
         .attr('style', 'display: none;')
-        .attr('id', 'keywords_' + d.id);
+        .attr('id', 'keywords_' + d.id + '_' + t);
     for (let w in d['images'][0]['keywords']) {
         keywords.append('span')
             .attr('class', 'badge badge-warning mr-1 hide')
             .attr('type', 'button')
-            .attr('onclick', '_exploreImage("' + d['images'][0]['name'] + ',' + d['images'][0]['keywords'][w] + ',' + d.id + '")')
+            .attr('onclick', '_exploreImage("' + d['images'][0]['name'] + ',' + d['images'][0]['keywords'][w] + ',' + d.id + ',' + t + '")')
             .html(d['images'][0]['keywords'][w]);
     }
     // the rest image
@@ -427,37 +420,37 @@ function drawTree(d) {
         // console.log(d);
         // the first level
     } else {
-        drawTreeNode(d, group, rectWidth, rectHeight, imageWidth);
+        drawTreeNode(d, group, rectWidth, rectHeight, imageWidth, t);
     }
 }
 
-function drawTreeNode(d, group, rectWidth, rectHeight, imageWidth) {
-    // console.log(d);
+function drawTreeNode(d, group, rectWidth, rectHeight, imageWidth, t) {
+    console.log(d);
     if (d['shape']) {
-        drawRect(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight);
-        drawWin(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight, d['shape']['images']);
+        drawRect(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight, t);
+        drawWin(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight, d['shape']['images'], t);
         drawLine(group, d.x, d.y, d['shape']['x'], d['shape']['y'], imageWidth, imageWidth / d['images'][0]['height'] * d['images'][0]['height'], 'shape');
-        drawTreeNode(d['shape'], group, rectWidth, rectHeight);
+        drawTreeNode(d['shape'], group, rectWidth, rectHeight, undefined, t);
     }
     if (d['semantic']) {
-        drawRect(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight);
-        drawWin(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight, d['semantic']['images']);
+        drawRect(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight, t);
+        drawWin(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight, d['semantic']['images'], t);
         drawLine(group, d.x, d.y, d['semantic']['x'], d['semantic']['y'], imageWidth, imageWidth / d['images'][0]['height'] * d['images'][0]['height'], 'semantic');
-        drawTreeNode(d['semantic'], group, rectWidth, rectHeight);
+        drawTreeNode(d['semantic'], group, rectWidth, rectHeight, undefined, t);
     }
     if (d['color']) {
-        drawRect(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight);
-        drawWin(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight, d['color']['images']);
+        drawRect(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight, t);
+        drawWin(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight, d['color']['images'], t);
         drawLine(group, d.x, d.y, d['color']['x'], d['color']['y'], imageWidth, imageWidth / d['images'][0]['height'] * d['images'][0]['height'], 'color');
-        drawTreeNode(d['color'], group, rectWidth, rectHeight);
+        drawTreeNode(d['color'], group, rectWidth, rectHeight, undefined, t);
     }
 }
 
-function drawRect(c, x, y, i, w, h) {
+function drawRect(c, x, y, i, w, h, t) {
     c.append('rect')
         .attr("transform", "translate("
             + x + "," + y + ")")
-        .attr('id', 'image_' + i)
+        .attr('id', 'image_' + i + '_' + t)
         .style('fill', '#95a5a6')
         .style('fill-opacity', '0.2')
         .style('stroke', '#7f8c8d')
@@ -466,15 +459,15 @@ function drawRect(c, x, y, i, w, h) {
         .attr('height', h);
 }
 
-function drawWin(c, x, y, i, w, h, input) {
-    // console.log(i);
+function drawWin(c, x, y, i, w, h, input, t) {
+    console.log(t);
     let window = c.append('foreignObject')
         .attr("transform", "translate("
             + x + "," + y + ")")
         .attr('width', w)
         .attr('height', h)
         .append('xhtml:div')
-        .attr("id", "window_" + i)
+        .attr("id", "window_" + i + '_' + t)
         .attr('class', 'carousel slide')
         .attr('data-interval', 'false')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml');
@@ -487,27 +480,27 @@ function drawWin(c, x, y, i, w, h, input) {
                 .attr('data-interval', 'false')
                 .append('img')
                 .attr('src', '../static/img/' + input[m]['name'])
-                .attr("id", "boarding_" + i + "_" + m)
+                .attr("id", "boarding_" + i + "_" + m + "_" + t)
                 .attr('width', input[m]['width'] / input[m]['height'] * h)
                 .attr('height', h)
-                .attr('onmouseup', 'browseImageList("' + input[m]['name'] + ',' + i + ',' + m + '")');
+                .attr('onmouseup', 'browseImageList("' + input[m]['name'] + ',' + i + ',' + m + ',' + t + '")');
         } else {
             subwindow.append('div')
                 .attr('class', 'carousel-item')
                 .attr('data-interval', 'false')
                 .append('img')
                 .attr('src', '../static/img/' + input[m]['name'])
-                .attr("id", "boarding_" + i + "_" + m)
+                .attr("id", "boarding_" + i + "_" + m + "_" + t)
                 .attr('width', input[m]['width'] / input[m]['height'] * h)
                 .attr('height', h)
-                .attr('onmouseup', 'browseImageList("' + input[m]['name'] + ',' + i + ',' + m + '")');
+                .attr('onmouseup', 'browseImageList("' + input[m]['name'] + ',' + i + ',' + m + ',' + t + '")');
         }
     }
     let leftcon = window.append('a')
         .attr('class', 'carousel-control-prev')
-        .attr('href', "#window_" + i)
+        .attr('href', "#window_" + i + "_" + t)
         .attr('role', 'button')
-        .attr('onclick', 'prevSlide(' + i + ')')
+        .attr('onclick', 'prevSlide(' + i + '_' + t + ')')
         .attr('data-slide', 'prev');
     leftcon.append('span')
         .attr('class', 'carousel-control-prev-icon')
@@ -517,9 +510,9 @@ function drawWin(c, x, y, i, w, h, input) {
         .html('Previous');
     let rightcon = window.append('a')
         .attr('class', 'carousel-control-next')
-        .attr('href', "#window_" + i)
+        .attr('href', "#window_" + i + "_" + t)
         .attr('role', 'button')
-        .attr('onclick', 'nextSlide(' + i + ')')
+        .attr('onclick', 'nextSlide(' + i + '_' + t + ')')
         .attr('data-slide', 'next');
     rightcon.append('span')
         .attr('class', 'carousel-control-next-icon')
@@ -637,14 +630,15 @@ function nextSlide(e) {
     d3.select('#kbutton_' + e).remove();
 }
 
-function remove(i) {
-    let g_id = "#image_" + i;
-    d3.select(g_id).remove();
-}
+// function remove(i) {
+//     let g_id = "#image_" + i;
+//     d3.select(g_id).remove();
+// }
 
 
 // Image Collection
 const collection = new Set();
+
 function _collectImage(i) {
     if (collection.has(i)) return;
     collection.add(i);
@@ -656,6 +650,7 @@ function _collectImage(i) {
     <img class="img-thumbnail" src="../static/img/${i}" alt="...">
     </div>`);
 }
+
 function _decollectImage(elem) {
     const item = elem.parent().parent();
     const image = item.attr('data-image')
@@ -667,11 +662,13 @@ function _decollectImage(elem) {
 var comments = {};
 var curCommentKey = null;
 var hasUnsavedComment = false;
+
 function _saveComment(value) {
     hasUnsavedComment = false;
     $('#image-comments-btn').addClass('btn-outline-secondary').removeClass('btn-secondary');
     comments[curCommentKey] = value;
 }
+
 function _setComment(key) {
     if (hasUnsavedComment && !confirm('You have unsaved image comments. Discard and comment a new image?')) return;
     hasUnsavedComment = false;
@@ -682,6 +679,7 @@ function _setComment(key) {
     curCommentKey = key;
     document.forms['image-comments'].content.value = comments[key] || '';
 }
+
 function _inputComment() {
     if (hasUnsavedComment) return;
     hasUnsavedComment = true;

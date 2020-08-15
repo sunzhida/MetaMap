@@ -200,12 +200,12 @@ def search(i):
     image = searchImage(conn, i)
     # Fake Color Palette Here
     color_palette = [
-        {'color':"#1F77B4", 'portion':0.3},
-        {'color':"#FF7F0E", 'portion':0.2},
-        {'color':"#2CA02C", 'portion':0.2},
-        {'color':"#D62728", 'portion':0.1},
-        {'color':"#9467BD", 'portion':0.1},
-        {'color':"#8C564B", 'portion':0.1},
+        {'color': "#1F77B4", 'portion': 0.3},
+        {'color': "#FF7F0E", 'portion': 0.2},
+        {'color': "#2CA02C", 'portion': 0.2},
+        {'color': "#D62728", 'portion': 0.1},
+        {'color': "#9467BD", 'portion': 0.1},
+        {'color': "#8C564B", 'portion': 0.1},
     ]
     data = {'search': i, 'keywords': keyword, 'images': image, 'colors': color_palette}
     conn.commit()
@@ -238,13 +238,6 @@ def plot(i):
 def inquire(i):
     imgName = i.split(',')[0]
     keyword = i.split(',')[1]
-    # imgID = i.split(',')[2]
-    # print(imgName)
-    # print(keyword)
-    #################################
-    # Youwen: processing the data here, the data should return related attributes to the image
-    # This is the function for exploring the related materials along different dimensions
-    #################################
     conn = create_connection(DATABASE)
 
     d = checkImageAttributes(conn, imgName)
@@ -253,62 +246,6 @@ def inquire(i):
     d['shape'] = imagelistRetrieve(conn, exploreShape(conn, imgName, keyword, topn=10))
 
     conn.close()
-    return json.dumps(d)
-
-
-@app.route('/explore/<i>', methods=['GET', 'POST'])
-def explore(i):
-    imgName = i.split(',')[0]
-    imgID = i.split(',')[1]
-    print(imgName)
-    print(imgID)
-    #################################
-    # Youwen: processing the data here, the data should return related attributes to the image
-    # This is the function for exploring the related materials along different dimensions
-    # May skip this function as it only serve the '->' explore button
-    #################################
-    d = {
-        "input": "01.jpg",
-        "semantic": [{
-            "name": "000e74ea347f08c0cae2b3cfc4f612cf.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 276,
-            "height": 180
-        }, {
-            "name": "00a8885948a4a3abed0a27480c9f3fa6.png",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 240,
-            "height": 180
-        }, {
-            "name": "00a5155ce76792c8aaef4bd67e2d4f44.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 232,
-            "height": 180
-        }],
-        "color": [{
-            "name": "00ab0fe3d1d76da690d7438117eeea49.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 270,
-            "height": 180
-        }, {
-            "name": "00e43e295097e2580d0178cb3cadd04b.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 131,
-            "height": 180
-        }],
-        "shape": [{
-            "name": "00daeeb00b31e6f7fd9bf103a1733560.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 131,
-            "height": 180
-        }, {
-            "name": "00dddfdfe4ad349925af78c3d04533f9.jpg",
-            "keywords": ["xxx", "health", "health", "health"],
-            "width": 116,
-            "height": 180
-        }],
-        "status": "xxx"
-    }
     return json.dumps(d)
 
 

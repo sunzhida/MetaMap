@@ -14,7 +14,12 @@ let width = w - margin.right - margin.left;
 let height = h - margin.top - margin.bottom;
 
 let tapID = 0;
-let imageTree = new ImageTree();
+let tapCount = 0;
+let _imageTrees = {};
+function imageTree() {
+    if (!_imageTrees[tapID]) _imageTrees[tapID] = new ImageTree();
+    return _imageTrees[tapID];
+}
 let MAX_ZOOM_IN = 10;
 let MAX_ZOOM_OUT = 0.1;
 let zoom = d3.behavior.zoom().scaleExtent([MAX_ZOOM_OUT, MAX_ZOOM_IN]).on('zoom', zoomed);
@@ -194,14 +199,21 @@ function _addImage(input) {
         url: "/plot/" + imageName,
         data: imageName,
         success: function (response) {
+            if (tapCount === 0) {
+                tapCount++;
+                tapID = 0;
+            } else {
+                tapID = tapCount;
+                tapCount++;
+            }
             let re = JSON.parse(response);
-            drawTree(imageTree.initialize(re), tapID);
+            drawTree(imageTree().initialize(re), tapID);
+            console.log('created and selected tab', tapID);
         },
         error: function (xhr) {
             //Do Something to handle error
         }
     });
-    tapID += 1;
 }
 
 function _exploreImage(i) {
@@ -216,7 +228,7 @@ function _exploreImage(i) {
         data: i,
         success: function (response) {
             let re = JSON.parse(response);
-            let currentTree = imageTree.explore(imgID, re);
+            let currentTree = imageTree().explore(imgID, re);
             drawTree(currentTree, treeID);
         },
         error: function (xhr) {
@@ -227,7 +239,7 @@ function _exploreImage(i) {
 
 // function _removeImage(input) {
 //     // console.log(input);
-//     let curTree = imageTree.remove(input);
+//     let curTree = imageTree().remove(input);
 //     // console.log(curTree);
 //     drawTree(curTree, t);
 // }
@@ -268,9 +280,9 @@ function browseImageList(input) {
     let tree_id = res[3];
     let rectWidth = 252, rectHeight = 40;
 
-    let currentRoot = imageTree.get(parseInt(window_id));
+    let currentRoot = imageTree().get(parseInt(window_id));
     // console.log(currentRoot);
-    let currentImageList = imageTree.find(parseInt(window_id));
+    let currentImageList = imageTree().find(parseInt(window_id));
     // console.log(currentImageList);
 
     d3.select('#kwindow_' + window_id + '_' + tree_id).remove();
@@ -339,11 +351,18 @@ function drawTree(d, t) {
         .append('a')
         .attr('class', 'nav-item nav-link active')
         .attr('id', 'nav_tab_' + t)
-        .attr('data-toggle', 'tab')
+        // 去掉这里可以禁用bootstrap自带的JS控制tab功能，然后我们写自己的onclick
+        // .attr('data-toggle', 'tab')
         .attr('href', '#nav_' + t)
         .attr('role', 'tab')
         .attr('aria-controls', 'nav_' + t)
         .attr('aria-selected', 'true')
+        .on('click', function() {
+            const elem = $(this);
+            elem.tab('show');
+            tapID = elem.attr('id').replace('nav_tab_', '');
+            console.log('switch to tab', tapID);
+        })
         .append('img')
         .attr('width', '16px')
         .attr('src', '../static/img/' + d['images'][0]['name']);

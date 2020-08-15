@@ -4,7 +4,7 @@ $().ready(function () {
 
 // Set the dimensions and margins of the diagram
 const w = window.innerWidth / 3 * 2 - 30;
-const h = window.innerHeight - 100;
+const h = window.innerHeight - 340;
 const margin = {top: 10, right: 20, bottom: 10, left: 20};
 let width = w - margin.right - margin.left;
 let height = h - margin.top - margin.bottom;
@@ -31,10 +31,6 @@ let container = canvas.append('g')
     .attr('id', 'container')
     .attr('width', '100%')
     .attr('height', '100%');
-canvas.append('text')
-    .attr('x', width / 2 - 50)
-    .attr('y', 100)
-    .text('Please click a image for boarding.');
 
 function submit() {
     let input = document.getElementById("search").value;
@@ -338,7 +334,7 @@ function browseImageList(input) {
 function drawTree(d) {
     // console.log(d);
     // remove text
-    canvas.select('text').remove();
+    d3.select('#intro').remove();
     // remove the whole content
     container.select('g').remove();
     let imageWidth = 120, rectWidth = 252, rectHeight = 120;

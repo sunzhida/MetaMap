@@ -25,17 +25,6 @@
 <main role="main" class="container-fluid">
 
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-<!--        <header class="masthead mb-3">-->
-<!--            <div class="inner">-->
-<!--                <h3 class="masthead-brand">-->
-<!--                    <a href="/">MetaBoard</a>-->
-<!--                </h3>-->
-<!--                &lt;!&ndash;                <nav class="nav nav-masthead justify-content-center">&ndash;&gt;-->
-<!--                &lt;!&ndash;                    <a class="nav-link active" href="/">Result</a>&ndash;&gt;-->
-<!--                &lt;!&ndash;                    <a class="nav-link" href="#">About</a>&ndash;&gt;-->
-<!--                &lt;!&ndash;                </nav>&ndash;&gt;-->
-<!--            </div>-->
-<!--        </header>-->
 
         <main role="main" class="inner cover">
             <div class="container-fluid">
@@ -116,6 +105,24 @@
                                 </div>
                             </div>
                             <div class="card-body">
+                                <nav>
+                                    <div class="nav nav-tabs" id="nav_tab" role="tablist">
+                                        <a class="nav-item nav-link active" id="nav_tab_1" data-toggle="tab"
+                                           href="#nav_1" role="tab" aria-controls="nav_1" aria-selected="true">1</a>
+                                        <a class="nav-item nav-link" id="nav_tab_2" data-toggle="tab" href="#nav_2"
+                                           role="tab" aria-controls="nav_2" aria-selected="true">2</a>
+                                    </div>
+                                </nav>
+                                <div class="tab-content" id="nav_tabContent">
+                                    <div class="tab-pane fade show active" id="nav_1" role="tabpanel"
+                                         aria-labelledby="nav_tab_1">
+                                        the image content 1
+                                    </div>
+                                    <div class="tab-pane fade" id="nav_2" role="tabpanel" aria-labelledby="nav_tab_2">
+                                        the image content 2
+                                    </div>
+                                </div>
+                                <h2 id="intro" class="text-center text-muted">Please click a image for browsing.</h2>
                                 <div id="board">
                                     <!--                                    <svg id="init">-->
                                     <!--                                        <svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" id="init-sub">-->

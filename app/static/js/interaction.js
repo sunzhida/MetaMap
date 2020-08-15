@@ -342,11 +342,36 @@ function drawTree(d) {
     // remove text
     d3.select('#intro').remove();
     // remove the whole content
+    d3.select('#nav_tab_' + tapID).remove();
+    d3.select('#nav_' + tapID).remove();
+    $('div.active').removeClass('active').removeClass('show');
+    $('a.active').removeClass('active');
+
     container.select('g').remove();
 
-
-
     let imageWidth = 120, rectWidth = 252, rectHeight = 120;
+
+    d3.select('#nav_tab')
+        .append('a')
+        .attr('class', 'nav-item nav-link active')
+        .attr('id', 'nav_tab_' + tapID)
+        .attr('data-toggle', 'tab')
+        .attr('href', '#nav_' + tapID)
+        .attr('role', 'tab')
+        .attr('aria-controls', 'nav_' + tapID)
+        .attr('aria-selected', 'true')
+        .append('img')
+        .attr('width', '16px')
+        .attr('src', '../static/img/' + d['images'][0]['name']);
+        // .html('Option ' + tapID);
+    d3.select('#nav_tabContent')
+        .append('div')
+        .attr('class', 'tab-pane fade show active')
+        .attr('id', 'nav_' + tapID)
+        .attr('role', 'tappanel')
+        .attr('aria-labelledby', 'nav_tab_' + tapID);
+
+
     let group = container.append("g")
         .attr("transform", "translate(0," + (height / 2 - imageWidth / d['images'][0]['width'] * d['images'][0]['height'] / 2) + ")")
         .attr('id', 'image_' + d.id);

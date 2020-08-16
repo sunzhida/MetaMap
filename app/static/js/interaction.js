@@ -194,26 +194,28 @@ function shareto() {
 function _addImage(input) {
     // console.log(input);
     let imageName = input.split('/')[3];
+    tapCount = parseInt(tapCount) + 1;
     $.ajax({
         type: "POST",
         url: "/plot/" + imageName,
         data: imageName,
         success: function (response) {
-            if (tapCount === 0) {
-                tapCount++;
-                tapID = 0;
-            } else {
-                tapID = tapCount;
-                tapCount++;
-            }
+            // if (tapCount === 0) {
+            //     tapCount++;
+            //     tapID = 0;
+            // } else {
+            //     tapID = tapCount;
+            //     tapCount++;
+            // }
             let re = JSON.parse(response);
-            drawTree(imageTree().initialize(re), tapID);
+            createTree(imageTree().initialize(re), tapID);
             console.log('created and selected tab', tapID);
         },
         error: function (xhr) {
             //Do Something to handle error
         }
     });
+    tapID = parseInt(tapID) + 1;
 }
 
 function _exploreImage(i) {
@@ -334,8 +336,9 @@ function browseImageList(input) {
     //     .attr('class', 'fas fa-trash-alt');
 }
 
-function drawTree(d, t) {
-    // console.log(d);
+function createTree(d, t) {
+    console.log(d, t);
+
     // remove text
     d3.select('#intro').remove();
     // remove the whole content
@@ -343,8 +346,6 @@ function drawTree(d, t) {
     d3.select('#nav_' + t).remove();
     $('div.active').removeClass('active').removeClass('show');
     $('a.active').removeClass('active');
-
-    let imageWidth = 120, rectWidth = 252, rectHeight = 120;
 
     // create the tab to hold the image
     d3.select('#nav_tab')
@@ -372,6 +373,16 @@ function drawTree(d, t) {
         .attr('id', 'nav_' + t)
         .attr('role', 'tappanel')
         .attr('aria-labelledby', 'nav_tab_' + t);
+    drawTree(d, t);
+}
+
+function drawTree(d, t) {
+    // console.log(d);
+
+    // remove the whole content
+    d3.select('#canvas_' + t).remove();
+
+    let imageWidth = 120, rectWidth = 252, rectHeight = 120;
 
     let container = d3.select('#nav_' + t)
         .append("svg")

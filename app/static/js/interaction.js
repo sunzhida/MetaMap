@@ -216,6 +216,7 @@ function _addImage(input) {
         }
     });
     tapID = parseInt(tapID) + 1;
+    console.log(_imageTrees);
 }
 
 function _exploreImage(i) {
@@ -338,13 +339,12 @@ function browseImageList(input) {
 
 function createTree(d, t) {
     console.log(d, t);
-
     // remove text
     d3.select('#intro').remove();
     // remove the whole content
-    d3.select('#nav_tab_' + t).remove();
-    d3.select('#nav_' + t).remove();
-    $('div.active').removeClass('active').removeClass('show');
+    // d3.select('#nav_tab_' + t).remove();
+    // d3.select('#nav_' + t).remove();
+    $('div.tab-pane').removeClass('active').removeClass('show');
     $('a.active').removeClass('active');
 
     // create the tab to hold the image
@@ -378,12 +378,10 @@ function createTree(d, t) {
 
 function drawTree(d, t) {
     // console.log(d);
-
     // remove the whole content
     d3.select('#canvas_' + t).remove();
 
     let imageWidth = 120, rectWidth = 252, rectHeight = 120;
-
     let container = d3.select('#nav_' + t)
         .append("svg")
         .attr('viewBox', '0 0 ' + width + ' ' + height)
@@ -455,7 +453,7 @@ function drawTree(d, t) {
 }
 
 function drawTreeNode(d, group, rectWidth, rectHeight, imageWidth, t) {
-    console.log(d);
+    // console.log(d);
     if (d['shape']) {
         drawRect(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight, t);
         drawWin(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight, d['shape']['images'], t);
@@ -490,7 +488,7 @@ function drawRect(c, x, y, i, w, h, t) {
 }
 
 function drawWin(c, x, y, i, w, h, input, t) {
-    console.log(t);
+    // console.log(t);
     let window = c.append('foreignObject')
         .attr("transform", "translate("
             + x + "," + y + ")")

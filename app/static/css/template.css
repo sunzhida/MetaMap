@@ -122,3 +122,40 @@ text {
 textarea.form-control {
     height: 80px !important;
 }
+
+.image-window {
+    height: 100%;
+    position: relative;
+}
+
+.image-subwindow {
+    height: 100%;
+    display: flex;
+    overflow: auto;
+}
+
+.image-subwindow::-webkit-scrollbar
+{
+    height: 6px;
+    background-color: #F5F5F5;
+}
+
+.image-subwindow::-webkit-scrollbar-track
+{
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+}
+
+.image-subwindow::-webkit-scrollbar-thumb
+{
+    background-color: #555;
+}
+
+.image-subwindow img {
+    height: 100%;
+    width: auto;
+}
+
+.boarding-selected {
+    border: 3px solid #ffc107;
+}

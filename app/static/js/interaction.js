@@ -337,7 +337,7 @@ function browseImageList(input) {
     let window_id = res[1];
     let image_id = res[2];
     let tree_id = res[3];
-    let rectWidth = 252, rectHeight = 40;
+    let rectWidth = 252, rectHeight = 80;
 
     let currentRoot = imageTree().get(parseInt(window_id));
     // // console.log(currentRoot);
@@ -489,9 +489,9 @@ function drawTree(d, t) {
         .attr('class', 'fas fa-search-plus');
     let keywords = group.append("foreignObject")
         .attr('x', d.x)
-        .attr('y', d.y - 40)
+        .attr('y', d.y - 80)
         .attr('width', imageWidth)
-        .attr('height', 40)
+        .attr('height', 80)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
         .attr('style', 'display: none;')

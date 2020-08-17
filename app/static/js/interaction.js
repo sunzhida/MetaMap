@@ -138,9 +138,11 @@ function drawImages(i) {
 
 function drawColors(colors) {
     colors.sort((a, b) => b.portion - a.portion);
+    colors.forEach(c => c.portion = (c.portion * 100).toFixed(2));
+    colors[colors.length - 1].portion = 100.0 - colors.slice(0, -1).reduce((acc, { portion }) => acc + Number(portion), 0.0);
     const ihtml = colors
         .map(c => `<div class="color-block"
-            style="width:${(c.portion * 100).toFixed(2)}%; background:${c.color};"
+            style="width:${c.portion}%; background:${c.color};"
             title="${c.color}"
             data-clipboard-text="${c.color}"
             data-toggle="tooltip"

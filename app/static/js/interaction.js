@@ -8,7 +8,7 @@ $().ready(function () {
 
 // Set the dimensions and margins of the diagram
 const w = window.innerWidth / 3 * 2 - 30;
-const h = window.innerHeight - 340;
+const h = window.innerHeight - 580;
 const margin = {top: 10, right: 20, bottom: 10, left: 20};
 let width = w - margin.right - margin.left;
 let height = h - margin.top - margin.bottom;

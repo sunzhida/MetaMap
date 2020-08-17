@@ -249,6 +249,14 @@ function _exploreImage(i) {
 
 // The interactive functions
 
+function enlargeImage(input) {
+    let res = input.split(',');
+    let image_url = res[0];
+    let image_name = res[0].split('/');
+    let image_id = res[1];
+    let tree_id = res[2];
+}
+
 /* click on the image and show the keywords and remove button */
 function browseImage(input) {
     let res = input.split(',');
@@ -403,6 +411,7 @@ function drawTree(d, t) {
         .attr('x', d.x)
         .attr('y', d.y)
         .attr('onmouseup', 'browseImage("../static/img/' + d['images'][0]['name'] + ',' + d.id + ',' + t + '")')
+        .attr('onmouseover', 'enlargeImage("../static/img/' + d['images'][0]['name'] + ',' + d.id + ',' + t + '")')
         .attr("id", "boarding_" + d.id + '_' + t);
     let buttons = group.append("foreignObject")
         .attr('x', d.x + imageWidth - 60)

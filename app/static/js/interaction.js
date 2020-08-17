@@ -194,7 +194,7 @@ function shareto() {
 // The following functions are used for updating the data structure
 
 function _addImage(input) {
-    // // console.log(input);
+    // console.log(input);
     let imageName = input.split('/')[3];
     tapCount = parseInt(tapCount) + 1;
     $.ajax({
@@ -241,13 +241,6 @@ function _exploreImage(i) {
         }
     });
 }
-
-// function _removeImage(input) {
-//     // // console.log(input);
-//     let curTree = imageTree().remove(input);
-//     // // console.log(curTree);
-//     drawTree(curTree, t);
-// }
 
 function _enlargeImage(input) {
     let res = input.split(',');
@@ -455,7 +448,8 @@ function drawTree(d, t) {
         .attr("width", width + margin.right + margin.left)
         .attr("height", height - 112)
         .attr('id', 'canvas_' + t)
-        .call(zoom);
+        .call(zoom)
+        .on('dblclick.zoom', null);
     let group = container.append("g")
         .attr('class', 'zoomable')
         .attr('width', '100%')
@@ -722,11 +716,6 @@ function nextSlide(e) {
     const elem = $(`#window_${e} .image-subwindow`).first();
     elem.animate({scrollLeft: '+=100'}, 300);
 }
-
-// function remove(i) {
-//     let g_id = "#image_" + i;
-//     d3.select(g_id).remove();
-// }
 
 
 // Image Collection

@@ -160,15 +160,6 @@ textarea.form-control {
     border: 3px solid #ffc107;
 }
 
-/*.image-demo {*/
-/*    position: fixed;*/
-/*    top: 50%;*/
-/*    left: 50%;*/
-/*    transform: translate(-50%, -50%);*/
-/*    z-index: 15;*/
-/*}*/
-
-
 .img-wrap {
     position: fixed;
     display: inline-block;

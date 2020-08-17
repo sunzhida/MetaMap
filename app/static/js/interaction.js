@@ -296,6 +296,8 @@ function browseImageList(input) {
     let currentImageList = imageTree().find(parseInt(window_id));
     // console.log(currentImageList);
 
+    $(`img.boarding_${window_id}_${tree_id}`).removeClass('boarding-selected');
+    $(`img#boarding_${window_id}_${image_id}_${tree_id}`).addClass('boarding-selected');
     d3.select('#kwindow_' + window_id + '_' + tree_id).remove();
     d3.select('#kbutton_' + window_id + '_' + tree_id).remove();
 
@@ -321,10 +323,10 @@ function browseImageList(input) {
 
     let buttons = d3.select('#image_' + currentRoot.id + '_' + tree_id)
         .append("foreignObject")
-        .attr('x', currentImageList.x + rectWidth - 60)
+        .attr('x', currentImageList.x + rectWidth + 10)
         .attr('y', currentImageList.y)
-        .attr('width', 60)
-        .attr('height', 30)
+        .attr('width', 50)
+        .attr('height', rectHeight)
         .attr('id', 'kbutton_' + window_id + '_' + tree_id)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
@@ -414,10 +416,10 @@ function drawTree(d, t) {
         .attr('onmouseover', 'enlargeImage("../static/img/' + d['images'][0]['name'] + ',' + d.id + ',' + t + '")')
         .attr("id", "boarding_" + d.id + '_' + t);
     let buttons = group.append("foreignObject")
-        .attr('x', d.x + imageWidth - 60)
+        .attr('x', d.x + imageWidth + 10)
         .attr('y', d.y)
-        .attr('width', imageWidth - 60)
-        .attr('height', 30)
+        .attr('width', 50)
+        .attr('height', rectHeight)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
         .attr('style', 'display: none;')
@@ -505,27 +507,22 @@ function drawWin(c, x, y, i, w, h, input, t) {
         .attr('height', h)
         .append('xhtml:div')
         .attr("id", "window_" + i + '_' + t)
-        .attr('class', 'carousel slide')
-        .attr('data-interval', 'false')
-        .attr('xmlns', 'http://www.w3.org/1999/xhtml');
+        .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+        .attr('class', 'image-window')
     let subwindow = window.append('div')
-        .attr('class', 'carousel-inner');
+        .attr('class', 'image-subwindow')
     for (let m in input) {
         if (m === '0') {
-            subwindow.append('div')
-                .attr('class', 'carousel-item active')
-                .attr('data-interval', 'false')
-                .append('img')
+            subwindow.append('img')
+                .attr('class', `boarding_${i}_${t} mr-2`)
                 .attr('src', '../static/img/' + input[m]['name'])
                 .attr("id", "boarding_" + i + "_" + m + "_" + t)
                 .attr('width', input[m]['width'] / input[m]['height'] * h)
                 .attr('height', h)
                 .attr('onmouseup', 'browseImageList("' + input[m]['name'] + ',' + i + ',' + m + ',' + t + '")');
         } else {
-            subwindow.append('div')
-                .attr('class', 'carousel-item')
-                .attr('data-interval', 'false')
-                .append('img')
+            subwindow.append('img')
+                .attr('class', `boarding_${i}_${t} mr-2`)
                 .attr('src', '../static/img/' + input[m]['name'])
                 .attr("id", "boarding_" + i + "_" + m + "_" + t)
                 .attr('width', input[m]['width'] / input[m]['height'] * h)
@@ -534,11 +531,12 @@ function drawWin(c, x, y, i, w, h, input, t) {
         }
     }
     let leftcon = window.append('a')
+        // 虽然父组件没有用carousel，但是这里借用了carousel-control-*类，本质上就是放在两边的按钮
+        // 希望bootstrap不要偷偷绑定一些乱七八糟的事件在这些类上面
         .attr('class', 'carousel-control-prev')
-        .attr('href', "#window_" + i + "_" + t)
+        .attr('href', '#')
         .attr('role', 'button')
-        .attr('onclick', 'prevSlide(' + i + '_' + t + ')')
-        .attr('data-slide', 'prev');
+        .attr('onclick', 'prevSlide("' + i + '_' + t + '")')
     leftcon.append('span')
         .attr('class', 'carousel-control-prev-icon')
         .attr('aria-hidden', 'true');
@@ -547,10 +545,9 @@ function drawWin(c, x, y, i, w, h, input, t) {
         .html('Previous');
     let rightcon = window.append('a')
         .attr('class', 'carousel-control-next')
-        .attr('href', "#window_" + i + "_" + t)
+        .attr('href', '#')
         .attr('role', 'button')
-        .attr('onclick', 'nextSlide(' + i + '_' + t + ')')
-        .attr('data-slide', 'next');
+        .attr('onclick', 'nextSlide("' + i + '_' + t + '")')
     rightcon.append('span')
         .attr('class', 'carousel-control-next-icon')
         .attr('aria-hidden', 'true');
@@ -657,14 +654,18 @@ function drawLine(c, x1, y1, x2, y2, w, h, t) {
 
 function prevSlide(e) {
     // console.log(e);
-    d3.select('#kwindow_' + e).remove();
-    d3.select('#kbutton_' + e).remove();
+    // d3.select('#kwindow_' + e).remove();
+    // d3.select('#kbutton_' + e).remove();
+    const elem = $(`#window_${e} .image-subwindow`).first();
+    elem.animate({ scrollLeft: '-=100' }, 300);
 }
 
 function nextSlide(e) {
     // console.log(e);
-    d3.select('#kwindow_' + e).remove();
-    d3.select('#kbutton_' + e).remove();
+    // d3.select('#kwindow_' + e).remove();
+    // d3.select('#kbutton_' + e).remove();
+    const elem = $(`#window_${e} .image-subwindow`).first();
+    elem.animate({ scrollLeft: '+=100' }, 300);
 }
 
 // function remove(i) {

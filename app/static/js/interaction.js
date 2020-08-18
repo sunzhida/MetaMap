@@ -36,6 +36,7 @@ function submit() {
         url: "/search/" + input,
         type: "get",
         data: input,
+        datatype: 'JSON',
         success: function (response) {
             let re = JSON.parse(response);
             let keywords = re['keywords'];

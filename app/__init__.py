@@ -195,7 +195,6 @@ def index():
 
 @app.route('/search/<i>', methods=['GET', 'POST'])
 def search(i):
-    print(i)
     conn = create_connection(DATABASE)
     keyword = suggestKeyword(conn, i)
     image = searchImage(conn, i)

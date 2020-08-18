@@ -36,7 +36,6 @@ function submit() {
         url: "/search/" + input,
         type: "get",
         data: input,
-        datatype: 'JSON',
         success: function (response) {
             let re = JSON.parse(response);
             let keywords = re['keywords'];
@@ -141,7 +140,7 @@ function drawImages(i) {
 function drawColors(colors) {
     colors.sort((a, b) => b.portion - a.portion);
     colors.forEach(c => c.portion = (c.portion * 100).toFixed(2));
-    colors[colors.length - 1].portion = 100.0 - colors.slice(0, -1).reduce((acc, { portion }) => acc + Number(portion), 0.0);
+    colors[colors.length - 1].portion = 100.0 - colors.slice(0, -1).reduce((acc, {portion}) => acc + Number(portion), 0.0);
     const ihtml = colors
         .map(c => `<div class="color-block"
             style="width:${c.portion}%; background:${c.color};"

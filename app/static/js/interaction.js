@@ -47,7 +47,7 @@ function submit() {
         },
         error: function (xhr) {
             //Do Something to handle error
-            console.log('get nothing');
+            console.log(xhr);
         }
     });
 }

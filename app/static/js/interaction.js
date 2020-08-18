@@ -34,7 +34,7 @@ function submit() {
     addAndDrawHistory(input);
     $.ajax({
         url: "/search/" + input,
-        type: "post",
+        type: "get",
         data: input,
         success: function (response) {
             let re = JSON.parse(response);

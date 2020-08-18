@@ -61,8 +61,10 @@ function resubmit(i) {
             let re = JSON.parse(response);
             let keywords = re['keywords'];
             let images = re['images'];
+            let colors = re.colors;
             drawKeywords(keywords);
             drawImages(images);
+            drawColors(colors);
         },
         error: function (xhr) {
             //Do Something to handle error
@@ -138,11 +140,9 @@ function drawImages(i) {
 
 function drawColors(colors) {
     colors.sort((a, b) => b.portion - a.portion);
-    colors.forEach(c => c.portion = (c.portion * 100).toFixed(2));
-    colors[colors.length - 1].portion = 100.0 - colors.slice(0, -1).reduce((acc, { portion }) => acc + Number(portion), 0.0);
     const ihtml = colors
         .map(c => `<div class="color-block"
-            style="width:${c.portion}%; background:${c.color};"
+            style="width:${(c.portion * 100).toFixed(2)}%; background:${c.color};"
             title="${c.color}"
             data-clipboard-text="${c.color}"
             data-toggle="tooltip"
@@ -339,7 +339,7 @@ function browseImageList(input) {
     let window_id = res[1];
     let image_id = res[2];
     let tree_id = res[3];
-    let rectWidth = 252, rectHeight = 80;
+    let rectWidth = 252, rectHeight = 40;
 
     let currentRoot = imageTree().get(parseInt(window_id));
     // // console.log(currentRoot);
@@ -491,9 +491,9 @@ function drawTree(d, t) {
         .attr('class', 'fas fa-search-plus');
     let keywords = group.append("foreignObject")
         .attr('x', d.x)
-        .attr('y', d.y - 80)
+        .attr('y', d.y - 40)
         .attr('width', imageWidth)
-        .attr('height', 80)
+        .attr('height', 40)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
         .attr('style', 'display: none;')

@@ -358,7 +358,7 @@ function browseImageList(input) {
         .append("foreignObject")
         .attr('x', currentImageList.x)
         .attr('y', currentImageList.y - rectHeight)
-        .attr('width', rectWidth)
+        .attr('width', rectWidth + 40)
         .attr('height', rectHeight)
         .attr('id', 'kwindow_' + window_id + '_' + tree_id)
         .append('xhtml:div')

@@ -495,7 +495,7 @@ function drawTree(d, t) {
     let keywords = group.append("foreignObject")
         .attr('x', d.x)
         .attr('y', d.y - 60)
-        .attr('width', imageWidth + 40)
+        .attr('width', imageWidth + 60)
         .attr('height', 60)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')

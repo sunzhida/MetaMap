@@ -8,7 +8,7 @@ $().ready(function () {
 
 // Set the dimensions and margins of the diagram
 const w = window.innerWidth / 3 * 2 - 30;
-const h = window.innerHeight - 580;
+const h = window.innerHeight - 470;
 const margin = {top: 10, right: 20, bottom: 10, left: 20};
 let width = w - margin.right - margin.left;
 let height = h - margin.top - margin.bottom;
@@ -47,6 +47,7 @@ function submit() {
         },
         error: function (xhr) {
             //Do Something to handle error
+            console.log(xhr);
         }
     });
 }
@@ -139,7 +140,7 @@ function drawImages(i) {
 function drawColors(colors) {
     colors.sort((a, b) => b.portion - a.portion);
     colors.forEach(c => c.portion = (c.portion * 100).toFixed(2));
-    colors[colors.length - 1].portion = 100.0 - colors.slice(0, -1).reduce((acc, { portion }) => acc + Number(portion), 0.0);
+    colors[colors.length - 1].portion = 100.0 - colors.slice(0, -1).reduce((acc, {portion}) => acc + Number(portion), 0.0);
     const ihtml = colors
         .map(c => `<div class="color-block"
             style="width:${c.portion}%; background:${c.color};"
@@ -339,7 +340,7 @@ function browseImageList(input) {
     let window_id = res[1];
     let image_id = res[2];
     let tree_id = res[3];
-    let rectWidth = 252, rectHeight = 80;
+    let rectWidth = 252, rectHeight = 50;
 
     let currentRoot = imageTree().get(parseInt(window_id));
     // // console.log(currentRoot);
@@ -360,11 +361,11 @@ function browseImageList(input) {
         .attr('id', 'kwindow_' + window_id + '_' + tree_id)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
-        .attr('id', 'keywords_' + window_id + '_' + image_id);
+        .attr('id', 'keywords_' + window_id + '_' + image_id)
+        .append('div')
+        .attr('id', 'subkeywords_' + window_id + '_' + image_id + '_' + tree_id);
     for (let t in currentImageList['images'][image_id]['keywords']) {
-        keywords.append('div')
-            .attr('id', 'subkeywords_' + window_id + '_' + image_id + '_' + tree_id)
-            .append('span')
+        keywords.append('span')
             .attr('class', 'badge badge-warning mr-1')
             .attr('type', 'button')
             .attr('onclick', '_exploreImage("' + currentImageList['images'][image_id]['name'] + ',' + currentImageList['images'][image_id]['keywords'][t] + ',' + window_id + ',' + tree_id + '")')
@@ -491,9 +492,9 @@ function drawTree(d, t) {
         .attr('class', 'fas fa-search-plus');
     let keywords = group.append("foreignObject")
         .attr('x', d.x)
-        .attr('y', d.y - 80)
+        .attr('y', d.y - 60)
         .attr('width', imageWidth)
-        .attr('height', 80)
+        .attr('height', 60)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
         .attr('style', 'display: none;')

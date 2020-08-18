@@ -340,7 +340,7 @@ function browseImageList(input) {
     let window_id = res[1];
     let image_id = res[2];
     let tree_id = res[3];
-    let rectWidth = 252, rectHeight = 50;
+    let rectWidth = 252, rectHeight = 30;
 
     let currentRoot = imageTree().get(parseInt(window_id));
     // // console.log(currentRoot);

@@ -266,7 +266,7 @@ function _enlargeImage(input) {
         .attr('height', target_height)
         .append('img')
         .attr('class', 'image-demo')
-        .attr('src', '../static/img/' + image_name);
+        .attr('src', '../static/img_large/' + image_name);
     d3.select("#demo_" + tree_id)
         .append('button')
         .attr('class', 'btn btn-light btn-sm button-demo')

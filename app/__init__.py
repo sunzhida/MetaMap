@@ -68,6 +68,29 @@ def searchImage(conn, keyword):
 
     return imagelist
 
+def hex_to_rgb(hex_code):
+    hex_code = hex_code.lstrip('#')
+    hlen = len(hex_code)
+    return np.array(tuple(int(hex_code[i:i+hlen//3], 16) for i in range(0, hlen, hlen//3)))
+
+def hex_color_distance(hex_1, hex_2):
+    rgb_1 = hex_to_rgb(hex_1)
+    rgb_2 = hex_to_rgb(hex_2)
+    
+    return np.linalg.norm(rgb_2 - rgb_1)
+
+def colorReRank(conn, hex_code, keyword):
+    image_df = pd.read_sql_query("SELECT image_name from keywords_images where keyword == '%s'" % keyword, conn)
+    imagelist = image_df.image_name.tolist()
+
+    imagelist = "(" +  str(imagelist)[1:-1] + ")"
+    image_df = pd.read_sql_query("SELECT image_name, color_dominant from images where image_name in %s" % imagelist, conn)
+
+    image_df['dist'] = image_df.color_dominant.apply(lambda x: hex_color_distance(hex_code, x))
+    image_df.sort_values(['dist'], inplace = True)
+    
+    return image_df.image_name.tolist()
+
 
 def checkImageAttributes(conn, image_name):
     keyword_df = pd.read_sql_query("SELECT keyword from keywords_images where image_name = '%s'" % image_name, conn)
@@ -284,6 +307,18 @@ def search(i):
     image = searchImage(conn, i)
     color_palette = colorPalette(conn, i)
     data = {'search': i, 'keywords': keyword, 'images': image, 'colors': color_palette}
+    conn.close()
+    return json.dumps(data)
+
+# @app.route('/colorrank/<i>', methods=['GET', 'POST'])
+# TODO: enable this API after finish front end
+def search(i):
+    hex_code = i.split(',')[0]
+    keyword = i.split(',')[1]
+    conn = create_connection(DATABASE)
+    
+    image = colorReRank(conn, hex_code, keyword)
+    data = {'images': image}
     conn.close()
     return json.dumps(data)
 

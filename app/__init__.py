@@ -312,7 +312,7 @@ def search(i):
 
 # @app.route('/colorrank/<i>', methods=['GET', 'POST'])
 # TODO: enable this API after finish front end
-def search(i):
+def colorsearch(i):
     hex_code = i.split(',')[0]
     keyword = i.split(',')[1]
     conn = create_connection(DATABASE)

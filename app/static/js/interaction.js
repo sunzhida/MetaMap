@@ -466,12 +466,12 @@ function drawTree(d, t) {
         .attr('href', '../static/img/' + d['images'][0]['name'])
         .attr('width', imageWidth)
         .attr('x', d.x)
-        .attr('y', d.y)
+        .attr('y', d.y + imageWidth / 2 - imageWidth / d['images'][0]['width'] * d['images'][0]['height'] / 2)
         .attr('onmouseup', 'browseImage("../static/img/' + d['images'][0]['name'] + ',' + d.id + ',' + t + '")')
         .attr("id", "boarding_" + d.id + '_' + t);
     let buttons = group.append("foreignObject")
         .attr('x', d.x + imageWidth + 10)
-        .attr('y', d.y)
+        .attr('y', d.y + imageWidth / 2 - imageWidth / d['images'][0]['width'] * d['images'][0]['height'] / 2)
         .attr('width', 50)
         .attr('height', 82)
         .append('xhtml:div')
@@ -493,16 +493,18 @@ function drawTree(d, t) {
         .append('i')
         .attr('class', 'fas fa-search-plus');
     let keywords = group.append("foreignObject")
-        .attr('x', d.x)
-        .attr('y', d.y - 60)
-        .attr('width', imageWidth + 60)
-        .attr('height', 60)
+        .attr('x', d.x - imageWidth)
+        .attr('y', d.y + imageWidth / 2 - imageWidth / d['images'][0]['width'] * d['images'][0]['height'] / 2)
+        .attr('width', imageWidth)
+        .attr('height', imageWidth)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
         .attr('style', 'display: none;')
         .attr('id', 'keywords_' + d.id + '_' + t);
     for (let w in d['images'][0]['keywords']) {
-        keywords.append('span')
+        keywords.append('div')
+            .attr('class', 'float-right')
+            .append('span')
             .attr('class', 'badge badge-warning mr-1 hide')
             .attr('type', 'button')
             .attr('onclick', '_exploreImage("' + d['images'][0]['name'] + ',' + d['images'][0]['keywords'][w] + ',' + d.id + ',' + t + '")')
@@ -522,19 +524,19 @@ function drawTreeNode(d, group, rectWidth, rectHeight, imageWidth, t) {
     if (d['shape']) {
         drawRect(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight, t);
         drawWin(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight, d['shape']['images'], t);
-        drawLine(group, d.x, d.y, d['shape']['x'], d['shape']['y'], imageWidth, imageWidth / d['images'][0]['height'] * d['images'][0]['height'], 'shape');
+        drawLine(group, d.x, d.y, d['shape']['x'], d['shape']['y'], imageWidth, imageWidth, 'shape');
         drawTreeNode(d['shape'], group, rectWidth, rectHeight, undefined, t);
     }
     if (d['semantic']) {
         drawRect(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight, t);
         drawWin(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight, d['semantic']['images'], t);
-        drawLine(group, d.x, d.y, d['semantic']['x'], d['semantic']['y'], imageWidth, imageWidth / d['images'][0]['height'] * d['images'][0]['height'], 'semantic');
+        drawLine(group, d.x, d.y, d['semantic']['x'], d['semantic']['y'], imageWidth, imageWidth, 'semantic');
         drawTreeNode(d['semantic'], group, rectWidth, rectHeight, undefined, t);
     }
     if (d['color']) {
         drawRect(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight, t);
         drawWin(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight, d['color']['images'], t);
-        drawLine(group, d.x, d.y, d['color']['x'], d['color']['y'], imageWidth, imageWidth / d['images'][0]['height'] * d['images'][0]['height'], 'color');
+        drawLine(group, d.x, d.y, d['color']['x'], d['color']['y'], imageWidth, imageWidth, 'color');
         drawTreeNode(d['color'], group, rectWidth, rectHeight, undefined, t);
     }
 }

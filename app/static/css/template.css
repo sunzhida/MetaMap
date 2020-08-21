@@ -180,3 +180,8 @@ textarea.form-control {
     right: 0px;
     z-index: 20;
 }
+
+.selected-image {
+    max-width: 100%;
+    height: auto;
+}

@@ -354,12 +354,13 @@ function browseImageList(input) {
     d3.select('#kwindow_' + window_id + '_' + tree_id).remove();
     d3.select('#kbutton_' + window_id + '_' + tree_id).remove();
 
+    d3.select('#kwindow_' + window_id + '_' + tree_id).remove;
     let keywords = d3.select('#image_' + currentRoot.id + '_' + tree_id)
         .append("foreignObject")
-        .attr('x', currentImageList.x)
-        .attr('y', currentImageList.y - rectHeight)
-        .attr('width', rectWidth + 40)
-        .attr('height', rectHeight)
+        .attr('x', currentImageList.x + rectWidth)
+        .attr('y', currentImageList.y)
+        .attr('width', 90)
+        .attr('height', 120)
         .attr('id', 'kwindow_' + window_id + '_' + tree_id)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
@@ -367,16 +368,34 @@ function browseImageList(input) {
         .append('div')
         .attr('id', 'subkeywords_' + window_id + '_' + image_id + '_' + tree_id);
     for (let t in currentImageList['images'][image_id]['keywords']) {
-        keywords.append('span')
+        keywords.append('div')
+            .attr('class', 'float-right')
+            .append('span')
             .attr('class', 'badge badge-warning mr-1')
             .attr('type', 'button')
             .attr('onclick', '_exploreImage("' + currentImageList['images'][image_id]['name'] + ',' + currentImageList['images'][image_id]['keywords'][t] + ',' + window_id + ',' + tree_id + '")')
             .html(currentImageList['images'][image_id]['keywords'][t]);
     }
 
+    d3.select('#selectedImage_' + window_id + '_' + tree_id).remove();
+    let example = d3.select('#image_' + currentRoot.id + '_' + tree_id)
+        .append("foreignObject")
+        .attr('x', currentImageList.x + rectWidth + 90)
+        .attr('y', currentImageList.y)
+        .attr('width', 120 / currentImageList['images'][image_id]['height'] * currentImageList['images'][image_id]['width'])
+        .attr('height', 120)
+        .attr('id', 'selectedImage_' + window_id + '_' + tree_id)
+        .append('xhtml:div')
+        .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+        .attr('id', 'kimage_' + window_id + '_' + tree_id)
+        .append('img')
+        .attr('class', 'img-fluid selected-image')
+        .attr('src', '../static/img/' + image_name);
+
+    d3.select('#kbutton_' + window_id + '_' + tree_id).remove();
     let buttons = d3.select('#image_' + currentRoot.id + '_' + tree_id)
         .append("foreignObject")
-        .attr('x', currentImageList.x + rectWidth + 10)
+        .attr('x', currentImageList.x + rectWidth + 120 / currentImageList['images'][image_id]['height'] * currentImageList['images'][image_id]['width'] + 100)
         .attr('y', currentImageList.y)
         .attr('width', 50)
         .attr('height', 82)

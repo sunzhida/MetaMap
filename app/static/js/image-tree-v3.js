@@ -1,6 +1,6 @@
 const HEIGHT = 180;
 const WIDTH = 252;
-const MIN_H_GUTTER = 8;
+const MIN_H_GUTTER = 0;
 const W_GUTTER = 83;
 
 /**

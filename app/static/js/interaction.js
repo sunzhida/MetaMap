@@ -335,7 +335,7 @@ function browseImage(input) {
 }
 
 function browseImageList(input) {
-    // console.log(input);
+    console.log(input);
     let res = input.split(',');
     let image_url = res[0];
     let image_name = res[0].split('/');
@@ -378,7 +378,7 @@ function browseImageList(input) {
     }
 
     d3.select('#selectedImage_' + window_id + '_' + tree_id).remove();
-    let example = d3.select('#image_' + currentRoot.id + '_' + tree_id)
+    d3.select('#image_' + currentRoot.id + '_' + tree_id)
         .append("foreignObject")
         .attr('x', currentImageList.x + rectWidth + 90)
         .attr('y', currentImageList.y)

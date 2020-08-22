@@ -305,8 +305,9 @@ def search(i):
     conn = create_connection(DATABASE)
     keyword = suggestKeyword(conn, i)
     image = searchImage(conn, i)
-    color_palette = colorPalette(conn, i)
-    data = {'search': i, 'keywords': keyword, 'images': image, 'colors': color_palette}
+    # color_palette = colorPalette(conn, i)
+    # data = {'search': i, 'keywords': keyword, 'images': image, 'colors': color_palette}
+    data = {'search': i, 'keywords': keyword, 'images': image}
     conn.close()
     return json.dumps(data)
 

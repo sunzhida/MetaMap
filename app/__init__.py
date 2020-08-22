@@ -308,11 +308,19 @@ def search(i):
     # color_palette = colorPalette(conn, i)
     # data = {'search': i, 'keywords': keyword, 'images': image, 'colors': color_palette}
     data = {'search': i, 'keywords': keyword, 'images': image}
+    color_palette = [
+        {'color':"#1F77B4", 'portion':0.3},
+        {'color':"#FF7F0E", 'portion':0.2},
+        {'color':"#2CA02C", 'portion':0.2},
+        {'color':"#D62728", 'portion':0.1},
+        {'color':"#9467BD", 'portion':0.1},
+        {'color':"#8C564B", 'portion':0.1},
+    ]
     conn.close()
     return json.dumps(data)
 
-# @app.route('/colorrank/<i>', methods=['GET', 'POST'])
 # TODO: enable this API after finish front end
+@app.route('/colorrank/<i>', methods=['GET', 'POST'])
 def colorsearch(i):
     hex_code = i.split(',')[0]
     keyword = i.split(',')[1]

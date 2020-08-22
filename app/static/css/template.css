@@ -104,10 +104,27 @@ text {
     display: flex;
 }
 
+#starred.scrollable::-webkit-scrollbar {
+    display: none;
+}
+
 #starred .item {
-    height: calc(100% - 0.5rem);
+    height: 100%;
     position: relative;
     flex: 0 0 auto;
+    border: 1px solid #dee2e6 !important;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+
+#starred .item.active {
+    border-bottom-color: transparent !important;
+}
+
+#starred .item:not(.active) {
+    border-top-color: transparent !important;
+    border-left-color: transparent !important;
+    border-right-color: transparent !important;
 }
 
 #starred .item img {

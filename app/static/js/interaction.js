@@ -29,6 +29,7 @@ let zoom = d3.behavior.zoom().scaleExtent([MAX_ZOOM_OUT, MAX_ZOOM_IN]).on('zoom'
 // 绑定在调色盘上的clipboardJS对象
 let colorClipboard;
 
+let currentSearchKeyword;
 function submit() {
     let input = document.getElementById("search").value;
     addAndDrawHistory(input);
@@ -37,6 +38,7 @@ function submit() {
         type: "get",
         data: input,
         success: function (response) {
+            currentSearchKeyword = input;
             let re = JSON.parse(response);
             let keywords = re['keywords'];
             let images = re['images'];
@@ -59,6 +61,7 @@ function resubmit(i) {
         type: "get",
         data: input,
         success: function (response) {
+            currentSearchKeyword = input;
             let re = JSON.parse(response);
             let keywords = re['keywords'];
             let images = re['images'];
@@ -71,6 +74,25 @@ function resubmit(i) {
             //Do Something to handle error
         }
     });
+}
+
+function submitColor(color) {
+    const keyword = currentSearchKeyword || document.getElementById("search").value;
+    if (!keyword) return;
+    color = encodeURIComponent(color);
+    $.ajax({
+        url: `/colorrank/${color},${keyword}`,
+        type: 'get',
+        data: `${color},${keyword}`,
+        success: function (response) {
+            let re = JSON.parse(response);
+            let images = re['images'];
+            drawImages(images);
+        },
+        error: function (xhr) {
+            //Do Something to handle error
+        }
+    })
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -149,7 +171,8 @@ function drawColors(colors) {
             title="${c.color}"
             data-clipboard-text="${c.color}"
             data-toggle="tooltip"
-            onclick="showColorToast()"></div>`)
+            onclick="submitColor('${c.color}')"></div>`)
+            // onclick="showColorToast()"></div>`)
         .join('');
     document.getElementById('colors').innerHTML = ihtml;
     // 挂载tooltip事件和clipboard事件
@@ -748,15 +771,17 @@ function nextSlide(e) {
 const collection = new Set();
 
 function _collectImage(i) {
+    if (hasUnsavedComment && !confirm('You have unsaved image comments. Discard?')) return;
     if (collection.has(i)) return;
     collection.add(i);
-    $('#starred').append(`<div class="item mr-3 mb-2 border border-light" data-image="${i}">
-    <div class="btn-group" role="group">
+    $('#starred').append(`<div class="item px-3 py-2 active" data-image="${i}">
+    <div class="btn-group pr-3 pt-2" role="group">
         <button type="button" class="btn btn-secondary btn-sm" onclick="_setComment('${i}')"><i class="fas fa-comment-alt" /></button>
         <button type="button" class="btn btn-danger btn-sm" onclick="_decollectImage($(this))"><i class="fas fa-trash-alt" /></button>
     </div>
-    <img class="img-thumbnail" src="../static/img/${i}" alt="...">
+    <img class="" src="../static/img/${i}" alt="...">
     </div>`);
+    _setComment(i, true);
 }
 
 function _decollectImage(elem) {
@@ -777,12 +802,14 @@ function _saveComment(value) {
     comments[curCommentKey] = value;
 }
 
-function _setComment(key) {
-    if (hasUnsavedComment && !confirm('You have unsaved image comments. Discard and comment a new image?')) return;
+function _setComment(key, force = false) {
+    if (!force && hasUnsavedComment) {
+        if (!confirm('You have unsaved image comments. Discard and comment a new image?')) return;
+    };
     hasUnsavedComment = false;
     $('#image-comments-btn').addClass('btn-outline-secondary').removeClass('btn-secondary');
-    $('#starred .item').removeClass('border-secondary').addClass('border-light');
-    $(`#starred .item[data-image="${key}"]`).addClass('border-secondary').removeClass('border-light');
+    $('#starred .item').removeClass('active');
+    $(`#starred .item[data-image="${key}"]`).addClass('active');
     $('#image-comments > fieldset').removeAttr('disabled');
     curCommentKey = key;
     document.forms['image-comments'].content.value = comments[key] || '';

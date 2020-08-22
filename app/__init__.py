@@ -45,6 +45,7 @@ def suggestKeyword(conn, keyword):
 
     return keywordlist
 
+
 # return suggest keywords based on input: a list of string
 def colorPalette(conn, keyword):
     search_df = pd.read_sql_query("SELECT color_palette from keywords where keyword == '%s'" % keyword, conn)
@@ -68,27 +69,31 @@ def searchImage(conn, keyword):
 
     return imagelist
 
+
 def hex_to_rgb(hex_code):
     hex_code = hex_code.lstrip('#')
     hlen = len(hex_code)
-    return np.array(tuple(int(hex_code[i:i+hlen//3], 16) for i in range(0, hlen, hlen//3)))
+    return np.array(tuple(int(hex_code[i:i + hlen // 3], 16) for i in range(0, hlen, hlen // 3)))
+
 
 def hex_color_distance(hex_1, hex_2):
     rgb_1 = hex_to_rgb(hex_1)
     rgb_2 = hex_to_rgb(hex_2)
-    
+
     return np.linalg.norm(rgb_2 - rgb_1)
+
 
 def colorReRank(conn, hex_code, keyword):
     image_df = pd.read_sql_query("SELECT image_name from keywords_images where keyword == '%s'" % keyword, conn)
     imagelist = image_df.image_name.tolist()
 
-    imagelist = "(" +  str(imagelist)[1:-1] + ")"
-    image_df = pd.read_sql_query("SELECT image_name, color_dominant from images where image_name in %s" % imagelist, conn)
+    imagelist = "(" + str(imagelist)[1:-1] + ")"
+    image_df = pd.read_sql_query("SELECT image_name, color_dominant from images where image_name in %s" % imagelist,
+                                 conn)
 
     image_df['dist'] = image_df.color_dominant.apply(lambda x: hex_color_distance(hex_code, x))
-    image_df.sort_values(['dist'], inplace = True)
-    
+    image_df.sort_values(['dist'], inplace=True)
+
     return image_df.image_name.tolist()
 
 
@@ -112,11 +117,13 @@ def checkImageAttributes(conn, image_name):
 def imagelistRetrieve(conn, imagelist):
     images_query = "(" + str(imagelist)[1:-1] + ")"
 
-    keyword_df = pd.read_sql_query("SELECT keyword, image_name from keywords_images where image_name in %s" % images_query, conn)
+    keyword_df = pd.read_sql_query(
+        "SELECT keyword, image_name from keywords_images where image_name in %s" % images_query, conn)
     # keywords = keyword_df.keyword.values.tolist()
     # keyword_df.set_index('image_name', inplace=True)
 
-    image_df = pd.read_sql_query("SELECT image_name, height, width from images where image_name in %s" % images_query, conn)
+    image_df = pd.read_sql_query("SELECT image_name, height, width from images where image_name in %s" % images_query,
+                                 conn)
     image_df.set_index('image_name', inplace=True)
 
     image_dict_list = []
@@ -129,10 +136,10 @@ def imagelistRetrieve(conn, imagelist):
 
         # image_dict = checkImageAttributes(conn, image)
         image_dict = {
-        "name": image,
-        "keywords": keywords,
-        "width": int(width),
-        "height": int(height),
+            "name": image,
+            "keywords": keywords,
+            "width": int(width),
+            "height": int(height),
         }
         image_dict_list.append(image_dict)
 
@@ -184,7 +191,8 @@ def exploreColorAndShape(conn, image_name, keyword, topn=10):
 
     image_df = pd.read_sql_query("SELECT image_name from keywords_images where keyword in %s" % related_keywords, conn)
     related_images = "(" + str(image_df.image_name.tolist())[1:-1] + ")"
-    color_shape_df = pd.read_sql_query("SELECT image_name, color_hist, contour from images where image_name in %s" % related_images, conn)
+    color_shape_df = pd.read_sql_query(
+        "SELECT image_name, color_hist, contour from images where image_name in %s" % related_images, conn)
 
     hist_1 = color_shape_df[color_shape_df["image_name"] == image_name].color_hist.values
     if len(hist_1) == 0:
@@ -217,6 +225,7 @@ def exploreColorAndShape(conn, image_name, keyword, topn=10):
     shape_imagelist = [i[0] for i in sorted(shape_d, key=lambda x: x[1], reverse=False)[:topn]]
 
     return color_imagelist, shape_imagelist
+
 
 # def exploreColor(conn, image_name, keyword, topn=10):
 #     related_keywords = pd.read_sql_query("SELECT related from keywords where keyword == '%s'" % keyword, conn)
@@ -291,9 +300,10 @@ def index():
         keyword_image_data = pd.read_csv('./data_csv/keyword_image.csv')
         image_data = pd.read_csv('./data_csv/images.csv')
         # store data to db
-        keyword_data.to_sql('keywords', conn, if_exists='replace', index = False, index_label='keyword')
-        keyword_image_data.to_sql('keywords_images', conn, if_exists='replace', index = False, index_label=['keyword', 'image_name'])
-        image_data.to_sql('images', conn, if_exists='replace', index = False, index_label='image_name')
+        keyword_data.to_sql('keywords', conn, if_exists='replace', index=False, index_label='keyword')
+        keyword_image_data.to_sql('keywords_images', conn, if_exists='replace', index=False,
+                                  index_label=['keyword', 'image_name'])
+        image_data.to_sql('images', conn, if_exists='replace', index=False, index_label='image_name')
     conn.commit()
     conn.close()
     message = 'OK'
@@ -309,15 +319,16 @@ def search(i):
     # data = {'search': i, 'keywords': keyword, 'images': image, 'colors': color_palette}
     data = {'search': i, 'keywords': keyword, 'images': image}
     color_palette = [
-        {'color':"#1F77B4", 'portion':0.3},
-        {'color':"#FF7F0E", 'portion':0.2},
-        {'color':"#2CA02C", 'portion':0.2},
-        {'color':"#D62728", 'portion':0.1},
-        {'color':"#9467BD", 'portion':0.1},
-        {'color':"#8C564B", 'portion':0.1},
+        {'color': "#1F77B4", 'portion': 0.3},
+        {'color': "#FF7F0E", 'portion': 0.2},
+        {'color': "#2CA02C", 'portion': 0.2},
+        {'color': "#D62728", 'portion': 0.1},
+        {'color': "#9467BD", 'portion': 0.1},
+        {'color': "#8C564B", 'portion': 0.1},
     ]
     conn.close()
     return json.dumps(data)
+
 
 # TODO: enable this API after finish front end
 @app.route('/colorrank/<i>', methods=['GET', 'POST'])
@@ -325,7 +336,7 @@ def colorsearch(i):
     hex_code = i.split(',')[0]
     keyword = i.split(',')[1]
     conn = create_connection(DATABASE)
-    
+
     image = colorReRank(conn, hex_code, keyword)
     data = {'images': image}
     conn.close()

@@ -30,6 +30,7 @@ let zoom = d3.behavior.zoom().scaleExtent([MAX_ZOOM_OUT, MAX_ZOOM_IN]).on('zoom'
 let colorClipboard;
 
 let currentSearchKeyword;
+
 function submit() {
     let input = document.getElementById("search").value;
     addAndDrawHistory(input);
@@ -172,7 +173,7 @@ function drawColors(colors) {
             data-clipboard-text="${c.color}"
             data-toggle="tooltip"
             onclick="submitColor('${c.color}')"></div>`)
-            // onclick="showColorToast()"></div>`)
+        // onclick="showColorToast()"></div>`)
         .join('');
     document.getElementById('colors').innerHTML = ihtml;
     // 挂载tooltip事件和clipboard事件
@@ -230,13 +231,6 @@ function _addImage(input) {
         url: "/plot/" + imageName,
         data: imageName,
         success: function (response) {
-            // if (tapCount === 0) {
-            //     tapCount++;
-            //     tapID = 0;
-            // } else {
-            //     tapID = tapCount;
-            //     tapCount++;
-            // }
             let re = JSON.parse(response);
             createTree(imageTree().initialize(re), tapID);
             // console.log('created and selected tab', tapID);
@@ -298,32 +292,6 @@ function _enlargeImage(input) {
         .attr('onclick', '_closeImage("' + tree_id + '")')
         .append('i')
         .attr('class', 'fas fa-times');
-
-    // d3.select("#canvas_" + tree_id)
-    //     .append('g')
-    //     .attr('id', 'demo_' + tree_id)
-    //     .append('image')
-    //     .attr('x', x)
-    //     .attr('y', y)
-    //     .attr('width', target_width)
-    //     .attr('height', target_height)
-    //     .attr('xlink:href', '../static/img/' + image_name);
-    // d3.select("#demo_" + tree_id)
-    //     .append("foreignObject")
-    //     .attr('x', x + target_width - 30)
-    //     .attr('y', y)
-    //     .attr('width', 30)
-    //     .attr('height', 36)
-    //     .append('xhtml:div')
-    //     .attr('xmlns', 'http://www.w3.org/1999/xhtml')
-    //     .attr('id', 'dbutton_' + tree_id)
-    //     .append('button')
-    //     .attr('class', 'btn btn-light btn-sm')
-    //     .attr('type', 'button')
-    //     .attr('id', 'close_' + tree_id)
-    //     .attr('onclick', '_closeImage("' + tree_id + '")')
-    //     .append('i')
-    //     .attr('class', 'fas fa-times');
 }
 
 function _closeImage(i) {
@@ -805,7 +773,8 @@ function _saveComment(value) {
 function _setComment(key, force = false) {
     if (!force && hasUnsavedComment) {
         if (!confirm('You have unsaved image comments. Discard and comment a new image?')) return;
-    };
+    }
+    ;
     hasUnsavedComment = false;
     $('#image-comments-btn').addClass('btn-outline-secondary').removeClass('btn-secondary');
     $('#starred .item').removeClass('active');

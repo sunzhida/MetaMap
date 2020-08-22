@@ -86,12 +86,8 @@ function submitColor(color) {
         data: `${color},${keyword}`,
         success: function (response) {
             let re = JSON.parse(response);
-            let keywords = re['keywords'];
             let images = re['images'];
-            let colors = re.colors;
-            drawKeywords(keywords);
             drawImages(images);
-            drawColors(colors);
         },
         error: function (xhr) {
             //Do Something to handle error

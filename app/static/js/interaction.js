@@ -771,15 +771,17 @@ function nextSlide(e) {
 const collection = new Set();
 
 function _collectImage(i) {
+    if (hasUnsavedComment && !confirm('You have unsaved image comments. Discard?')) return;
     if (collection.has(i)) return;
     collection.add(i);
-    $('#starred').append(`<div class="item mr-3 mb-2 border border-light" data-image="${i}">
-    <div class="btn-group" role="group">
+    $('#starred').append(`<div class="item px-3 py-2 active" data-image="${i}">
+    <div class="btn-group pr-3 pt-2" role="group">
         <button type="button" class="btn btn-secondary btn-sm" onclick="_setComment('${i}')"><i class="fas fa-comment-alt" /></button>
         <button type="button" class="btn btn-danger btn-sm" onclick="_decollectImage($(this))"><i class="fas fa-trash-alt" /></button>
     </div>
-    <img class="img-thumbnail" src="../static/img/${i}" alt="...">
+    <img class="" src="../static/img/${i}" alt="...">
     </div>`);
+    _setComment(i, true);
 }
 
 function _decollectImage(elem) {
@@ -800,12 +802,14 @@ function _saveComment(value) {
     comments[curCommentKey] = value;
 }
 
-function _setComment(key) {
-    if (hasUnsavedComment && !confirm('You have unsaved image comments. Discard and comment a new image?')) return;
+function _setComment(key, force = false) {
+    if (!force && hasUnsavedComment) {
+        if (!confirm('You have unsaved image comments. Discard and comment a new image?')) return;
+    };
     hasUnsavedComment = false;
     $('#image-comments-btn').addClass('btn-outline-secondary').removeClass('btn-secondary');
-    $('#starred .item').removeClass('border-secondary').addClass('border-light');
-    $(`#starred .item[data-image="${key}"]`).addClass('border-secondary').removeClass('border-light');
+    $('#starred .item').removeClass('active');
+    $(`#starred .item[data-image="${key}"]`).addClass('active');
     $('#image-comments > fieldset').removeAttr('disabled');
     curCommentKey = key;
     document.forms['image-comments'].content.value = comments[key] || '';

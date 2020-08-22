@@ -152,6 +152,10 @@ getImage() => Image // 返回当前imageIndex指向的图片
 nextImage() => Image // 自增imageIndex并返回新图片
 prevImage() => Image // 自减imageIndex并返回新图片
 getThreeImages() => [Image, Image, Image] // 返回 [上一张，这一张，下一张]
+
+/* 新增 */
+setSelectedImage(image) // 传入一个Image object
+getSelectedImage() // get 当前的selectedImage 或者null
 ```
 使用方式如下
 ```javascript

@@ -319,8 +319,8 @@ def search(i):
     conn.close()
     return json.dumps(data)
 
-# @app.route('/colorrank/<i>', methods=['GET', 'POST'])
 # TODO: enable this API after finish front end
+@app.route('/colorrank/<i>', methods=['GET', 'POST'])
 def colorsearch(i):
     hex_code = i.split(',')[0]
     keyword = i.split(',')[1]

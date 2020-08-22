@@ -40,6 +40,7 @@ class TreeNode {
         this.x = 0;
         this.y = 0;
         this.level = 0;
+        this.selectedImage = null;
         children.semantic && (this.semantic = children.semantic);
         children.color && (this.color = children.color);
         children.shape && (this.shape = children.shape);
@@ -98,6 +99,22 @@ class TreeNode {
             this.images[this.imageIndex],
             this.images[nextIdx],
         ];
+    }
+
+    /**
+     * Set selected image to this image object
+     * @param {Image} image 
+     */
+    setSelectedImage(image) {
+        this.selectedImage = { ...image };
+    }
+
+    /**
+     * Returns current selected image or null if unset yet
+     * @returns {Image | null}
+     */
+    getSelectedImage() {
+        return this.selectedImage;
     }
 };
 

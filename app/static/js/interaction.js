@@ -29,6 +29,7 @@ let zoom = d3.behavior.zoom().scaleExtent([MAX_ZOOM_OUT, MAX_ZOOM_IN]).on('zoom'
 // 绑定在调色盘上的clipboardJS对象
 let colorClipboard;
 
+let currentSearchKeyword;
 function submit() {
     let input = document.getElementById("search").value;
     addAndDrawHistory(input);
@@ -37,6 +38,7 @@ function submit() {
         type: "get",
         data: input,
         success: function (response) {
+            currentSearchKeyword = input;
             let re = JSON.parse(response);
             let keywords = re['keywords'];
             let images = re['images'];
@@ -59,6 +61,7 @@ function resubmit(i) {
         type: "get",
         data: input,
         success: function (response) {
+            currentSearchKeyword = input;
             let re = JSON.parse(response);
             let keywords = re['keywords'];
             let images = re['images'];
@@ -71,6 +74,29 @@ function resubmit(i) {
             //Do Something to handle error
         }
     });
+}
+
+function submitColor(color) {
+    const keyword = currentSearchKeyword || document.getElementById("search").value;
+    if (!keyword) return;
+    color = encodeURIComponent(color);
+    $.ajax({
+        url: `/colorrank/${color},${keyword}`,
+        type: 'get',
+        data: `${color},${keyword}`,
+        success: function (response) {
+            let re = JSON.parse(response);
+            let keywords = re['keywords'];
+            let images = re['images'];
+            let colors = re.colors;
+            drawKeywords(keywords);
+            drawImages(images);
+            drawColors(colors);
+        },
+        error: function (xhr) {
+            //Do Something to handle error
+        }
+    })
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -149,7 +175,8 @@ function drawColors(colors) {
             title="${c.color}"
             data-clipboard-text="${c.color}"
             data-toggle="tooltip"
-            onclick="showColorToast()"></div>`)
+            onclick="submitColor('${c.color}')"></div>`)
+            // onclick="showColorToast()"></div>`)
         .join('');
     document.getElementById('colors').innerHTML = ihtml;
     // 挂载tooltip事件和clipboard事件

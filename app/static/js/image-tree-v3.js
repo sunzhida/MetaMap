@@ -3,6 +3,13 @@ const WIDTH = 252;
 const MIN_H_GUTTER = 0;
 const W_GUTTER = 83;
 
+const TYPES = {
+    ROOT: 'root',
+    SEMANTIC: 'semantic',
+    COLOR: 'color',
+    SHAPE: 'shape',
+};
+
 /**
  * DTO - Data Transfer Object (btw frontend & backend)
  * @typedef {Object} DTO
@@ -33,7 +40,7 @@ class TreeNode {
      * @param {TreeNode} [children.color]
      * @param {TreeNode} [children.shape]
      */
-    constructor(id, images, children) {
+    constructor(id, images, children, type = TYPES.ROOT) {
         this.id = id;
         this.images = images;
         this.imageIndex = 0;
@@ -41,6 +48,7 @@ class TreeNode {
         this.y = 0;
         this.level = 0;
         this.selectedImage = null;
+        this.type = type;
         children.semantic && (this.semantic = children.semantic);
         children.color && (this.color = children.color);
         children.shape && (this.shape = children.shape);
@@ -102,16 +110,16 @@ class TreeNode {
     }
 
     /**
-     * Set selected image to this image object
-     * @param {Image} image
+     * Set selected image to this string
+     * @param {string} image
      */
     setSelectedImage(image) {
-        this.selectedImage = {...image};
+        this.selectedImage = image;
     }
 
     /**
      * Returns current selected image or null if unset yet
-     * @returns {Image | null}
+     * @returns {string | null}
      */
     getSelectedImage() {
         return this.selectedImage;
@@ -163,18 +171,22 @@ class ImageTree {
                     this.__getId(),
                     dto.semantic,
                     {},
+                    TYPES.SEMANTIC,
                 ),
                 color: new TreeNode(
                     this.__getId(),
                     dto.color,
                     {},
+                    TYPES.COLOR,
                 ),
                 shape: new TreeNode(
                     this.__getId(),
                     dto.shape,
                     {},
+                    TYPES.SHAPE,
                 ),
-            }
+            },
+            TYPES.ROOT,
         )
         this._updateTreeXY();
         return this.tree;
@@ -220,17 +232,20 @@ class ImageTree {
         found.semantic = new TreeNode(
             this.__getId(),
             dto.semantic,
-            {}
+            {},
+            TYPES.SEMANTIC,
         );
         found.color = new TreeNode(
             this.__getId(),
             dto.color,
-            {}
+            {},
+            TYPES.COLOR,
         );
         found.shape = new TreeNode(
             this.__getId(),
             dto.shape,
-            {}
+            {},
+            TYPES.SHAPE,
         );
         this._updateTreeXY();
         return this.tree;

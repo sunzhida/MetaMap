@@ -339,6 +339,7 @@ function browseImageList(input) {
     // // console.log(currentRoot);
     let currentImageList = imageTree().find(parseInt(window_id));
     // console.log(currentImageList);
+    // let selectedImage = imageTree().
 
     $(`img.boarding_${window_id}_${tree_id}`).removeClass('boarding-selected');
     $(`img#boarding_${window_id}_${image_id}_${tree_id}`).addClass('boarding-selected');

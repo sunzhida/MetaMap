@@ -102,9 +102,10 @@ text {
 
 #starred {
     display: flex;
+    margin-bottom: -1px;
 }
 
-#starred.scrollable::-webkit-scrollbar {
+#starred::-webkit-scrollbar {
     display: none;
 }
 
@@ -118,7 +119,7 @@ text {
 }
 
 #starred .item.active {
-    border-bottom-color: transparent !important;
+    border-bottom-color: white !important;
 }
 
 #starred .item:not(.active) {

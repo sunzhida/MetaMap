@@ -21,14 +21,14 @@ const W_GUTTER = 83;
  * @property {string} name
  * @property {string[]} keywords
  * @property {number} height
- * @property {number} width 
+ * @property {number} width
  */
 
 class TreeNode {
     /**
-     * @param {number} id 
-     * @param {Image[]} images 
-     * @param {object} children 
+     * @param {number} id
+     * @param {Image[]} images
+     * @param {object} children
      * @param {TreeNode} [children.semantic]
      * @param {TreeNode} [children.color]
      * @param {TreeNode} [children.shape]
@@ -88,7 +88,7 @@ class TreeNode {
         while (prevIdx < 0) {
             prevIdx += this.images.length;
         }
-        
+
         let nextIdx = this.imageIndex + 1;
         if (nextIdx >= this.images.length) {
             nextIdx %= this.images.length;
@@ -103,10 +103,10 @@ class TreeNode {
 
     /**
      * Set selected image to this image object
-     * @param {Image} image 
+     * @param {Image} image
      */
     setSelectedImage(image) {
-        this.selectedImage = { ...image };
+        this.selectedImage = {...image};
     }
 
     /**
@@ -116,7 +116,7 @@ class TreeNode {
     getSelectedImage() {
         return this.selectedImage;
     }
-};
+}
 
 class ImageTree {
     /**
@@ -192,7 +192,7 @@ class ImageTree {
     /**
      * Find the parent tree node of given id
      * If id === 0, i.e. root node, also returns undefined
-     * @param {number} id 
+     * @param {number} id
      * @returns {TreeNode | undefined}
      */
     findParent(id) {
@@ -265,14 +265,14 @@ class ImageTree {
     _updateTreeXY() {
         const totalLevel = this.__injectTreeLevel(this.tree, 0);
 
-        const gutters = Array.from({ length: totalLevel + 1 });
+        const gutters = Array.from({length: totalLevel + 1});
         gutters[0] = 0;
         gutters[totalLevel] = MIN_H_GUTTER;
         for (let lev = totalLevel - 1; lev > 0; lev--) {
             // gutters[lev] = 2 * HEIGHT + 3 * gutters[lev + 1];
             gutters[lev] = MIN_H_GUTTER;
         }
-    
+
         this.__injectTreeHeight(this.tree, 0, gutters);
         return totalLevel;
     }
@@ -287,8 +287,8 @@ class ImageTree {
 
     /**
      * @private
-     * @param {number} id 
-     * @param {TreeNode | undefined} cur 
+     * @param {number} id
+     * @param {TreeNode | undefined} cur
      * @returns {TreeNode | undefined}
      */
     __findInner(id, cur) {
@@ -301,8 +301,8 @@ class ImageTree {
 
     /**
      * @private
-     * @param {number} id 
-     * @param {TreeNode | undefined} cur 
+     * @param {number} id
+     * @param {TreeNode | undefined} cur
      * @returns {TreeNode | undefined}
      */
     __findParentInner(id, cur) {
@@ -318,7 +318,7 @@ class ImageTree {
 
     /**
      * @private
-     * @param {TreeNode | undefined} node 
+     * @param {TreeNode | undefined} node
      */
     __removeChild(node) {
         if (!node) return;
@@ -329,7 +329,7 @@ class ImageTree {
 
     /**
      * @private
-     * @param {TreeNode} node 
+     * @param {TreeNode} node
      * @param {number} cur Current level
      */
     __injectTreeLevel(node, cur) {
@@ -343,9 +343,9 @@ class ImageTree {
 
     /**
      * @private
-     * @param {TreeNode} node 
-     * @param {number} curY 
-     * @param {number[]} H_GUTTERS 
+     * @param {TreeNode} node
+     * @param {number} curY
+     * @param {number[]} H_GUTTERS
      */
     __injectTreeHeight(node, curY, H_GUTTERS) {
         node.y = curY;

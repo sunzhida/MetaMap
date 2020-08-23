@@ -270,7 +270,7 @@ function _enlargeImage(input) {
     let image_width = res[1];
     let image_height = res[2];
     let tree_id = res[3];
-    console.log(input);
+    // console.log(input);
     let target_height = 480;
     let target_width = target_height / image_height * image_width;
     let x = width / 2 - target_width / 2;
@@ -308,7 +308,7 @@ function browseImage(input) {
     let image_name = res[0].split('/');
     let image_id = res[1];
     let tree_id = res[2];
-    // // console.log(image_id);
+    // console.log(image_id);
 
     let popup_kw = document.getElementById('keywords_' + image_id + '_' + tree_id);
     if (popup_kw.style.display === "none") {
@@ -326,7 +326,7 @@ function browseImage(input) {
 }
 
 function browseImageList(input) {
-    console.log(input);
+    // console.log(input);
     let res = input.split(',');
     let image_url = res[0];
     let image_name = res[0].split('/');
@@ -339,7 +339,6 @@ function browseImageList(input) {
     // // console.log(currentRoot);
     let currentImageList = imageTree().find(parseInt(window_id));
     // console.log(currentImageList);
-    // let selectedImage = imageTree().
 
     $(`img.boarding_${window_id}_${tree_id}`).removeClass('boarding-selected');
     $(`img#boarding_${window_id}_${image_id}_${tree_id}`).addClass('boarding-selected');
@@ -761,9 +760,9 @@ function _decollectImage(elem) {
 }
 
 // Starred Image
-var comments = {};
-var curCommentKey = null;
-var hasUnsavedComment = false;
+let comments = {};
+let curCommentKey = null;
+let hasUnsavedComment = false;
 
 function _saveComment(value) {
     hasUnsavedComment = false;
@@ -775,7 +774,6 @@ function _setComment(key, force = false) {
     if (!force && hasUnsavedComment) {
         if (!confirm('You have unsaved image comments. Discard and comment a new image?')) return;
     }
-    ;
     hasUnsavedComment = false;
     $('#image-comments-btn').addClass('btn-outline-secondary').removeClass('btn-secondary');
     $('#starred .item').removeClass('active');

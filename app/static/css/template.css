@@ -113,7 +113,7 @@ text {
     height: 100%;
     position: relative;
     flex: 0 0 auto;
-    border: 1px solid #dee2e6 !important;
+    border: 1px solid #71777d !important;
     border-top-left-radius: 0.25rem;
     border-top-right-radius: 0.25rem;
 }
@@ -138,6 +138,10 @@ text {
     top: 0;
     right: 0;
     z-index: 10;
+}
+
+#image-comments {
+    border-color: #71777d !important;
 }
 
 textarea.form-control {

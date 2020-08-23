@@ -12,6 +12,7 @@ const h = window.innerHeight - 470;
 const margin = {top: 10, right: 20, bottom: 10, left: 20};
 let width = w - margin.right - margin.left;
 let height = h - margin.top - margin.bottom;
+let selectedImage = {};
 
 let tapID = 0;
 let tapCount = 0;
@@ -248,7 +249,8 @@ function _exploreImage(i) {
     let keyword = i.split(',')[1];
     let imgID = parseInt(i.split(',')[2]);
     let treeID = parseInt(i.split(',')[3]);
-    // // console.log(i);
+    let selectImgID = parseInt(i.split(',')[4]);
+    console.log(i);
     $.ajax({
         url: "/inquire/" + i,
         type: "get",
@@ -256,6 +258,11 @@ function _exploreImage(i) {
         success: function (response) {
             let re = JSON.parse(response);
             let currentTree = imageTree().explore(imgID, re);
+            console.log(currentTree);
+            if (selectImgID) {
+                console.log();
+            }
+            // currentTree.setSelectedImage();
             drawTree(currentTree, treeID);
         },
         error: function (xhr) {
@@ -364,7 +371,7 @@ function browseImageList(input) {
             .append('span')
             .attr('class', 'badge badge-warning mr-1')
             .attr('type', 'button')
-            .attr('onclick', '_exploreImage("' + currentImageList['images'][image_id]['name'] + ',' + currentImageList['images'][image_id]['keywords'][t] + ',' + window_id + ',' + tree_id + '")')
+            .attr('onclick', '_exploreImage("' + currentImageList['images'][image_id]['name'] + ',' + currentImageList['images'][image_id]['keywords'][t] + ',' + window_id + ',' + tree_id + ',' + image_id + '")')
             .html(currentImageList['images'][image_id]['keywords'][t]);
     }
 
@@ -373,7 +380,7 @@ function browseImageList(input) {
         .append("foreignObject")
         .attr('x', currentImageList.x + rectWidth + 90)
         .attr('y', currentImageList.y)
-        .attr('width', 120 / currentImageList['images'][image_id]['height'] * currentImageList['images'][image_id]['width'])
+        .attr('width', 120) // / currentImageList['images'][image_id]['height'] * currentImageList['images'][image_id]['width']
         .attr('height', 120)
         .attr('id', 'selectedImage_' + window_id + '_' + tree_id)
         .append('xhtml:div')
@@ -386,7 +393,7 @@ function browseImageList(input) {
     d3.select('#kbutton_' + window_id + '_' + tree_id).remove();
     let buttons = d3.select('#image_' + currentRoot.id + '_' + tree_id)
         .append("foreignObject")
-        .attr('x', currentImageList.x + rectWidth + 120 / currentImageList['images'][image_id]['height'] * currentImageList['images'][image_id]['width'] + 100)
+        .attr('x', currentImageList.x + rectWidth + 120 + 100)
         .attr('y', currentImageList.y)
         .attr('width', 50)
         .attr('height', 82)
@@ -499,7 +506,7 @@ function drawTree(d, t) {
         .attr('class', 'btn btn-light btn-sm')
         .attr('type', 'button')
         .attr('id', 'large_' + d.id + '_' + t)
-        .attr('onclick', '_enlargeImage("' + d['images'][0]['name'] + ',' + d['images'][0]['width'] + ',' + d['images'][0]['height'] + ',' + t + '")')
+        .attr('onclick', '_enlargeImage("' + d['images'][0]['name'] + ',' + d['images'][0]['width'] + ',' + d['images'][0]['height'] + ',' + t + ',' + d.id + '")')
         .append('i')
         .attr('class', 'fas fa-search-plus');
     let keywords = group.append("foreignObject")

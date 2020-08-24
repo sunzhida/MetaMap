@@ -375,13 +375,26 @@ function browseImageList(input) {
             .html(currentImageList['images'][image_id]['keywords'][t]);
     }
 
+    let idealWidth, idealHeight, adjustX, adjustY;
+    if (currentImageList['images'][image_id]['height'] < currentImageList['images'][image_id]['width']) {
+        idealWidth = 120;
+        idealHeight = 120 / currentImageList['images'][image_id]['width'] * currentImageList['images'][image_id]['height'];
+        adjustX = 0;
+        adjustY = (120 - idealHeight)/2;
+    } else {
+        idealWidth = 120 / currentImageList['images'][image_id]['height'] * currentImageList['images'][image_id]['width'];
+        idealHeight = 120;
+        adjustY = 0;
+        adjustX = (120 - idealWidth)/2;
+    }
+
     d3.select('#selectedImage_' + window_id + '_' + tree_id).remove();
     d3.select('#image_' + currentRoot.id + '_' + tree_id)
         .append("foreignObject")
-        .attr('x', currentImageList.x + rectWidth + 90)
-        .attr('y', currentImageList.y)
-        .attr('width', 120) // / currentImageList['images'][image_id]['height'] * currentImageList['images'][image_id]['width']
-        .attr('height', 120)
+        .attr('x', currentImageList.x + rectWidth + 90 + adjustX)
+        .attr('y', currentImageList.y + adjustY)
+        .attr('width', idealWidth)
+        .attr('height', idealHeight)
         .attr('id', 'selectedImage_' + window_id + '_' + tree_id)
         .append('xhtml:div')
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')

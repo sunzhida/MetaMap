@@ -317,7 +317,6 @@ function browseImage(input) {
     let image_name = res[0].split('/');
     let image_id = res[1];
     let tree_id = res[2];
-    // console.log(image_id);
 
     let popup_kw = document.getElementById('keywords_' + image_id + '_' + tree_id);
     if (popup_kw.style.display === "none") {
@@ -552,25 +551,37 @@ function drawTree(d, t) {
 }
 
 function drawTreeNode(d, group, rectWidth, rectHeight, imageWidth, t) {
-    // // console.log(d);
+    console.log(d);
     if (d['shape']) {
         drawRect(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight, t);
         drawWin(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight, d['shape']['images'], t, 'shape');
-        drawLine(group, d.x + 250, d.y, d['shape']['x'], d['shape']['y'], imageWidth, imageWidth, 'shape');
+        if (d['level'] === 0) {
+            drawLine(group, d.x, d.y, d['shape']['x'], d['shape']['y'], imageWidth, imageWidth, 'shape');
+        } else {
+            drawLine(group, d.x + 250, d.y, d['shape']['x'], d['shape']['y'], imageWidth, imageWidth, 'shape');
+        }
         drawTreeNode(d['shape'], group, rectWidth, rectHeight, undefined, t);
         drawSelectedImage(group, d['shape'], t);
     }
     if (d['semantic']) {
         drawRect(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight, t);
         drawWin(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight, d['semantic']['images'], t, 'semantic');
-        drawLine(group, d.x + 250, d.y, d['semantic']['x'], d['semantic']['y'], imageWidth, imageWidth, 'semantic');
+        if (d['level'] === 0) {
+            drawLine(group, d.x, d.y, d['semantic']['x'], d['semantic']['y'], imageWidth, imageWidth, 'semantic');
+        } else {
+            drawLine(group, d.x + 250, d.y, d['semantic']['x'], d['semantic']['y'], imageWidth, imageWidth, 'semantic');
+        }
         drawTreeNode(d['semantic'], group, rectWidth, rectHeight, undefined, t);
         drawSelectedImage(group, d['semantic'], t);
     }
     if (d['color']) {
         drawRect(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight, t);
         drawWin(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight, d['color']['images'], t, 'color');
-        drawLine(group, d.x + 250, d.y, d['color']['x'], d['color']['y'], imageWidth, imageWidth, 'color');
+        if (d['level'] === 0) {
+            drawLine(group, d.x, d.y, d['color']['x'], d['color']['y'], imageWidth, imageWidth, 'color');
+        } else {
+            drawLine(group, d.x + 250, d.y, d['color']['x'], d['color']['y'], imageWidth, imageWidth, 'color');
+        }
         drawTreeNode(d['color'], group, rectWidth, rectHeight, undefined, t);
         drawSelectedImage(group, d['color'], t);
     }
@@ -731,7 +742,7 @@ function drawWin(c, x, y, i, w, h, input, t, type) {
 }
 
 function drawLine(c, x1, y1, x2, y2, w, h, t) {
-    // // console.log(x1, y1, x2, y2, w, h);
+    console.log(x1, y1, x2, y2, w, h);
     let path;
     if (!w || !h) {
         // // console.log(w, h);

@@ -330,7 +330,6 @@ def search(i):
     return json.dumps(data)
 
 
-# TODO: enable this API after finish front end
 @app.route('/colorrank/<i>', methods=['GET', 'POST'])
 def colorsearch(i):
     hex_code = i.split(',')[0]

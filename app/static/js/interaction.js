@@ -251,7 +251,7 @@ function _exploreImage(i) {
     let treeID = parseInt(i.split(',')[3]);
     let selectImgID = parseInt(i.split(',')[4]);
     let type = i.split(',')[5];
-    console.log(i);
+    // console.log(i);
     $.ajax({
         url: "/inquire/" + i,
         type: "get",
@@ -261,6 +261,7 @@ function _exploreImage(i) {
             let currentTree = imageTree().explore(imgID, re);
             if (selectImgID || selectImgID === 0) {
                 let targetTree = imageTree().find(imgID);
+                targetTree['imageIndex'] = selectImgID;
                 targetTree.setSelectedImage(targetTree['images'][selectImgID]);
             }
             console.log(currentTree);
@@ -345,7 +346,7 @@ function browseImageList(input) {
     let rectWidth = 252, rectHeight = 32;
 
     let currentRoot = imageTree().get(parseInt(window_id));
-    // // console.log(currentRoot);
+    // console.log(currentRoot);
     let currentImageList = imageTree().find(parseInt(window_id));
     // console.log(currentImageList);
 
@@ -430,7 +431,6 @@ function browseImageList(input) {
         .attr('onclick', '_enlargeImage("' + image_name + ',' + currentImageList['images'][image_id]['width'] + ',' + currentImageList['images'][image_id]['height'] + ',' + tree_id + '")')
         .append('i')
         .attr('class', 'fas fa-search-plus');
-    // console.log(currentImageList['images'][image_id]);
 }
 
 function createTree(d, t) {
@@ -556,20 +556,103 @@ function drawTreeNode(d, group, rectWidth, rectHeight, imageWidth, t) {
     if (d['shape']) {
         drawRect(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight, t);
         drawWin(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight, d['shape']['images'], t, 'shape');
-        drawLine(group, d.x, d.y, d['shape']['x'], d['shape']['y'], imageWidth, imageWidth, 'shape');
+        drawLine(group, d.x + 250, d.y, d['shape']['x'], d['shape']['y'], imageWidth, imageWidth, 'shape');
         drawTreeNode(d['shape'], group, rectWidth, rectHeight, undefined, t);
+        drawSelectedImage(group, d['shape'], t);
     }
     if (d['semantic']) {
         drawRect(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight, t);
         drawWin(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight, d['semantic']['images'], t, 'semantic');
-        drawLine(group, d.x, d.y, d['semantic']['x'], d['semantic']['y'], imageWidth, imageWidth, 'semantic');
+        drawLine(group, d.x + 250, d.y, d['semantic']['x'], d['semantic']['y'], imageWidth, imageWidth, 'semantic');
         drawTreeNode(d['semantic'], group, rectWidth, rectHeight, undefined, t);
+        drawSelectedImage(group, d['semantic'], t);
     }
     if (d['color']) {
         drawRect(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight, t);
         drawWin(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight, d['color']['images'], t, 'color');
-        drawLine(group, d.x, d.y, d['color']['x'], d['color']['y'], imageWidth, imageWidth, 'color');
+        drawLine(group, d.x + 250, d.y, d['color']['x'], d['color']['y'], imageWidth, imageWidth, 'color');
         drawTreeNode(d['color'], group, rectWidth, rectHeight, undefined, t);
+        drawSelectedImage(group, d['color'], t);
+    }
+}
+
+function drawSelectedImage(c, d, t) {
+    console.log(d);
+    console.log(d['selectedImage']);
+    if (d['selectedImage']) {
+        // let currentImageList = imageTree().find(d['id']);
+        // console.log(currentImageList);
+        let keywords = c.append('foreignObject')
+            .attr('x', d.x + 252)
+            .attr('y', d.y)
+            .attr('width', 90)
+            .attr('height', 120)
+            .attr('id', 'kwindow_' + d['id'] + '_' + t)
+            .append('xhtml:div')
+            .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+            .attr('id', 'keywords_' + d['id'] + '_' + d['imageIndex'])
+            .append('div')
+            .attr('id', 'subkeywords_' + d['id'] + '_' + d['imageIndex'] + '_' + t);
+        for (let e in d['selectedImage']['keywords']) {
+            keywords.append('div')
+                .attr('class', 'float-right')
+                .append('span')
+                .attr('class', 'badge badge-warning mr-1')
+                .attr('type', 'button')
+                .attr('onclick', '_exploreImage("' + d['selectedImage']['name'] + ',' + d['selectedImage']['keywords'][e] + ','
+                    + d['id'] + ',' + t + ',' + d['imageIndex'] + ',' + d['type'] + '")')
+                .html(d['selectedImage']['keywords'][e]);
+        }
+
+        let idealWidth, idealHeight, adjustX, adjustY;
+        if (d['selectedImage']['height'] < d['selectedImage']['width']) {
+            idealWidth = 120;
+            idealHeight = 120 / d['selectedImage']['width'] * d['selectedImage']['height'];
+            adjustX = 0;
+            adjustY = (120 - idealHeight) / 2;
+        } else {
+            idealWidth = 120 / d['selectedImage']['height'] * d['selectedImage']['width'];
+            idealHeight = 120;
+            adjustY = 0;
+            adjustX = (120 - idealWidth) / 2;
+        }
+
+        c.append("foreignObject")
+            .attr('x', d.x + 252 + 90 + adjustX)
+            .attr('y', d.y + adjustY)
+            .attr('width', idealWidth)
+            .attr('height', idealHeight)
+            .attr('id', 'selectedImage_' + d['id'] + '_' + t)
+            .append('xhtml:div')
+            .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+            .attr('id', 'kimage_' + d['id'] + '_' + t)
+            .append('img')
+            .attr('class', 'img-fluid selected-image')
+            .attr('src', '../static/img/' + d['selectedImage']['name']);
+
+        let buttons = c.append("foreignObject")
+            .attr('x', d.x + 252 + 120 + 100)
+            .attr('y', d.y)
+            .attr('width', 50)
+            .attr('height', 82)
+            .attr('id', 'kbutton_' + d['id'] + '_' + t)
+            .append('xhtml:div')
+            .attr('xmlns', 'http://www.w3.org/1999/xhtml')
+            .attr('id', 'button_' + d['id'] + '_' + t);
+        buttons.append('button')
+            .attr('class', 'btn btn-dark btn-sm')
+            .attr('type', 'button')
+            .attr('id', 'collect_' + d['imageIndex'] + '_' + t)
+            .attr('onclick', '_collectImage("' + d['selectedImage']['name'] + '")')
+            .append('i')
+            .attr('class', 'fas fa-thumbtack');
+        buttons.append('button')
+            .attr('class', 'btn btn-light btn-sm')
+            .attr('type', 'button')
+            .attr('id', 'large_' + d['imageIndex'] + '_' + t)
+            .attr('onclick', '_enlargeImage("' + d['selectedImage']['name'] + ',' + d['selectedImage']['width'] + ',' + d['selectedImage']['height'] + ',' + t + '")')
+            .append('i')
+            .attr('class', 'fas fa-search-plus');
     }
 }
 
@@ -591,8 +674,10 @@ function drawWin(c, x, y, i, w, h, input, t, type) {
     let window = c.append('foreignObject')
         .attr("transform", "translate("
             + x + "," + y + ")")
-        .attr('width', w)
+        .attr('width', 502)
+        // .attr('width', w)
         .attr('height', h)
+        .attr("id", "foreignGroup_" + i + '_' + t)
         .append('xhtml:div')
         .attr("id", "window_" + i + '_' + t)
         .attr('xmlns', 'http://www.w3.org/1999/xhtml')
@@ -756,7 +841,6 @@ function nextSlide(e) {
     const elem = $(`#window_${e} .image-subwindow`).first();
     elem.animate({scrollLeft: '+=100'}, 300);
 }
-
 
 // Image Collection
 const collection = new Set();

@@ -149,6 +149,7 @@ textarea.form-control {
 }
 
 .image-window {
+    width: 252px;
     height: 100%;
     position: relative;
 }

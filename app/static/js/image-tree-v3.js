@@ -1,5 +1,6 @@
 const HEIGHT = 180;
-const WIDTH = 502;
+const WIDTH = 252;
+const WIDTH_SELECTED = 250;
 const MIN_H_GUTTER = 0;
 const W_GUTTER = 83;
 
@@ -350,6 +351,7 @@ class ImageTree {
     __injectTreeLevel(node, cur) {
         node.level = cur;
         node.x = cur * (WIDTH + W_GUTTER);
+        if (cur > 0) node.x += (cur - 1) * WIDTH_SELECTED;
         const r1 = node.semantic ? this.__injectTreeLevel(node.semantic, cur + 1) : cur;
         const r2 = node.color ? this.__injectTreeLevel(node.color, cur + 1) : cur;
         const r3 = node.shape ? this.__injectTreeLevel(node.shape, cur + 1) : cur;

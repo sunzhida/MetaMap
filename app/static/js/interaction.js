@@ -264,7 +264,7 @@ function _exploreImage(i) {
                 targetTree['imageIndex'] = selectImgID;
                 targetTree.setSelectedImage(targetTree['images'][selectImgID]);
             }
-            console.log(currentTree);
+            // console.log(currentTree);
             drawTree(currentTree, treeID);
         },
         error: function (xhr) {
@@ -577,8 +577,8 @@ function drawTreeNode(d, group, rectWidth, rectHeight, imageWidth, t) {
 }
 
 function drawSelectedImage(c, d, t) {
-    console.log(d);
-    console.log(d['selectedImage']);
+    // console.log(d);
+    // console.log(d['selectedImage']);
     if (d['selectedImage']) {
         // let currentImageList = imageTree().find(d['id']);
         // console.log(currentImageList);

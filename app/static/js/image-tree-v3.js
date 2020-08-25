@@ -110,16 +110,16 @@ class TreeNode {
     }
 
     /**
-     * Set selected image to this string
-     * @param {string} image
+     * Set selected image to this image object
+     * @param {Image} image
      */
     setSelectedImage(image) {
-        this.selectedImage = image;
+        this.selectedImage = {...image};
     }
 
     /**
      * Returns current selected image or null if unset yet
-     * @returns {string | null}
+     * @returns {Image | null}
      */
     getSelectedImage() {
         return this.selectedImage;

@@ -250,6 +250,7 @@ function _exploreImage(i) {
     let imgID = parseInt(i.split(',')[2]);
     let treeID = parseInt(i.split(',')[3]);
     let selectImgID = parseInt(i.split(',')[4]);
+    let type = i.split(',')[5];
     console.log(i);
     $.ajax({
         url: "/inquire/" + i,
@@ -258,11 +259,11 @@ function _exploreImage(i) {
         success: function (response) {
             let re = JSON.parse(response);
             let currentTree = imageTree().explore(imgID, re);
-            console.log(currentTree);
-            if (selectImgID) {
-                console.log();
+            if (selectImgID || selectImgID === 0) {
+                let targetTree = imageTree().find(imgID);
+                targetTree.setSelectedImage(targetTree['images'][selectImgID]);
             }
-            // currentTree.setSelectedImage();
+            console.log(currentTree);
             drawTree(currentTree, treeID);
         },
         error: function (xhr) {
@@ -340,6 +341,7 @@ function browseImageList(input) {
     let window_id = res[1];
     let image_id = res[2];
     let tree_id = res[3];
+    let image_type = res[4];
     let rectWidth = 252, rectHeight = 32;
 
     let currentRoot = imageTree().get(parseInt(window_id));
@@ -352,7 +354,6 @@ function browseImageList(input) {
     d3.select('#kwindow_' + window_id + '_' + tree_id).remove();
     d3.select('#kbutton_' + window_id + '_' + tree_id).remove();
 
-    d3.select('#kwindow_' + window_id + '_' + tree_id).remove;
     let keywords = d3.select('#image_' + currentRoot.id + '_' + tree_id)
         .append("foreignObject")
         .attr('x', currentImageList.x + rectWidth)
@@ -371,7 +372,8 @@ function browseImageList(input) {
             .append('span')
             .attr('class', 'badge badge-warning mr-1')
             .attr('type', 'button')
-            .attr('onclick', '_exploreImage("' + currentImageList['images'][image_id]['name'] + ',' + currentImageList['images'][image_id]['keywords'][t] + ',' + window_id + ',' + tree_id + ',' + image_id + '")')
+            .attr('onclick', '_exploreImage("' + currentImageList['images'][image_id]['name'] + ',' + currentImageList['images'][image_id]['keywords'][t] + ','
+                + window_id + ',' + tree_id + ',' + image_id + ',' + image_type + '")')
             .html(currentImageList['images'][image_id]['keywords'][t]);
     }
 
@@ -380,12 +382,12 @@ function browseImageList(input) {
         idealWidth = 120;
         idealHeight = 120 / currentImageList['images'][image_id]['width'] * currentImageList['images'][image_id]['height'];
         adjustX = 0;
-        adjustY = (120 - idealHeight)/2;
+        adjustY = (120 - idealHeight) / 2;
     } else {
         idealWidth = 120 / currentImageList['images'][image_id]['height'] * currentImageList['images'][image_id]['width'];
         idealHeight = 120;
         adjustY = 0;
-        adjustX = (120 - idealWidth)/2;
+        adjustX = (120 - idealWidth) / 2;
     }
 
     d3.select('#selectedImage_' + window_id + '_' + tree_id).remove();
@@ -553,19 +555,19 @@ function drawTreeNode(d, group, rectWidth, rectHeight, imageWidth, t) {
     // // console.log(d);
     if (d['shape']) {
         drawRect(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight, t);
-        drawWin(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight, d['shape']['images'], t);
+        drawWin(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight, d['shape']['images'], t, 'shape');
         drawLine(group, d.x, d.y, d['shape']['x'], d['shape']['y'], imageWidth, imageWidth, 'shape');
         drawTreeNode(d['shape'], group, rectWidth, rectHeight, undefined, t);
     }
     if (d['semantic']) {
         drawRect(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight, t);
-        drawWin(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight, d['semantic']['images'], t);
+        drawWin(group, d['semantic']['x'], d['semantic']['y'], d['semantic']['id'], rectWidth, rectHeight, d['semantic']['images'], t, 'semantic');
         drawLine(group, d.x, d.y, d['semantic']['x'], d['semantic']['y'], imageWidth, imageWidth, 'semantic');
         drawTreeNode(d['semantic'], group, rectWidth, rectHeight, undefined, t);
     }
     if (d['color']) {
         drawRect(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight, t);
-        drawWin(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight, d['color']['images'], t);
+        drawWin(group, d['color']['x'], d['color']['y'], d['color']['id'], rectWidth, rectHeight, d['color']['images'], t, 'color');
         drawLine(group, d.x, d.y, d['color']['x'], d['color']['y'], imageWidth, imageWidth, 'color');
         drawTreeNode(d['color'], group, rectWidth, rectHeight, undefined, t);
     }
@@ -584,8 +586,8 @@ function drawRect(c, x, y, i, w, h, t) {
         .attr('height', h);
 }
 
-function drawWin(c, x, y, i, w, h, input, t) {
-    // // console.log(t);
+function drawWin(c, x, y, i, w, h, input, t, type) {
+    // console.log(t);
     let window = c.append('foreignObject')
         .attr("transform", "translate("
             + x + "," + y + ")")
@@ -598,6 +600,7 @@ function drawWin(c, x, y, i, w, h, input, t) {
     let subwindow = window.append('div')
         .attr('class', 'image-subwindow')
     for (let m in input) {
+        // console.log(input[m]);
         if (m === '0') {
             subwindow.append('img')
                 .attr('class', `boarding_${i}_${t} mr-2`)
@@ -605,7 +608,7 @@ function drawWin(c, x, y, i, w, h, input, t) {
                 .attr("id", "boarding_" + i + "_" + m + "_" + t)
                 .attr('width', input[m]['width'] / input[m]['height'] * h)
                 .attr('height', h)
-                .attr('onmouseup', 'browseImageList("' + input[m]['name'] + ',' + i + ',' + m + ',' + t + '")');
+                .attr('onmouseup', 'browseImageList("' + input[m]['name'] + ',' + i + ',' + m + ',' + t + ',' + type + '")');
         } else {
             subwindow.append('img')
                 .attr('class', `boarding_${i}_${t} mr-2`)
@@ -613,7 +616,7 @@ function drawWin(c, x, y, i, w, h, input, t) {
                 .attr("id", "boarding_" + i + "_" + m + "_" + t)
                 .attr('width', input[m]['width'] / input[m]['height'] * h)
                 .attr('height', h)
-                .attr('onmouseup', 'browseImageList("' + input[m]['name'] + ',' + i + ',' + m + ',' + t + '")');
+                .attr('onmouseup', 'browseImageList("' + input[m]['name'] + ',' + i + ',' + m + ',' + t + ',' + type + '")');
         }
     }
     let leftcon = window.append('a')

@@ -551,7 +551,7 @@ function drawTree(d, t) {
 }
 
 function drawTreeNode(d, group, rectWidth, rectHeight, imageWidth, t) {
-    console.log(d);
+    // console.log(d);
     if (d['shape']) {
         drawRect(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight, t);
         drawWin(group, d['shape']['x'], d['shape']['y'], d['shape']['id'], rectWidth, rectHeight, d['shape']['images'], t, 'shape');
@@ -742,7 +742,7 @@ function drawWin(c, x, y, i, w, h, input, t, type) {
 }
 
 function drawLine(c, x1, y1, x2, y2, w, h, t) {
-    console.log(x1, y1, x2, y2, w, h);
+    // console.log(x1, y1, x2, y2, w, h);
     let path;
     if (!w || !h) {
         // // console.log(w, h);

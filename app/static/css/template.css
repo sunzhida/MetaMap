@@ -148,6 +148,10 @@ textarea.form-control {
     height: 80px !important;
 }
 
+.img-thumbnail {
+    width: 100% !important;
+}
+
 .image-window {
     width: 252px;
     height: 100%;

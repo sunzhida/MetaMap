@@ -240,8 +240,10 @@ function _addImage(input) {
             //Do Something to handle error
         }
     });
-    tapID = parseInt(tapID) + 1;
+    tapID = tapCount;
     // console.log(_imageTrees);
+    // console.log(tapCount);
+    // console.log(tapID);
 }
 
 function _exploreImage(i) {
@@ -304,7 +306,7 @@ function _enlargeImage(input) {
 }
 
 function _closeImage(i) {
-    console.log(i);
+    // console.log(i);
     d3.select("#demo_" + i).remove();
 }
 

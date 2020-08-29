@@ -18,13 +18,6 @@ app = Flask(__name__, instance_relative_config=True)
 app.config['DEBUG'] = True
 
 
-# app.config['SECRET_KEY'] = 'hcihkust'
-
-# TEMPData = pd.DataFrame()
-# SCOPEData = pd.DataFrame()
-# SCOPEView = 50
-
-
 def create_connection(db_file):
     """ create a database connection to a SQLite database """
     try:
@@ -119,8 +112,6 @@ def imagelistRetrieve(conn, imagelist):
 
     keyword_df = pd.read_sql_query(
         "SELECT keyword, image_name from keywords_images where image_name in %s" % images_query, conn)
-    # keywords = keyword_df.keyword.values.tolist()
-    # keyword_df.set_index('image_name', inplace=True)
 
     image_df = pd.read_sql_query("SELECT image_name, height, width from images where image_name in %s" % images_query,
                                  conn)
@@ -131,10 +122,7 @@ def imagelistRetrieve(conn, imagelist):
         keywords = keyword_df[keyword_df.image_name == image].keyword.tolist()
         height = image_df.loc[image, 'height']
         width = image_df.loc[image, 'width']
-        # height = image_df[image_df.image_name == image].height.tolist()
-        # width = image_df[image_df.image_name == image].width.tolist()
 
-        # image_dict = checkImageAttributes(conn, image)
         image_dict = {
             "name": image,
             "keywords": keywords,
@@ -149,15 +137,6 @@ def imagelistRetrieve(conn, imagelist):
 def exploreSemantic(conn, image_name, keyword, topn=10):
     search_df = pd.read_sql_query("SELECT semantic_match from keywords where keyword == '%s'" % keyword, conn)
     keywordlist = search_df.semantic_match.values
-
-    # if keywordlist == ['[]']:
-    #     keywordlist = "(" + keyword + ")"
-    # else:
-    #     keywordlist = "(" + keywordlist[0][1:-1] + ")"
-
-    # image_df = pd.read_sql_query("SELECT image_name from keywords_images where keyword in %s" % keywordlist, conn)
-    # imagelist = image_df.image_name.tolist()
-    # return random.sample(imagelist, 10)
 
     if keywordlist == ['[]']:
         keywordlist = [keyword]
@@ -227,70 +206,6 @@ def exploreColorAndShape(conn, image_name, keyword, topn=10):
     return color_imagelist, shape_imagelist
 
 
-# def exploreColor(conn, image_name, keyword, topn=10):
-#     related_keywords = pd.read_sql_query("SELECT related from keywords where keyword == '%s'" % keyword, conn)
-#     related_keywords = "('" + keyword + "', " + related_keywords.related[0][1:-1] + ")"
-
-#     image_df = pd.read_sql_query("SELECT image_name from keywords_images where keyword in %s" % related_keywords, conn)
-#     related_images = "(" + str(image_df.image_name.tolist())[1:-1] + ")"
-#     color_df = pd.read_sql_query("SELECT image_name, color_hist from images where image_name in %s" % related_images,
-#                                  conn)
-
-#     hist_1 = color_df[color_df["image_name"] == image_name].color_hist.values
-#     if len(hist_1) == 0:
-#         print("hist_1 is null: ", hist_1)
-#         return []
-
-#     hist_1 = np.array(eval(hist_1[0]), dtype="float32")
-
-#     d = []
-
-#     for _, image in color_df.iterrows():
-#         if pd.isnull(image.color_hist):
-#             print('nan')
-#             continue
-#         hist_2 = np.array(eval(image.color_hist), dtype="float32")
-#         distance = cv2.compareHist(hist_1, hist_2, cv2.HISTCMP_CORREL)
-#         if distance <= 0.95:
-#             d.append((image.image_name, distance))
-
-#     imagelist = [i[0] for i in sorted(d, key=lambda x: x[1], reverse=True)[:topn]]
-
-#     return imagelist
-
-
-# def exploreShape(conn, image_name, keyword, topn=10):
-#     related_keywords = pd.read_sql_query("SELECT related from keywords where keyword == '%s'" % keyword, conn)
-#     related_keywords = "('" + keyword + "', " + related_keywords.related[0][1:-1] + ")"
-
-#     image_df = pd.read_sql_query("SELECT image_name from keywords_images where keyword in %s" % related_keywords, conn)
-#     related_images = "(" + str(image_df.image_name.tolist())[1:-1] + ")"
-
-#     shape_df = pd.read_sql_query("SELECT image_name, contour from images where image_name in %s" % related_images, conn)
-
-#     shape_1 = shape_df[shape_df["image_name"] == image_name].contour.values
-#     if len(shape_1) == 0:
-#         print("shape_1 is null: ", shape_1)
-#         return []
-
-#     shape_1 = np.array(eval(shape_1[0]), dtype="float32")
-
-#     d = []
-
-#     for _, image in shape_df.iterrows():
-#         if pd.isnull(image.contour) or image.contour == []:
-#             print('nan')
-#             continue
-#         shape_2 = np.array(eval(image.contour), dtype="float32")
-#         distance = cv2.matchShapes(shape_1, shape_2, 1, 0.0)
-#         if distance >= 0.01:
-#             d.append((image.image_name, distance))
-
-#     imagelist = [i[0] for i in sorted(d, key=lambda x: x[1], reverse=False)[:topn]]
-
-#     return imagelist
-
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
     RELOAD_DATABASE = False
@@ -315,8 +230,9 @@ def search(i):
     conn = create_connection(DATABASE)
     keyword = suggestKeyword(conn, i)
     image = searchImage(conn, i)
-    color_palette = colorPalette(conn, i)
-    data = {'search': i, 'keywords': keyword, 'images': image, 'colors': color_palette}
+    # color_palette = colorPalette(conn, i)
+    data = {'search': i, 'keywords': keyword, 'images': image}
+    # data = {'search': i, 'keywords': keyword, 'images': image, 'colors': color_palette}
     # data = {'search': i, 'keywords': keyword, 'images': image}
     # color_palette = [
     #     {'color': "#1F77B4", 'portion': 0.3},

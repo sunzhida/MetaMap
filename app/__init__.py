@@ -41,6 +41,34 @@ def suggestKeyword(conn, keyword):
 
 # return suggest keywords based on input: a list of string
 def colorPalette(conn, keyword):
+    # if keyword == 'mental':
+    #     return [
+    #         {'color': '#E7DED5', 'portion': 0.25},
+    #         {'color': '#221914','portion': 0.2},
+    #         {'color': '#BE9984','portion': 0.2},
+    #         {'color': '#785748','portion': 0.15},
+    #         {'color': '#141A37','portion': 0.1},
+    #         {'color': '#CFDCE6','portion': 0.1},
+    #     ]
+    # if keyword == 'bike':
+    #     return [
+    #         {'color': '#5B5C5F', 'portion': 0.25},
+    #         {'color': '#290200','portion': 0.2},
+    #         {'color': '#629ED4','portion': 0.2},
+    #         {'color': '#F7E500','portion': 0.15},
+    #         {'color': '#589E64','portion': 0.1},
+    #         {'color': '#CB9B10','portion': 0.1},
+    #     ]
+    # return [
+    #     {'color': "#1F77B4", 'portion': 0.3},
+    #     {'color': "#FF7F0E", 'portion': 0.2},
+    #     {'color': "#2CA02C", 'portion': 0.2},
+    #     {'color': "#D62728", 'portion': 0.1},
+    #     {'color': "#9467BD", 'portion': 0.1},
+    #     {'color': "#8C564B", 'portion': 0.1},
+    # ]
+
+
     search_df = pd.read_sql_query("SELECT color_palette from keywords where keyword == '%s'" % keyword, conn)
 
     color_palette = search_df.color_palette.values
@@ -230,9 +258,9 @@ def search(i):
     conn = create_connection(DATABASE)
     keyword = suggestKeyword(conn, i)
     image = searchImage(conn, i)
-    # color_palette = colorPalette(conn, i)
-    data = {'search': i, 'keywords': keyword, 'images': image}
-    # data = {'search': i, 'keywords': keyword, 'images': image, 'colors': color_palette}
+    color_palette = colorPalette(conn, i)
+    # data = {'search': i, 'keywords': keyword, 'images': image}
+    data = {'search': i, 'keywords': keyword, 'images': image, 'colors': color_palette}
     # data = {'search': i, 'keywords': keyword, 'images': image}
     # color_palette = [
     #     {'color': "#1F77B4", 'portion': 0.3},

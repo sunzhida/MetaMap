@@ -5,7 +5,7 @@ A CHI 2021 work by Kang, Youwen and Sun, Zhida and Wang, Sitong and Huang, Zeyu 
 
 ## Run
 
-1. Download the source code, the database and the images from release. (Cloning the project is not advised, as historical git snapshots contain the entire image database and is huge.) (No kidding, ~2.5G.)
+1. Download the source code, the database and the images *from [release](https://github.com/sunzhida/projects_MetaBoard_system/releases/latest)*. (Cloning the project is not advised, as historical git snapshots contain the entire image database and is huge. Downloading from release will not have this issue.) (No kidding, ~2.5G.)
 2. Put `database.db` at project root. Extract the `img` folder to `<project>/app/static/`.
 The final structure looks like
 ```

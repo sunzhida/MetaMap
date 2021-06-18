@@ -1,0 +1,10 @@
+name: metamap
+channels:
+  - conda-forge
+dependencies:
+  - python=3
+  - sqlite
+  - numpy
+  - flask
+  - pandas
+  - opencv

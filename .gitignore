@@ -103,9 +103,9 @@ venv.bak/
 # mypy
 .mypy_cache/
 
-# app/static/img
-# app/static/img_old
-# *.jpg
-# *.png
-# *.db
+app/static/img
+app/static/img_old
+*.jpg
+*.png
+*.db
 

@@ -1,7 +1,8 @@
 # MetaMap: Supporting Visual Metaphor Ideation through Multi-dimensional Example-based Exploration
 
-A CHI 2021 work by Kang, Youwen and Sun, Zhida and Wang, Sitong and Huang, Zeyu and Wu, Ziming and Ma, Xiaojuan.
-[DOI: 10.1145/3411764.3445325](https://doi.org/10.1145/3411764.3445325).
+Youwen Kang*, Zhida Sun*, Sitong Wang, Zeyu Huang, Ziming Wu, and Xiaojuan Ma. 2021. MetaMap: Supporting Visual Metaphor Ideation through Multi-dimensional Example-based Exploration. In Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems (CHI '21). Association for Computing Machinery, New York, NY, USA, Article 427, 1–15. [DOI:https://doi.org/10.1145/3411764.3445325](https://doi.org/10.1145/3411764.3445325)
+
+![image](https://github.com/sunzhida/projects_MetaMap_system/blob/master/system.png)
 
 ## Run
 

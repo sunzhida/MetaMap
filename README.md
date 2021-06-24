@@ -7,8 +7,8 @@ Youwen Kang*, Zhida Sun*, Sitong Wang, Zeyu Huang, Ziming Wu, and Xiaojuan Ma. 2
 
 ## Run
 
-1. Download the source code, the database and the images *from [release](https://github.com/sunzhida/projects_MetaBoard_system/releases/latest)*. (Cloning the project is not advised, as historical git snapshots contain the entire image database and is huge. Downloading from release will not have this issue.) (No kidding, ~2.5G.)
-2. Put `database.db` at project root. Extract the `img` folder to `<project>/app/static/`.
+1. Download the source code, the database and the images *from [release](https://github.com/sunzhida/projects_MetaBoard_system/releases/latest)*. (Cloning the project is not advised, as historical git snapshots contain a huge image database. However, downloading from the release will not have this issue.) (No kidding, the entire image database is ~2.5G.)
+2. Put `database.db` at project root, and extract the `img` folder to `<project>/app/static/`.
 The final structure looks like
 ```
 <project>
@@ -22,7 +22,7 @@ The final structure looks like
 │  └─...
 └─...
 ```
-3. Install the dependencies. Eveyr dependency is explicitly imported at the top of `app/run.py`. You can install them manually.
+3. Install the dependencies. Each dependency is explicitly imported at the top of `app/run.py`. You can install them manually.
 As a `conda` alternate, you can run `conda env create -f environment.yml` in the project root directory to create an environment named *metamap*
 with required dependencies.
 4. `cd` to the project root and run `python run.py`. The webapp will be hosted on 5000 by default.

@@ -7,8 +7,8 @@ Youwen Kang*, Zhida Sun*, Sitong Wang, Zeyu Huang, Ziming Wu, and Xiaojuan Ma. 2
 
 ## Run
 
-*. Download the source code, the database and the images *from [release](https://github.com/sunzhida/projects_MetaBoard_system/releases/latest)*. (Cloning the project is not advised, as historical git snapshots contain a huge image database. However, downloading from the release will not have this issue.) (No kidding, the entire image database is ~2.5G.)
-*. Put `database.db` at project root, and extract the `img` folder to `<project>/app/static/`.
+* Download the source code, the database and the images *from [release](https://github.com/sunzhida/projects_MetaBoard_system/releases/latest)*. (Cloning the project is not advised, as historical git snapshots contain a huge image database. However, downloading from the release will not have this issue.) (No kidding, the entire image database is ~2.5G.)
+* Put `database.db` at project root, and extract the `img` folder to `<project>/app/static/`.
 The final structure looks like
 
 ```
@@ -24,10 +24,10 @@ The final structure looks like
 └─...
 ```
 
-*. Install the dependencies. Each dependency is explicitly imported at the top of `app/run.py`. You can install them manually.
+* Install the dependencies. Each dependency is explicitly imported at the top of `app/run.py`. You can install them manually.
 As a `conda` alternate, you can run `conda env create -f environment.yml` in the project root directory to create an environment named *metamap*
 with required dependencies.
-*. `cd` to the project root and run `python run.py`. The webapp will be hosted on 5000 by default.
+* `cd` to the project root and run `python run.py`. The webapp will be hosted on 5000 by default.
 
 ## Note
 

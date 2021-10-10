@@ -53,7 +53,7 @@ Click on any keywords to further explore from it.
 
 #### Left control panel
 
-1. Searching (done)
+1. Searching
     1. searching keywords with keywords
     2. searching images with keywords
 2. Keywords history

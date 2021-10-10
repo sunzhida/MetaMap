@@ -3,7 +3,7 @@
 
 Youwen Kang*, Zhida Sun*, Sitong Wang, Zeyu Huang, Ziming Wu, and Xiaojuan Ma. 2021. MetaMap: Supporting Visual Metaphor Ideation through Multi-dimensional Example-based Exploration. In Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems (CHI '21). Association for Computing Machinery, New York, NY, USA, Article 427, 1–15. [DOI:https://doi.org/10.1145/3411764.3445325](https://doi.org/10.1145/3411764.3445325)
 
-![image](system.png)
+![](system.png)
 
 ## Run
 

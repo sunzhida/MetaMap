@@ -1,11 +1,11 @@
-# MetaMap
+## MetaMap
 > Supporting Visual Metaphor Ideation through Multi-dimensional Example-based Exploration
 
 Youwen Kang*, Zhida Sun*, Sitong Wang, Zeyu Huang, Ziming Wu, and Xiaojuan Ma. 2021. MetaMap: Supporting Visual Metaphor Ideation through Multi-dimensional Example-based Exploration. In Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems (CHI '21). Association for Computing Machinery, New York, NY, USA, Article 427, 1–15. [DOI:https://doi.org/10.1145/3411764.3445325](https://doi.org/10.1145/3411764.3445325)
 
 ![](system.png)
 
-## Run
+### Run
 
 * Download the source code, the database and the images *from [release](https://github.com/sunzhida/projects_MetaBoard_system/releases/latest)*. (Cloning the project is not advised, as historical git snapshots contain a huge image database. However, downloading from the release will not have this issue.) (No kidding, the entire image database is ~2.5G.)
 * Put `database.db` at project root, and extract the `img` folder to `<project>/app/static/`.
@@ -29,7 +29,7 @@ As a `conda` alternate, you can run `conda env create -f environment.yml` in the
 with required dependencies.
 * `cd` to the project root and run `python run.py`. The webapp will be hosted on 5000 by default.
 
-## Note
+### Note
 
 Start by entering search keywords on the top left.
 Available keywords including *bike*, *mental*, *clock*...
@@ -49,9 +49,9 @@ Alternatively, drag or click on the horizontal scroll bar to navigate.
 Click on an image to select and show its keywords.
 Click on any keywords to further explore from it.
 
-## Functions
+### Functions
 
-### Left control panel
+#### Left control panel
 
 1. Searching (done)
     1. searching keywords with keywords
@@ -59,7 +59,7 @@ Click on any keywords to further explore from it.
 2. Keywords history
 3. Color palette
 
-### Right mood-boarding area
+#### Right mood-boarding area
 
 1. Expand/Explore the mind map
     1. searching images with images
